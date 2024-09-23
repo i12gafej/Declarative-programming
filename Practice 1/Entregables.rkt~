@@ -10,21 +10,21 @@ Objetivo:
 una cantidad C durante n años con un interés del i%.
 Parámetros:
  - n: número de años.
- - C: Cantidad de unidades monetarias.
- - i: porcentaje de interés.
+ - C: Cantidad de unidades monetarias
+ - i: porcentaje de interés
 Resultado:
-   Valor real.
+   Valor real 
 Descripción de la solucion:
    Cantidad de u.m. con el interés añadido acumulada en los n años.
 Funciones auxiliares a las que llama:
-   ninguna
+   expt
 |#
 
 (define (serie1 n c i)
   (*
      c
      (expt (+
-      1.
+      1
       (/
        i
        100
@@ -35,7 +35,7 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (serie1 55. 5 8)
-;; Resultado => 344.56...
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 7. b.
@@ -49,11 +49,11 @@ Objetivo:
 Parámetros:
  - n: término n-ésimo a calcular de la sucesión de Fibonacci.
 Resultado:
-   Número natural (con decimales por la precisión).
+   Número natural
 Descripción de la solucion:
    Valor n de la sucesión de Fibonacci.
 Funciones auxiliares a las que llama:
-   ninguna
+   sqrt, expt
 |#
 
 (define (serie2 n)
@@ -73,7 +73,6 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (serie2 6)
-;; Resultado => 8.0...
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 7. c.
@@ -87,7 +86,7 @@ Objetivo:
 Parámetros:
  - n: término n-ésimo a calcular de la sucesión de Fibonacci.
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
    Aproximación del número aureo.
 Funciones auxiliares a las que llama:
@@ -101,9 +100,7 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (serie3 10)
-;; Resultado => 1.6181818181818184
 ;; (serie3 40)
-;; Resultado => 1.6180339887498951
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 8. a.
@@ -113,15 +110,15 @@ Funciones auxiliares a las que llama:
 Nombre:
    conversion1
 Objetivo:
-   Convertir de millas a kilómetros.
+   Convertir de millas a kilómetros
 Parámetros:
- - m: Cantidad de millas.
+ - m: Cantidad de millas
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Valor en kilómetros de las millas introducidas.
+   Valor en kilómetros de las millas introducidas
 Funciones auxiliares a las que llama:
-   ninguna
+   
 |#
 
 (define (conversion1 m)
@@ -129,7 +126,6 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (conversion1 2)
-;; Resultado => 3.21868 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 8. b.
@@ -141,11 +137,11 @@ Nombre:
 Objetivo:
    Convertir de kilómetros a millas
 Parámetros:
- - km: Cantidad de kilómetros.
+ - km: Cantidad de kilómetros
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Valor en millas de los kilómetros introducidos.
+   Valor en millas de los kilómetros introducidos
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -155,7 +151,6 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (conversion2 1.60934)
-;; Resultado => 1.0
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 8. c.
@@ -165,11 +160,11 @@ Funciones auxiliares a las que llama:
 Nombre:
    conversion3
 Objetivo:
-   Convertir de grados Celsius a grados Fahrenheit.
+   Convertir de grados Celsius a grados Fahrenheit
 Parámetros:
- - c: grados Celsius.
+ - c: grados Celsius
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
    Valor en grados Fahrenheit de los grados Celsius introducidos. 
 Funciones auxiliares a las que llama:
@@ -180,8 +175,7 @@ Funciones auxiliares a las que llama:
   (+ (* c (/ 9 5)) 32)
   )
 
-;; (conversion3 5)
-;; Resultado => 41
+;; (conversion3 5) ==> 41
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 8. d.
@@ -191,11 +185,11 @@ Funciones auxiliares a las que llama:
 Nombre:
    conversion4
 Objetivo:
-   Convertir de grados Fahrenheit a grados Celsius.
+   Convertir de grados Fahrenheit a grados Celsius
 Parámetros:
- - f: grados Fahrenheit.
+ - f: grados Fahrenheit
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
    Valor en grados Celsius de los grados Fahrenheit introducidos. 
 Funciones auxiliares a las que llama:
@@ -206,8 +200,7 @@ Funciones auxiliares a las que llama:
   (* (- f 32) (/ 5 9))
   )
 
-;; (conversion4 41)
-;; Resultado => 5
+;; (conversion4 41) ==> 5
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 9. a.
@@ -217,14 +210,14 @@ Funciones auxiliares a las que llama:
 Nombre:
    perimetro
 Objetivo:
-   Calcula el perímetro de un polígono regular.
+   Calcula el perímetro de un polígono regular
 Parámetros:
- - n: número de lados.
- - l: longitud de los lados.
+ - n: número de lados
+ - l: longitud de los lados
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Valor en unidades de medida del perímetro del polígono dado.
+   Valor en unidades de medida del perímetro del polígono dado
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -232,8 +225,7 @@ Funciones auxiliares a las que llama:
  (define perimetro (lambda (n l) (* n l))
    )
 
-;; (perimetro 5 2)
-;; Resultado => 10
+;; (perimetro 5 2) ==> 10
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 9. b.
@@ -243,22 +235,21 @@ Funciones auxiliares a las que llama:
 Nombre:
    angulo-central
 Objetivo:
-   Calcula el angulo central de un polígono regular.
+   Calcula el angulo central de un polígono regular
 Parámetros:
- - n: número de lados.
+ - n: número de lados
 Resultado:
-   Valor en radianes.
+   Angulo en grados
 Descripción de la solucion:
-   Ángulo central de un polígono.
+   Ángulo central de un polígono
 Funciones auxiliares a las que llama:
    ninguna
 |#
 
- (define angulo-central (lambda (n) (* (/ (/ 360 n) 180) pi))
+ (define angulo-central (lambda (n) (/ 360 n))
    )
 
 ;; (angulo-central 3)
-;; Resultado => 2.0943951023931953
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 9. c.
@@ -268,24 +259,26 @@ Funciones auxiliares a las que llama:
 Nombre:
    apotema
 Objetivo:
-   Calcula el apotema de un polígono regular.
+   Calcula el apotema de un polígono regular
 Parámetros:
- - n: número de lados.
- - l: longitud de los lados.
+ - n: número de lados
+ - l: longitud de los lados
 Resultado:
-   Valor real.
+   Distancia en unidades de medida
 Descripción de la solucion:
-   Aponema del polígono.
+   Aponema del polígono
 Funciones auxiliares a las que llama:
-   angulo-central
+   angulo-central, tan
 |#
 
  (define (apotema n l)
-   (/ l (* 2 (tan (/ (angulo-central n) 2))))
+   ;; (/ l (* 2 (tan (/ (angulo-central n) 2))))
+   ;; esto es lo que pone que hagamos,
+   ;; pero no me da el resultado correcto
+   (/ l (* 2 (tan (/ pi n))))
    )
 
 ;; (apotema 5 5)
-;; Resultado => 3.44
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 9. d.
@@ -295,14 +288,14 @@ Funciones auxiliares a las que llama:
 Nombre:
    area
 Objetivo:
-   Calcula el area de un polígono regular.
+   Calcula el area de un polígono regular
 Parámetros:
- - n: número de lados.
- - l: longitud de los lados.
+ - n: número de lados
+ - l: longitud de los lados
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Area del polígono.
+   Area del polígono
 Funciones auxiliares a las que llama:
    aponema, perimetro
 |#
@@ -311,8 +304,7 @@ Funciones auxiliares a las que llama:
    (/ (* (perimetro n l) (apotema n l)) 2)
    )
 
-;; (area 4 2)
-;; Resultado => 4.0...
+;; (area 3 3)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 10. a.
@@ -324,15 +316,15 @@ Nombre:
 Objetivo:
    Calcula el area de un triángulo a partir de sus lados usando la fórmula de Herón.
 Parámetros:
- - a: lado a.
- - b: lado b.
- - c: lado c.
+ - a: lado a
+ - b: lado b
+ - c: lado c
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Area del triángulo.
+   Area del triángulo
 Funciones auxiliares a las que llama:
-   ninguna
+   sqrt
 |#
 
  (define (areaTriangulo a b c)
@@ -340,8 +332,7 @@ Funciones auxiliares a las que llama:
    (sqrt (* s (- s a)(- s b)(- s c)))
    )
 
-;; (areaTriangulo 3 4 5)
-;; Resultado => 6
+;; (areaTriangulo 3 3 3)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 10. b.
@@ -353,12 +344,12 @@ Nombre:
 Objetivo:
    Calcula el area de un rombo a partir de sus diagonales.
 Parámetros:
- - d1: diagonal d1.
- - d2: diagonal d2.
+ - d1: diagonal d1
+ - d2: diagonal d2
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Area del rombo.
+   Area del rombo
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -368,7 +359,6 @@ Funciones auxiliares a las que llama:
    )
 
 ;; (areaRombo 2 2)
-;; Resultado => 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 10. c.
@@ -380,13 +370,13 @@ Nombre:
 Objetivo:
    Calcula el area del trapecio a partir de sus bases y altura.
 Parámetros:
- - b1: base b1.
- - b2: base b2.
- - h: altura.
+ - b1: base b1
+ - b2: base b2
+ - h: altura
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Area del trapecio.
+   Area del trapecio
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -396,7 +386,6 @@ Funciones auxiliares a las que llama:
    )
 
 ;; (areaTrapecio 2 2 2)
-;; Resultado => 4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 11. a.
@@ -406,18 +395,18 @@ Funciones auxiliares a las que llama:
 Nombre:
    D2
 Objetivo:
-   Calcula la distancia euclidiana o distancia L2 entre dos puntos P1 = (x1, y1) y P2 = (x2, y2).
+   Calcula la distancia euclidiana o distancia L2 entre dos puntos P1 = (x1, y1) y P2 = (x2, y2)
 Parámetros:
- - x1: coordenada x P1.
- - y1: coordenada y P1.
- - x2: coordenada x P2.
- - y2: coordenada y P2.
+ - x1: coordenada x P1
+ - y1: coordenada y P1
+ - x2: coordenada x P2
+ - y2: coordenada y P2
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Distancia euclidiana.
+   Distancia euclidiana
 Funciones auxiliares a las que llama:
-   ninguna
+   sqrt, expt
 |#
 
  (define (D2 x1 y1 x2 y2)
@@ -425,7 +414,6 @@ Funciones auxiliares a las que llama:
    )
 
 ;; (D2 0 0 1 1)
-;; Resultado => 1.41..
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 11. b.
@@ -435,18 +423,18 @@ Funciones auxiliares a las que llama:
 Nombre:
    D1
 Objetivo:
-   distancia de Manhattan, distancia de la ciudad de los bloques o distancia L1.
+   distancia de Manhattan, distancia de la ciudad de los bloques o distancia L1
 Parámetros:
- - x1: coordenada x P1.
- - y1: coordenada y P1.
- - x2: coordenada x P2.
- - y2: coordenada y P2.
+ - x1: coordenada x P1
+ - y1: coordenada y P1
+ - x2: coordenada x P2
+ - y2: coordenada y P2
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Distancia de Manhattan.
+   Distancia de Manhattan
 Funciones auxiliares a las que llama:
-   ninguna
+   abs
 |#
 
  (define (D1 x1 y1 x2 y2)
@@ -454,7 +442,6 @@ Funciones auxiliares a las que llama:
    )
 
 ;; (D1 0 0 1 1)
-;; Resultado => 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 11. c.
@@ -464,26 +451,25 @@ Funciones auxiliares a las que llama:
 Nombre:
    Dmax
 Objetivo:
-   Calcula la distancia de ajedrez, distancia de Chebyshev o distancia L00.
+   Calcula la distancia de ajedrez, distancia de Chebyshev o distancia L00
 Parámetros:
- - x1: coordenada x P1.
- - y1: coordenada y P1.
- - x2: coordenada x P2.
- - y2: coordenada y P2.
+ - x1: coordenada x P1
+ - y1: coordenada y P1
+ - x2: coordenada x P2
+ - y2: coordenada y P2
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Distancia de ajedrez.
+   Distancia de ajedrez
 Funciones auxiliares a las que llama:
-   ninguna
+   max, abs
 |#
 
  (define (Dmax x1 y1 x2 y2)
    (max (abs (- x2 x1)) (abs (- y2 y1)))
    )
 
-;; (Dmax 0 0 1 1)
-;; Resultado => 1
+;; (Dmax 0 0 1 9)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 12.
@@ -493,18 +479,18 @@ Funciones auxiliares a las que llama:
 Nombre:
    areaTrianguloVertices
 Objetivo:
-   Calcula el área del triángulo a partir de sus vértices.
+   Calcula el área del triángulo a partir de sus vértices
 Parámetros:
- - x1: coordenada x P1.
- - y1: coordenada y P1.
- - x2: coordenada x P2.
- - y2: coordenada y P2.
- - x3: coordenada x P3.
- - y3: coordenada y P3.
+ - x1: coordenada x P1
+ - y1: coordenada y P1
+ - x2: coordenada x P2
+ - y2: coordenada y P2
+ - x3: coordenada x P3
+ - y3: coordenada y P3
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Area del triángulo.
+   Area del triángulo
 Funciones auxiliares a las que llama:
    areaTriangulo, D2
 |#
@@ -516,7 +502,6 @@ Funciones auxiliares a las que llama:
     (areaTriangulo A B C)))
 
 ;; (areaTrianguloVertices 0 0 4 0 0 3)
-;; Resultado => 6
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 13.
@@ -526,20 +511,20 @@ Funciones auxiliares a las que llama:
 Nombre:
    areaRomboVerticesLet
 Objetivo:
-   Calcula el área del rombo a partir de sus vértices.
+   Calcula el área del rombo a partir de sus vértices
 Parámetros:
- - x1: coordenada x P1 (Primer punto Diagonal d1).
- - y1: coordenada y P1 (Primer punto Diagonal d1).
- - x2: coordenada x P2 (Segundo punto Diagonal d1).
- - y2: coordenada y P2 (Segundo punto Diagonal d1).
- - x3: coordenada x P3 (Primer punto Diagonal d2).
- - y3: coordenada y P3 (Primer punto Diagonal d2).
- - x4: coordenada x P4 (Segundo punto Diagonal d2).
- - y4: coordenada y P4 (Segundo punto Diagonal d2).
+ - x1: coordenada x P1 (Primer punto Diagonal d1)
+ - y1: coordenada y P1 (Primer punto Diagonal d1)
+ - x2: coordenada x P2 (Segundo punto Diagonal d1)
+ - y2: coordenada y P2 (Segundo punto Diagonal d1)
+ - x3: coordenada x P3 (Primer punto Diagonal d2)
+ - y3: coordenada y P3 (Primer punto Diagonal d2)
+ - x4: coordenada x P4 (Segundo punto Diagonal d2)
+ - y4: coordenada y P4 (Segundo punto Diagonal d2)
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Area del rombo.
+   Area del rombo
 Funciones auxiliares a las que llama:
    areaRombo, D2
 |#
@@ -551,7 +536,6 @@ Funciones auxiliares a las que llama:
     (areaRombo d1 d2)))
 
 ;; (areaRomboVerticesLet 0 0 4 0 2 3 2 -3)
-;; Resultado => 12
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 14. a.
@@ -561,19 +545,19 @@ Funciones auxiliares a las que llama:
 Nombre:
    distanciaPuntoRecta
 Objetivo:
-   Calcula la distancia que hay entre un punto y una recta.
+   Calcula la distancia que hay entre un punto y una recta
 Parámetros:
- - x0: coordenada x del punto P.
- - y0: coordenada y del punto P. 
- - a: coeficiente de x.
- - b: coeficiente de y.
- - c: término independiente.
+ - x0: coordenada x del punto P 
+ - y0: coordenada y del punto P 
+ - a: coeficiente de x
+ - b: coeficiente de y
+ - c: término independiente
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Distancia entre el punto y la recta.
+   Distancia entre el punto y la recta
 Funciones auxiliares a las que llama:
-   ninguna
+   abs, sqrt, sqr
 |#
 
 (define (distanciaPuntoRecta x0 y0 a b c)
@@ -581,7 +565,6 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (distanciaPuntoRecta 0 0 1 1 4)
-;; Resultado => 2.82...
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 14. b.
@@ -591,18 +574,18 @@ Funciones auxiliares a las que llama:
 Nombre:
    distanciaPuntoRecta2
 Objetivo:
-   Calcula la distancia que hay entre un punto y una recta que pasa por lo spunto P1 y P2.
+   Calcula la distancia que hay entre un punto y una recta que pasa por lo spunto P1 y P2
 Parámetros:
- - x0: coordenada x del punto P0. 
- - y0: coordenada y del punto P0.
- - x1: coordenada x del punto P1.
- - y1: coordenada y del punto P1.
- - x2: coordenada x del punto P2.
- - y2: coordenada y del punto P2.
+ - x0: coordenada x del punto P0 
+ - y0: coordenada y del punto P0
+ - x1: coordenada x del punto P1
+ - y1: coordenada y del punto P1
+ - x2: coordenada x del punto P2
+ - y2: coordenada y del punto P2
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Distancia entre el punto y la recta dado por los puntos P1 y P2.
+   Distancia entre el punto y la recta dado por los puntos P1 y P2
 Funciones auxiliares a las que llama:
    distanciaPuntoRecta
 |#
@@ -616,7 +599,6 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (distanciaPuntoRecta2 0 0 2 1 2 3)
-;; Resultado => 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 15.
@@ -626,26 +608,26 @@ Funciones auxiliares a las que llama:
 Nombre:
    areaTrapecioLetVertices
 Objetivo:
-   Calcula el área de un trapecio a partir de sus vértices.
+   Calcula el área de un trapecio a partir de sus vértices
 Parámetros:
    Introducción en sentido horario, empezando por el superior izquierdo.
- - x0: coordenada x del punto A. 
- - y0: coordenada y del punto A.
- - x1: coordenada x del punto B.
- - y1: coordenada y del punto B.
- - x2: coordenada x del punto C.
- - y2: coordenada y del punto C.
- - x3: coordenada x del punto D.
- - y3: coordenada y del punto D.
+ - x0: coordenada x del punto A 
+ - y0: coordenada y del punto A
+ - x1: coordenada x del punto B
+ - y1: coordenada y del punto B
+ - x2: coordenada x del punto C
+ - y2: coordenada y del punto C
+ - x3: coordenada x del punto D 
+ - y3: coordenada y del punto D
 
                A----B
               /      \
              D--------C
 
 Resultado:
-   Valor real.
+   Valor real
 Descripción de la solucion:
-   Área del trapecio dados sus vértices.
+   Área del trapecio dados sus vértices
 Funciones auxiliares a las que llama:
    D2, distanciaPuntoRecta2, areaTrapecio
 |#
@@ -659,7 +641,6 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (areaTrapecioLetVertices 2 4 5 4 7 0 0 0)
-;; Resultado => 20
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 16. a.
@@ -675,7 +656,7 @@ Parámetros:
  - i: tipo de interés anual de la hipoteca.
  - a: número de años de la hipoteca.
 Resultado:
-   Valor real.
+   Valor real en unidades monetarias.
 Descripción de la solucion:
    Cuota mensual del préstamo hipotecario.
 Funciones auxiliares a las que llama:
@@ -690,7 +671,6 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (cuota-mensual 100000 3.0 20)
-;; Resultado => 554.59...
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 16. b.
@@ -705,7 +685,7 @@ Parámetros:
  - c: capital cantidad de dinero pendiente de pago en la hipoteca.
  - i: tipo de interés anual de la hipoteca.
 Resultado:
-   Valor real.
+   Valor real en unidades monetarias.
 Descripción de la solucion:
    Interes mensual del préstamo hipotecario.
 Funciones auxiliares a las que llama:
@@ -717,7 +697,6 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (interes-mensual 100000 3.0)
-;; Resultado => 250.0
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 16. c.
@@ -733,7 +712,7 @@ Parámetros:
  - i: tipo de interés anual de la hipoteca.
  - a: número de años de la hipoteca.
 Resultado:
-   Valor real.
+   Valor real en unidades monetarias.
 Descripción de la solucion:
    Amortización mensual del préstamo hipotecario.
 Funciones auxiliares a las que llama:
@@ -748,4 +727,3 @@ Funciones auxiliares a las que llama:
   )
 
 ;; (amortizacion-mensual 100000 3.0 20)
-;; Resultado => 304.59...
