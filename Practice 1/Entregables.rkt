@@ -13,9 +13,11 @@ Parámetros:
  - C: Cantidad de unidades monetarias.
  - i: porcentaje de interés.
 Resultado:
-   Valor real.
+   Valor real. Cantidad de u.m. con el interés añadido acumulada en los n años.
 Descripción de la solucion:
-   Cantidad de u.m. con el interés añadido acumulada en los n años.
+   Introduciendo: 
+   (serie1 numero-de-años cantidad-dinero interes)
+   El valor devuelto es la cantidad de dinero mas intereses.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -49,9 +51,9 @@ Objetivo:
 Parámetros:
  - n: término n-ésimo a calcular de la sucesión de Fibonacci.
 Resultado:
-   Número natural (con decimales por la precisión).
+   Número natural (con decimales por la precisión). Valor n de la sucesión de Fibonacci.
 Descripción de la solucion:
-   Valor n de la sucesión de Fibonacci.
+   Para serie2 el valor de 2 es 1, de 3 es 2, de 4 es 3, de 5 es 5, ...
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -87,9 +89,11 @@ Objetivo:
 Parámetros:
  - n: término n-ésimo a calcular de la sucesión de Fibonacci.
 Resultado:
-   Valor real.
+   Valor real. Aproximación del número aureo.
 Descripción de la solucion:
-   Aproximación del número aureo.
+   Para valores mayores, la precisión del valor aumenta.
+   Para 10, el resultado es 1.6181818181818184.
+   Para 40, el resultado es 1.6180339887498951
 Funciones auxiliares a las que llama:
    serie2
 |#
@@ -117,9 +121,9 @@ Objetivo:
 Parámetros:
  - m: Cantidad de millas.
 Resultado:
-   Valor real.
+   Valor real. Valor en kilómetros de las millas introducidas.
 Descripción de la solucion:
-   Valor en kilómetros de las millas introducidas.
+   Una milla son 1.60934 kilómetros. Para 10 millas, el valor es 16.0934 km.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -143,9 +147,9 @@ Objetivo:
 Parámetros:
  - km: Cantidad de kilómetros.
 Resultado:
-   Valor real.
+   Valor real. Valor en millas de los kilómetros introducidos.
 Descripción de la solucion:
-   Valor en millas de los kilómetros introducidos.
+   1.60934 kilómetros son 1 milla. Para 16.0934 km, el valor es 10 millas.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -169,9 +173,9 @@ Objetivo:
 Parámetros:
  - c: grados Celsius.
 Resultado:
-   Valor real.
+   Valor real. Valor en grados Fahrenheit de los grados Celsius introducidos. 
 Descripción de la solucion:
-   Valor en grados Fahrenheit de los grados Celsius introducidos. 
+   Para 5 grados Celsius, la conversión es 41 grados  Fahrenheit.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -195,9 +199,9 @@ Objetivo:
 Parámetros:
  - f: grados Fahrenheit.
 Resultado:
-   Valor real.
+   Valor real. Valor en grados Celsius de los grados Fahrenheit introducidos.  
 Descripción de la solucion:
-   Valor en grados Celsius de los grados Fahrenheit introducidos. 
+   Para 41 grados Fahrenheit, la conversión es 5 grados Celsius.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -222,9 +226,9 @@ Parámetros:
  - n: número de lados.
  - l: longitud de los lados.
 Resultado:
-   Valor real.
+   Valor real. Valor en unidades de medida del perímetro del polígono dado.
 Descripción de la solucion:
-   Valor en unidades de medida del perímetro del polígono dado.
+   Si tenemos un cuadrado de 4 cm de lado, el perímetro será 16 cm.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -247,9 +251,10 @@ Objetivo:
 Parámetros:
  - n: número de lados.
 Resultado:
-   Valor en radianes.
+   Valor en radianes. Ángulo central de un polígono.
 Descripción de la solucion:
-   Ángulo central de un polígono.
+   Para un pentágono, obtenemos el ángulo de los triángulos formados por las resctas de sus vertices
+   a su centro.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -273,9 +278,9 @@ Parámetros:
  - n: número de lados.
  - l: longitud de los lados.
 Resultado:
-   Valor real.
+   Valor real. Aponema del polígono.
 Descripción de la solucion:
-   Aponema del polígono.
+   Para un cuadrado, obtenemos la distancia del centro a la mediana de alguno de sus lados.
 Funciones auxiliares a las que llama:
    angulo-central
 |#
@@ -300,9 +305,9 @@ Parámetros:
  - n: número de lados.
  - l: longitud de los lados.
 Resultado:
-   Valor real.
+   Valor real. Area del polígono.
 Descripción de la solucion:
-   Area del polígono.
+   Dado un cuadrádo (4 lados) de 20 centímetros, tenemos 400 cm².
 Funciones auxiliares a las que llama:
    aponema, perimetro
 |#
@@ -328,9 +333,9 @@ Parámetros:
  - b: lado b.
  - c: lado c.
 Resultado:
-   Valor real.
+   Valor real. Area del triángulo.
 Descripción de la solucion:
-   Area del triángulo.
+   Dado un triángulo de lados 3, 4 y 5, el área es 6.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -356,9 +361,9 @@ Parámetros:
  - d1: diagonal d1.
  - d2: diagonal d2.
 Resultado:
-   Valor real.
+   Valor real. Area del rombo.
 Descripción de la solucion:
-   Area del rombo.
+   Dado un rombo de diagonales 4 y 5, el área es 10.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -367,7 +372,7 @@ Funciones auxiliares a las que llama:
    (/ (* d1 d2) 2)
    )
 
-;; (areaRombo 2 2)
+;; (areaRombo 4 5)
 ;; Resultado => 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -384,9 +389,9 @@ Parámetros:
  - b2: base b2.
  - h: altura.
 Resultado:
-   Valor real.
+   Valor real. Area del trapecio.
 Descripción de la solucion:
-   Area del trapecio.
+   Dado un trapecio de bases 8 y 4 y altura 3, el área es 18.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -395,7 +400,7 @@ Funciones auxiliares a las que llama:
    (* (/ (+ b1 b2) 2) h)
    )
 
-;; (areaTrapecio 2 2 2)
+;; (areaTrapecio 8 4 3)
 ;; Resultado => 4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -413,9 +418,9 @@ Parámetros:
  - x2: coordenada x P2.
  - y2: coordenada y P2.
 Resultado:
-   Valor real.
+   Valor real. Distancia euclidiana.
 Descripción de la solucion:
-   Distancia euclidiana.
+   Para los puntos 0 0 y 1 1 la distancia es 1.41..
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -442,9 +447,9 @@ Parámetros:
  - x2: coordenada x P2.
  - y2: coordenada y P2.
 Resultado:
-   Valor real.
+   Valor real. Distancia de Manhattan.
 Descripción de la solucion:
-   Distancia de Manhattan.
+   Para los puntos 0 0, 1 1, la distancia es 2.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -471,9 +476,9 @@ Parámetros:
  - x2: coordenada x P2.
  - y2: coordenada y P2.
 Resultado:
-   Valor real.
+   Valor real. Distancia de ajedrez.
 Descripción de la solucion:
-   Distancia de ajedrez.
+   Para los puntos 0 0 y 1 2 la distancia es 2.
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -482,8 +487,8 @@ Funciones auxiliares a las que llama:
    (max (abs (- x2 x1)) (abs (- y2 y1)))
    )
 
-;; (Dmax 0 0 1 1)
-;; Resultado => 1
+;; (Dmax 0 0 1 2)
+;; Resultado => 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 12.
@@ -502,9 +507,9 @@ Parámetros:
  - x3: coordenada x P3.
  - y3: coordenada y P3.
 Resultado:
-   Valor real.
+   Valor real. Area del triángulo.
 Descripción de la solucion:
-   Area del triángulo.
+   Dados los puntos 0 0 , 3 0 y 0 4 el área es 6.
 Funciones auxiliares a las que llama:
    areaTriangulo, D2
 |#
@@ -537,9 +542,9 @@ Parámetros:
  - x4: coordenada x P4 (Segundo punto Diagonal d2).
  - y4: coordenada y P4 (Segundo punto Diagonal d2).
 Resultado:
-   Valor real.
+   Valor real. Area del rombo.
 Descripción de la solucion:
-   Area del rombo.
+   Dados los puntos 0 0, 4 0, 2 3 y 2 -3, el área es 12.
 Funciones auxiliares a las que llama:
    areaRombo, D2
 |#
@@ -569,9 +574,9 @@ Parámetros:
  - b: coeficiente de y.
  - c: término independiente.
 Resultado:
-   Valor real.
+   Valor real.  Distancia entre el punto y la recta.
 Descripción de la solucion:
-   Distancia entre el punto y la recta.
+   Dada la recta definida por x + y + 4 = 0, y el punto 0 0, la distancia es 2.82..
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -600,9 +605,9 @@ Parámetros:
  - x2: coordenada x del punto P2.
  - y2: coordenada y del punto P2.
 Resultado:
-   Valor real.
+   Valor real. Distancia entre el punto y la recta dado por los puntos P1 y P2.
 Descripción de la solucion:
-   Distancia entre el punto y la recta dado por los puntos P1 y P2.
+   Dado el punto 0 0, y la recta que pasa por 2 1 y 2 3, la distancia es 2. 
 Funciones auxiliares a las que llama:
    distanciaPuntoRecta
 |#
@@ -643,9 +648,10 @@ Parámetros:
              D--------C
 
 Resultado:
-   Valor real.
+   Valor real. Área del trapecio dados sus vértices.
 Descripción de la solucion:
-   Área del trapecio dados sus vértices.
+   Dados los puntos consecutivos en orden horario empezando por el superior izquierdo
+   2 4, 5 4, 7 0 y 0 0, el área es 20.
 Funciones auxiliares a las que llama:
    D2, distanciaPuntoRecta2, areaTrapecio
 |#
@@ -675,9 +681,9 @@ Parámetros:
  - i: tipo de interés anual de la hipoteca.
  - a: número de años de la hipoteca.
 Resultado:
-   Valor real.
+   Valor real. Cuota mensual del préstamo hipotecario.
 Descripción de la solucion:
-   Cuota mensual del préstamo hipotecario.
+   Dada una cantidad de dinero, interés anual y años de hipoteca, se devuelve la cuota mensual.
 Funciones auxiliares a las que llama:
    expt
 |#
@@ -705,9 +711,9 @@ Parámetros:
  - c: capital cantidad de dinero pendiente de pago en la hipoteca.
  - i: tipo de interés anual de la hipoteca.
 Resultado:
-   Valor real.
+   Valor real. Interes mensual del préstamo hipotecario.
 Descripción de la solucion:
-   Interes mensual del préstamo hipotecario.
+   Se devuelve el interes mensual dado el capital y tipo de interés.
 Funciones auxiliares a las que llama:
    
 |#
@@ -733,9 +739,9 @@ Parámetros:
  - i: tipo de interés anual de la hipoteca.
  - a: número de años de la hipoteca.
 Resultado:
-   Valor real.
+   Valor real. Amortización mensual del préstamo hipotecario.
 Descripción de la solucion:
-   Amortización mensual del préstamo hipotecario.
+   Dadas la cuota mensual y el interés, se puede calcular la amortización mensual.
 Funciones auxiliares a las que llama:
    cuota-mensual, interes-mensual
 |#
