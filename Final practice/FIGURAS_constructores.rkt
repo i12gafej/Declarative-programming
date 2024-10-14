@@ -110,8 +110,87 @@
 ;; FIN FUNCION DIBUJAR CORAZON
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FUNCION DIBUJAR TRÉBOL
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Función para calcular el centroide de un triángulo
+(define (calcular-centroide x1 y1 x2 y2 x3 y3)
+  (vector (/ (+ x1 x2 x3) 3) (/ (+ y1 y2 y3) 3)))
+
+;; Función para dibujar el trébol
+(define (dibujar-trebol centrox centroy escala)
+
+  ;; Centroide original del trébol
+  (define centroide (calcular-centroide 290 270 250 350 330 350))
+  (define centroide-x (vector-ref centroide 0))
+  (define centroide-y (vector-ref centroide 1))
+
+  ;; Desplazamiento de los centros de los círculos respecto al centroide
+  (define offset 100)
+  (define dx1 (- (+ 280 offset) centroide-x))
+  (define dy1 (- (+ 300 offset) centroide-y))
+
+  (define dx2 (- (+ 200 offset) centroide-x))
+  (define dy2 (- (+ 300 offset) centroide-y))
+
+  (define dx3 (- (+ 240 offset) centroide-x))
+  (define dy3 (- (+ 220 offset) centroide-y))
+
+  ;; Desplazamiento de los vértices del triangulito respecto al centroide
+  (define dxv1 (- 290 centroide-x))
+  (define dyv1 (- 380 centroide-y))
+
+  (define dxv2 (- 250 centroide-x))
+  (define dyv2 (- 425 centroide-y))
+
+  (define dxv3 (- 330 centroide-x))
+  (define dyv3 (- 425 centroide-y))
+
+  ;; Escalar y desplazar los puntos
+  (define xc1 (+ centrox (* escala dx1)))
+  (define yc1 (+ centroy (* escala dy1)))
+
+  (define xc2 (+ centrox (* escala dx2)))
+  (define yc2 (+ centroy (* escala dy2)))
+
+  (define xc3 (+ centrox (* escala dx3)))
+  (define yc3 (+ centroy (* escala dy3)))
+
+  ;; Escalar los vértices del triangulito
+  (define xv1 (+ centrox (* escala dxv1)))
+  (define yv1 (+ centroy (* escala dyv1)))
+
+  (define xv2 (+ centrox (* escala dxv2)))
+  (define yv2 (+ centroy (* escala dyv2)))
+
+  (define xv3 (+ centrox (* escala dxv3)))
+  (define yv3 (+ centroy (* escala dyv3)))
+
+  ;; Dibujar los círculos del trébol
+  ((draw-solid-ellipse v1) (make-posn (- xc1 50) (- yc1 50)) (* 2 escala 50) (* 2 escala 50) color5)
+  ((draw-solid-ellipse v1) (make-posn (- xc2 50) (- yc2 50)) (* 2 escala 50) (* 2 escala 50) color5)
+  ((draw-solid-ellipse v1) (make-posn (- xc3 50) (- yc3 50)) (* 2 escala 50) (* 2 escala 50) color5)
+
+  ;; Dibujar el triangulito inferior
+  ((draw-solid-polygon v1) 
+   (list (make-posn xv1 yv1)
+         (make-posn xv2 yv2)
+         (make-posn xv3 yv3)) (make-posn 0 0)
+   color5)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FIN FUNCION DIBUJAR TRÉBOL
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Llamada de ejemplo: Dibujar trébol centrado en (400, 300) con una escala de 1.5
+(dibujar-trebol 40 70 0.5)
+
 ;; Llamada de ejemplo: dibujar un corazón en el centro (400, 300) con una escala de 1.5
 (dibujar-corazon 40 70 0.5)
+
+((draw-solid-ellipse v1) (make-posn 36 66) 8 8 color3)
 
 
 
