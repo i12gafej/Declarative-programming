@@ -27,6 +27,7 @@ Funciones auxiliares a las que llama:
 
 
 (define (provincias nombre)
+    ;; Casos
     (case nombre
       (("Almería") "04")
       (("Cádiz") "11")
@@ -99,6 +100,7 @@ Funciones auxiliares a las que llama:
 |#
 
 (define (letra-dni n)
+     ;; Casos
     (case (modulo n 23)
        ((0) "T")
        ((1) "R")
@@ -171,12 +173,13 @@ Funciones auxiliares a las que llama:
 (define (angulo x1 y1 x2 y2 x3 y3 x4 y4)
   (let
      (
+       ;; Variables locales
        (u1 (- x2 x1))
        (u2 (- y2 y1))
        (v1 (- x4 x3))
        (v2 (- y4 y3))
      )
-    
+     ;; Cuerpo del Let
      (acos (/
               (+ (* u1 v1) (* u2 v2))
               (* (sqrt (+ (sqr u1) (sqr u2))) (sqrt (+ (sqr v1) (sqr v2)))))
@@ -225,16 +228,22 @@ Funciones auxiliares a las que llama:
 (define (posicionRelativaRectas a1 b1 c1 a2 b2 c2)
   (let
     (
+      ;; Variables locales
       (determinante (- (* a1 b2) (* a2 b1)))
     )
+    ;; Cuerpo del Let
     (cond
+      ;; Los productos de los coeficientes son inversos
       ((= (* a1 a2) (- (* b1 b2))) "Perpendiculares")
+      ;; Determinante 0 y diferente corte con eje y 
       ((and (= determinante 0)
             (not (= (/ c1 a1) (/ c2 a2))))
        "Paralelas")
+      ;; Mismos coeficientes y cortes con eje y
       ((and (= (/ a1 a2) (/ b1 b2))
             (= (/ c1 c2) (/ b1 b2)))
        "Iguales")
+      ;; Diferentes
       ((not (= determinante 0)) "Secantes")
     )
   )
@@ -269,14 +278,14 @@ Parámetros:
 Resultado:
    Posicion relativa de las circunferencias.
 Descripción de la solucion:
-   Iguales [1]: si son la misma circunferencia (x1 = x2 y y1 = y2 y r1 = r2)
-   Concentricas [2]: si tienen el mismo centro (x1 = x2 y y1 = y2 y r1 != r2)
-   Tangentes por dentro [3]: si la distancia entre los centros es menor a la diferencia de los radios
-   Tangentes por fuera [4]: si la distancia entre los centros es mayor a la suma de los radios
-   Exteriores [5]: si la distancia entre los centros es mayor a la suma de los radios
-   Interiores [6]: si la distancia entre los centros es menor a la diferencia de los radios
-   Secantes por dentro [7]: si la distancia entre los centros es menor a la suma de los radios
-   Secantes por fuera [8]: si la distancia entre los centros es mayor a la diferencia de los radios
+   - 1. Iguales: si son la misma circunferencia (x1 = x2 y y1 = y2 y r1 = r2)
+   - 2. Concentricas: si tienen el mismo centro (x1 = x2 y y1 = y2 y r1 != r2)
+   - 3. Tangentes por dentro: si la distancia entre los centros es igual a la diferencia de los radios
+   - 4. Tangentes por fuera: si la distancia entre los centros es igual a la suma de los radios
+   - 5. Exteriores: si la distancia entre los centros es mayor a la suma de los radios
+   - 6. Interiores: si la distancia entre los centros es menor a la diferencia de los radios
+   - 7. Secantes por dentro: Distancia de los centros menor al mayor de los radios y menor a la distancia entre los centros
+   - 8. Secantes por fuera: Distancia de los centros mayor al mayor de los radios y menor a la distancia entre los centros
 Funciones auxiliares a las que llama:
    ninguna
 |#
@@ -284,41 +293,51 @@ Funciones auxiliares a las que llama:
 (define (posicionRelativaCircunferencias x1 y1 r1 x2 y2 r2)
   (let
     (
+      ;; Variables locales
       (distanciaCentros (sqrt (+ (sqr (- x2 x1)) (sqr (- y2 y1)))))
     )
+    ;; Cuerpo del Let
     (cond
+      ;; La misma circunferencia con el mismo radio
       ((and (= x1 x2) (= y1 y2) (= r1 r2)) 1)
+      ;; Mismo centro distinto radio
       ((and (= x1 x2) (= y1 y2) (not (= r1 r2))) 2)
-      ((= distanciaCentros (+ r1 r2)) 3)
-      ((= distanciaCentros (abs (- r1 r2))) 4)
+      ;; Distancia dentro igual a suma de los radios
+      ((= distanciaCentros (+ r1 r2)) 4)
+      ;; Distancia centro igual a resta de los radios
+      ((= distanciaCentros (abs (- r1 r2))) 3)
+      ;; Distancia centro mayor a la suma de los radios
       ((> distanciaCentros (+ r1 r2)) 5)
+      ;; Distancia centro menor a la suma de los radios
       ((< distanciaCentros (abs (- r1 r2))) 6)
-      ((and (< distanciaCentros (+ r1 r2)) (> distanciaCentros (abs (- r1 r2)))) 7)
+      ;; Distancia de los centros menor al mayor de los radios y menor a la distancia entre los centros
+      ((and (< distanciaCentros (max r1 r2)) (< distanciaCentros (+ r1 r2))) 7)
+      ;; Distancia de los centros mayor al mayor de los radios y menor a la distancia entre los centros
+      ((and (> distanciaCentros (max r1 r2)) (< distanciaCentros (+ r1 r2))) 8)
+      (else 8)
     )
   )
 )
 
 
 ;; Ejemplo de iguales
-;; (posicionRelativaCircunferencias 0 0 1 0 0 1)
+ ;;(posicionRelativaCircunferencias 0 0 1 0 0 1)
 ;; Ejemplo de concentricas
-;; (posicionRelativaCircunferencias 0 0 1 0 0 2)
-;; Ejemplo de tangentes por fuera
-;; (posicionRelativaCircunferencias 0 0 1 3 0 2)
+ ;;(posicionRelativaCircunferencias 0 0 1 0 0 2)
 ;; Ejemplo de tangentes por dentro
-;; (posicionRelativaCircunferencias 0 0 1 1 0 2)
+ ;;(posicionRelativaCircunferencias 0 0 1 1 0 2)
+;; Ejemplo de tangentes por fuera
+ ;;(posicionRelativaCircunferencias 0 0 1 2 0 1)
 ;; Ejemplo de exteriores
 ;; (posicionRelativaCircunferencias 0 0 1 4 0 1)
 ;; Ejemplo de interiores
 ;; (posicionRelativaCircunferencias 0 0 1 0 1 4)
-;; Ejemplo de secantes
-;; (posicionRelativaCircunferencias 0 0 1 2 0 2)
+;; Ejemplo de secantes por dentro
+;;(posicionRelativaCircunferencias 0 0 3 2 1 1)
+;; Secante por fuera
+;;(posicionRelativaCircunferencias 0 0 3 3 -2 1)
 
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 8.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 8.
@@ -522,8 +541,10 @@ Funciones auxiliares a las que llama:
      (m2 (pendiente x3 y3 x4 y4))
      )
   (cond
-    ((and (eq? m1 'infinito) (eq? m2 'infinito)) #t) ;; Si las pendientes son las dos infinitas
-    ((and (and (number? m1) (number? m2)) (= m1 m2)) #t) ;; O iguales, es verdad
+    ;; Si las pendientes son las dos infinitas
+    ((and (eq? m1 'infinito) (eq? m2 'infinito)) #t)
+    ;; O iguales, es verdad
+    ((and (and (number? m1) (number? m2)) (= m1 m2)) #t) 
     (else #f) ;; Si no es falso
     )
   )
@@ -569,10 +590,13 @@ Funciones auxiliares a las que llama:
      (m2 (pendiente x3 y3 x4 y4))
      )
   (cond
+    ;; Si las pendientes son paralelas al eje x e y (infinito y 0)
     ((or (and (eq? m1 'infinito) (<= m2 1e-6))
-         (and (eq? m2 'infinito) (<= m1 1e-6))) #t) ;; Si las pendientes son paralelas al eje x e y (infinito y 0)
-    ((and (number? m1) (number? m2) (= (* m1 m2) -1)) #t) ;; Si el producto de las pendientes es -1 
-    (else #f) ;; Si no es falso
+         (and (eq? m2 'infinito) (<= m1 1e-6))) #t)
+    ;; Si el producto de las pendientes es -1 
+    ((and (number? m1) (number? m2) (= (* m1 m2) -1)) #t)
+    ;; Si no, es falso
+    (else #f) 
     )
   )
 )
@@ -615,25 +639,38 @@ Funciones auxiliares a las que llama:
 
 ;; Función Auxiliar distanciaPuntoRecta
 (define (distanciaPuntoRecta x0 y0 x1 y1 x2 y2)
-  (let ((a (- y2 y1))
+  
+  (let
+      ;; Variables locales
+      ((a (- y2 y1))
         (b (- x1 x2))
         (c (- (* x2 y1) (* x1 y2))))
+    ;; Cuerpo del let
     (/ (abs (+ (* a x0) (* b y0) c)) (sqrt (+ (expt a 2) (expt b 2))))))
 
 ;; Función de la práctica 1 areaTrapecioLetVertices
 (define (areaTrapecioLetVertices x0 y0 x1 y1 x2 y2 x3 y3)
-  (let ((base1 (D2 x0 y0 x1 y1))
+  (let
+      ;;Variables locales
+      ((base1 (D2 x0 y0 x1 y1))
         (base2 (D2 x3 y3 x2 y2))
         (h (distanciaPuntoRecta x3 y3 x0 y0 x1 y1)))
+    ;; Cuerpo del let
     (* (/ (+ base1 base2) 2.) h)))
 
 (define (areaTrapecio x1 y1 x2 y2 x3 y3 x4 y4)
-  (let ((paralelo12-34 (ladosParalelos? x1 y1 x2 y2 x3 y3 x4 y4))
+  (let
+      ;; VAraibles localres
+      ((paralelo12-34 (ladosParalelos? x1 y1 x2 y2 x3 y3 x4 y4))
         (paralelo13-24 (ladosParalelos? x1 y1 x3 y3 x2 y2 x4 y4))
         (paralelo14-23 (ladosParalelos? x1 y1 x4 y4 x2 y2 x3 y3)))
+    ;;Cuerpo del let
     (cond
+      ;; Si los lados 1-2 y 3-4 son paralelos se calcula el area con estos
       (paralelo12-34 (areaTrapecioLetVertices x1 y1 x2 y2 x3 y3 x4 y4))
+      ;; Si los lados 1-3 y 2-4 son paralelos se calcula el area con estos
       (paralelo13-24 (areaTrapecioLetVertices x1 y1 x3 y3 x2 y2 x4 y4))
+      ;; Si los lados 1-4 y 2-3 son paralelos se calcula el area con estos
       (paralelo14-23 (areaTrapecioLetVertices x1 y1 x4 y4 x2 y2 x3 y3))
       )))
 
@@ -689,20 +726,30 @@ Funciones auxiliares a las que llama:
 
 ;; Función que calcula el área del rombo dado por las diagonales
 (define (areaRomboVerticesLet x1 y1 x2 y2 x3 y3 x4 y4)
-  (let ((d1 (D2 x1 y1 x2 y2)) ;; Diagonal 1
-        (d2 (D2 x3 y3 x4 y4))) ;; Diagonal 2
-    (/ (* d1 d2) 2))) ;; Área del rombo
+  (let
+      ;;Variables locales
+      ((d1 (D2 x1 y1 x2 y2)) 
+        (d2 (D2 x3 y3 x4 y4)))
+    ;;Cuerpo del let
+    (/ (* d1 d2) 2))) 
 
 ;; Función principal que calcula el área del rombo
 (define (areaRombo x1 y1 x2 y2 x3 y3 x4 y4)
-  (let ((diag12-34 (perpendiculares? x1 y1 x2 y2 x3 y3 x4 y4))
+  (let
+      ;,Variables locales
+      ((diag12-34 (perpendiculares? x1 y1 x2 y2 x3 y3 x4 y4))
         (diag13-24 (perpendiculares? x1 y1 x3 y3 x2 y2 x4 y4))
         (diag14-23 (perpendiculares? x1 y1 x4 y4 x2 y2 x3 y3)))
+    ;; Cuerpo del let
     (cond
-      (diag12-34 (areaRomboVerticesLet x1 y1 x2 y2 x3 y3 x4 y4)) ;; Diagonales P1P2 y P3P4
-      (diag13-24 (areaRomboVerticesLet x1 y1 x3 y3 x2 y2 x4 y4)) ;; Diagonales P1P3 y P2P4
-      (diag14-23 (areaRomboVerticesLet x1 y1 x4 y4 x2 y2 x3 y3)) ;; Diagonales P1P4 y P2P3
-      (else 0)))) ;; Si no es un rombo, devuelve 0
+      ;; Si los lados 1-2 y 3-4 son perpendiculares se calcula el area con estos
+      (diag12-34 (areaRomboVerticesLet x1 y1 x2 y2 x3 y3 x4 y4))
+      ;; Si los lados 1-3 y 2-4 son perpendiculares se calcula el area con estos
+      (diag13-24 (areaRomboVerticesLet x1 y1 x3 y3 x2 y2 x4 y4))
+      ;; Si los lados 1-4 y 2-3 son perpendiculares se calcula el area con estos
+      (diag14-23 (areaRomboVerticesLet x1 y1 x4 y4 x2 y2 x3 y3))
+      ;; Si no es un rombo, devuelve 0
+      (else 0)))) 
 
 
 ;; Ejemplo 1: Rombo con diagonales perpendiculares
@@ -737,16 +784,16 @@ Parámetros:
 
 Resultado:
    Devuelve el tipo de cuadrilátero formado por los cuatro puntos dados. El resultado puede ser uno de los siguientes tipos:
-     - "Cuadrado": Todos los lados iguales y ángulos rectos.
-     - "Rectángulo": Lados desiguales y ángulos rectos.
-     - "Rombo": Lados iguales y ángulos opuestos iguales.
-     - "Romboide": Lados opuestos y ángulos opuestos iguales.
-     - "Trapecio rectangular": Dos lados paralelos y un ángulo recto.
-     - "Trapecio isósceles": Dos lados paralelos y otros dos lados iguales.
-     - "Trapecio escaleno": Dos lados paralelos y otros dos lados desiguales.
-     - "Cometa": Lados contiguos iguales dos a dos.
-     - "Cometa oblicuo": Un solo par de lados contiguos iguales.
-     - "Trapezoide": Todos los lados distintos.
+     - "Cuadrado":             Todos los lados iguales // ángulos rectos.
+     - "Rectángulo":           Lados desiguales        // ángulos rectos.
+     - "Rombo":                Lados iguales           // ángulos opuestos iguales.
+     - "Romboide":             Lados opuestos          // ángulos opuestos iguales.
+     - "Trapecio rectangular": Dos lados paralelos     // un ángulo recto.
+     - "Trapecio isósceles":   Dos lados paralelos     // otros dos lados iguales.
+     - "Trapecio escaleno":    Dos lados paralelos     // otros dos lados desiguales.
+     - "Cometa":               Lados contiguos iguales dos a dos.
+     - "Cometa oblicuo":       Un solo par de lados contiguos iguales.
+     - "Trapezoide":           Todos los lados distintos.
 
 Descripción de la solución:
    1. Se calcula la longitud de los lados y las diagonales del cuadrilátero utilizando la fórmula de la distancia euclidiana `D2`.
@@ -754,6 +801,9 @@ Descripción de la solución:
    3. Se calculan los ángulos formados por los lados, y se determina si los ángulos son rectos.
    4. Dependiendo de las propiedades de los lados y los ángulos (si son iguales, desiguales, o si son paralelos), la función clasifica el cuadrilátero en una de las categorías mencionadas.
 
+   Hay 6 combinaciones de lados posibles (4 lados y 2 diagonales). Serian 12, 13, 14, 23, 24, 34. Cada combinación entre lados es 12-34, 13-24, 23-14,
+
+  Los puntos se meten en orden, da igual el que sea.
 Funciones auxiliares a las que llama:
    D2, ladosParalelos?, perpendiculares?, ladosIguales?
 
@@ -761,81 +811,138 @@ Funciones auxiliares a las que llama:
 
 ;; Función auxiliar para verificar si dos lados tienen la misma longitud
 (define (ladosIguales? x1 y1 x2 y2 x3 y3 x4 y4)
-  (let ((lado1 (D2 x1 y1 x2 y2))
+  (let
+      ;,Variables locales
+      ((lado1 (D2 x1 y1 x2 y2))
         (lado2 (D2 x3 y3 x4 y4)))
-    (< (abs (- lado1 lado2)) 1e-6))) ;; Compara las longitudes con una tolerancia de 1e-6
+    ;; Cuerpo del let
+    (< (abs (- lado1 lado2)) 1e-6)))
 
 ;; Función principal que clasifica el cuadrilátero
 (define (clasificarCuadrilatero x1 y1 x2 y2 x3 y3 x4 y4)
-  (let ((lados-paralelos-12-34 (ladosParalelos? x1 y1 x2 y2 x3 y3 x4 y4))
-        (lados-paralelos-13-24 (ladosParalelos? x1 y1 x3 y3 x2 y2 x4 y4))
+  (let
+      ;; Variables locales
+       (
+        ;; Lados paralelos
+        (lados-paralelos-12-34 (ladosParalelos? x1 y1 x2 y2 x3 y3 x4 y4))
         (lados-paralelos-14-23 (ladosParalelos? x1 y1 x4 y4 x2 y2 x3 y3))
+
+        ;; Lados iguales
+        (lados-iguales-12-14 (ladosIguales? x1 y1 x2 y2 x1 y1 x4 y4))
+        (lados-iguales-12-23 (ladosIguales? x1 y1 x2 y2 x2 y2 x3 y3))
+        (lados-iguales-23-34 (ladosIguales? x2 y2 x3 y3 x3 y3 x4 y4))
+        (lados-iguales-34-14 (ladosIguales? x3 y3 x4 y4 x1 y1 x4 y4))
+        (lados-iguales-14-23 (ladosIguales? x1 y1 x4 y4 x2 y2 x3 y3))
         (lados-iguales-12-34 (ladosIguales? x1 y1 x2 y2 x3 y3 x4 y4))
         (lados-iguales-13-24 (ladosIguales? x1 y1 x3 y3 x2 y2 x4 y4))
-        (lados-iguales-14-23 (ladosIguales? x1 y1 x4 y4 x2 y2 x3 y3))
-        (perpendiculares-12-34 (perpendiculares? x1 y1 x2 y2 x3 y3 x4 y4))
-        (perpendiculares-13-24 (perpendiculares? x1 y1 x3 y3 x2 y2 x4 y4)))
-    
+
+        ;; Lados perpendiculares
+        (perpendiculares-12-14 (perpendiculares? x1 y1 x2 y2 x1 y1 x4 y4))
+        (perpendiculares-12-23 (perpendiculares? x1 y1 x2 y2 x2 y2 x3 y3))
+        (perpendiculares-23-34 (perpendiculares? x2 y2 x3 y3 x3 y3 x4 y4))
+        (perpendiculares-34-14 (perpendiculares? x3 y3 x4 y4 x1 y1 x4 y4))
+
+        ;; Angulos
+        (angulo-12-23 (angulo x1 y1 x2 y2 x2 y2 x3 y3))
+        (angulo-23-34 (angulo x2 y2 x3 y3 x3 y3 x4 y4))
+        (angulo-34-14 (angulo x3 y3 x4 y4 x4 y4 x1 y1))
+        (angulo-12-14 (angulo x4 y4 x1 y1 x1 y1 x2 y2))
+        )
+    ;; Cuerpo del let
     (cond
-      ;; Cuadrado: Todos los lados iguales y ángulos rectos
-      ((and lados-iguales-12-34 lados-iguales-13-24 perpendiculares-12-34 perpendiculares-13-24) "Cuadrado")
+      
       
       ;; Rectángulo: Ángulos rectos pero lados no necesariamente iguales
-      ((and perpendiculares-12-34 perpendiculares-13-24 (not lados-iguales-12-34)) "Rectángulo")
+      ((and perpendiculares-12-14 perpendiculares-12-23 perpendiculares-23-34 perpendiculares-34-14 lados-iguales-12-34 lados-iguales-14-23 (not lados-iguales-12-23)) "Rectángulo")
       
       ;; Rombo: Todos los lados iguales, pero no ángulos rectos
-      ((and lados-iguales-12-34 lados-iguales-13-24 (not perpendiculares-12-34)) "Rombo")
+      ((and lados-iguales-12-34 lados-iguales-14-23 lados-iguales-12-23
+            (<= (- angulo-12-23 angulo-34-14) 1e-6)
+            (<= (- angulo-12-14 angulo-23-34) 1e-6)
+            (> (- angulo-12-14 angulo-12-23) 1e-6)
+            (not (and perpendiculares-12-14 perpendiculares-12-23 perpendiculares-23-34 perpendiculares-34-14))) "Rombo")
+
+      ;; Cuadrado: Todos los lados iguales y ángulos opuestos iguales
+      ((and lados-iguales-12-34 lados-iguales-13-24 lados-iguales-12-23 perpendiculares-12-14 perpendiculares-12-23 perpendiculares-23-34 perpendiculares-34-14) "Cuadrado")
       
       ;; Romboide: Lados opuestos iguales y no ángulos rectos
-      ((and lados-paralelos-12-34 lados-paralelos-13-24 lados-iguales-12-34 lados-iguales-13-24 (not perpendiculares-12-34)) "Romboide")
+      ((and lados-paralelos-12-34 lados-paralelos-14-23 lados-iguales-12-34 lados-iguales-14-23
+            (not lados-iguales-12-23)
+            (<= (- angulo-12-23 angulo-34-14) 1e-6)
+            (<= (- angulo-12-14 angulo-23-34) 1e-6)
+            (> (- angulo-12-14 angulo-12-23) 1e-6)
+            (not (and perpendiculares-12-14 perpendiculares-12-23 perpendiculares-23-34 perpendiculares-34-14))) "Romboide")
       
       ;; Trapecio rectangular: Un par de lados paralelos y un ángulo recto
-      ((and lados-paralelos-12-34 perpendiculares-12-34) "Trapecio rectangular")
+      ((and
+        (or
+         (and lados-paralelos-12-34 (not lados-paralelos-14-23)) ;; Son paralelos los lados de arriba y abajo
+         (and (not lados-paralelos-14-23) lados-paralelos-12-34)
+         )
+        (or perpendiculares-12-14 perpendiculares-12-23 perpendiculares-23-34 perpendiculares-34-14)) "Trapecio rectangular")
       
       ;; Trapecio isósceles: Un par de lados paralelos y lados iguales
-      ((and lados-paralelos-12-34 lados-iguales-13-24) "Trapecio isósceles")
+      ((and
+        (or
+         (and (not lados-paralelos-12-34) lados-paralelos-14-23 lados-iguales-12-34 (not lados-iguales-12-23))
+         (and lados-paralelos-12-34 (not lados-paralelos-14-23) lados-iguales-14-23 (not lados-iguales-12-23))
+         )
+        ) "Trapecio isósceles")
       
       ;; Trapecio escaleno: Un par de lados paralelos y lados desiguales
-      ((and lados-paralelos-12-34 (not lados-iguales-13-24)) "Trapecio escaleno")
+      ((and
+        (or
+         (and lados-paralelos-12-34 (not lados-paralelos-14-23))
+         (and lados-paralelos-14-23 (not lados-paralelos-12-34)))
+        ) "Trapecio escaleno")
       
       ;; Cometa: Dos pares de lados contiguos iguales
-      ((and lados-iguales-13-24 lados-iguales-14-23 (not lados-paralelos-12-34)) "Cometa")
+      ((or
+       (and lados-iguales-12-23 lados-iguales-34-14 (not lados-iguales-23-34) (not lados-iguales-12-14))
+       (and (not lados-iguales-12-23) (not lados-iguales-34-14) lados-iguales-23-34 lados-iguales-12-14)
+       ) "Cometa")
       
       ;; Cometa oblicuo: Un solo par de lados contiguos iguales
-      ((and (or lados-iguales-13-24 lados-iguales-14-23) (not lados-paralelos-12-34)) "Cometa oblicuo")
+      ((or
+        (and lados-iguales-12-23 (not lados-iguales-23-34) (not lados-iguales-34-14) (not lados-iguales-12-14))
+        (and (not lados-iguales-12-23) lados-iguales-23-34 (not lados-iguales-34-14) (not lados-iguales-12-14))
+        (and (not lados-iguales-12-23) (not lados-iguales-23-34) lados-iguales-34-14 (not lados-iguales-12-14))
+        (and (not lados-iguales-12-23) (not lados-iguales-23-34) (not lados-iguales-34-14) lados-iguales-12-14)
+       )
+       "Cometa oblicuo")
       
       ;; Trapezoide: Todos los lados son diferentes y no paralelos
-      ((and (not lados-paralelos-12-34) (not lados-iguales-12-34) (not lados-iguales-13-24)) "Trapezoide")
+      ;;((and (not lados-paralelos-12-34) (not lados-iguales-12-34) (not lados-iguales-13-24)) "Trapezoide")
       
       ;; Por defecto, devolver que no se ha podido clasificar
-      (else "Cuadrilátero no clasificado"))))
+      (else "Trapezoide"))))
 
 ;; Ejemplo de Cuadrado: Todos los lados iguales y ángulos rectos
-(clasificarCuadrilatero 0 0 2 0 2 2 0 2)  ;; Cuadrado
+;;(clasificarCuadrilatero 0 0 2 0 2 2 0 2)  ;; Cuadrado
 
 ;; Ejemplo de Rectángulo: Lados desiguales y ángulos rectos
-(clasificarCuadrilatero 0 0 4 0 4 2 0 2)  ;; Rectángulo
+;;(clasificarCuadrilatero 0 0 4 0 4 2 0 2)  ;; Rectángulo
 
 ;; Ejemplo de Rombo: Todos los lados iguales y ángulos no rectos
-(clasificarCuadrilatero 0 0 2 1 4 0 2 -1)  ;; Rombo
+;;(clasificarCuadrilatero 0 0 1 2 0 4 -1 2)  ;; Rombo
 
 ;; Ejemplo de Romboide: Lados opuestos iguales y ángulos no rectos
-(clasificarCuadrilatero 0 0 4 1 6 5 2 4)  ;; Romboide
+;;(clasificarCuadrilatero 0 0 4 1 6 5 2 4)  ;; Romboide
 
 ;; Ejemplo de Trapecio Rectangular: Un par de lados paralelos y un ángulo recto
-(clasificarCuadrilatero 0 0 4 0 3 2 0 2)  ;; Trapecio rectangular
+;;(clasificarCuadrilatero 0 0 4 0 3 2 0 2)  ;; Trapecio rectangular
 
 ;; Ejemplo de Trapecio Isósceles: Un par de lados paralelos y los lados no paralelos son iguales
-(clasificarCuadrilatero 0 0 4 0 3 2 1 2)  ;; Trapecio isósceles
+;;(clasificarCuadrilatero 0 0 4 0 3 2 1 2)  ;; Trapecio isósceles
 
 ;; Ejemplo de Trapecio Escaleno: Un par de lados paralelos y los lados no paralelos son desiguales
-(clasificarCuadrilatero 0 0 4 0 3 2 2 2)  ;; Trapecio escaleno
+;;(clasificarCuadrilatero 0 0 4 0 3 2 2 2)  ;; Trapecio escaleno
 
 ;; Ejemplo de Cometa: Dos pares de lados contiguos iguales
-(clasificarCuadrilatero 0 0 2 1 3 3 1 2)  ;; Cometa
+;;(clasificarCuadrilatero 0 0 1 1 0 3 -1 1)  ;; Cometa
 
 ;; Ejemplo de Cometa Oblicuo: Un solo par de lados contiguos iguales
-(clasificarCuadrilatero 0 0 2 1 4 2 1 3)  ;; Cometa oblicuo
+;;(clasificarCuadrilatero 0 0 1 1 -0.5 3 -1 1)  ;; Cometa oblicuo
 
 ;; Ejemplo de Trapezoide: Todos los lados son distintos y no hay lados paralelos
-(clasificarCuadrilatero 0 0 1 2 3 1 2 3)  ;; Trapezoide
+;;(clasificarCuadrilatero 0 0 1 2 3 1 2 3)  ;; Trapezoide

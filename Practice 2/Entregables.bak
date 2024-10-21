@@ -638,23 +638,23 @@ Funciones auxiliares a las que llama:
       )))
 
 ;; Ejemplo 1: Trapecio con bases paralelas horizontales
-(areaTrapecio 0 0 4 0 3 3 -1 3)
+;;(areaTrapecio 0 0 4 0 3 3 -1 3)
 ;; Salida esperada: 12
 
 ;; Ejemplo 2: Trapecio rotado, con bases paralelas inclinadas
-(areaTrapecio 0 0 3 3 6 3 9 0)
+;;(areaTrapecio 0 0 3 3 6 3 9 0)
 ;; Salida esperada: 18
 
 ;; Ejemplo 3: Trapecio donde los puntos no están en orden
-(areaTrapecio 1 1 4 1 3 5 0 5)
+;;(areaTrapecio 1 1 4 1 3 5 0 5)
 ;; Salida esperada: 16
 
 ;; Ejemplo 4: Trapecio muy angosto
-(areaTrapecio 0 0 2 0 1 0.1 1 -0.1)
+;;(areaTrapecio 0 0 2 0 1 0.1 1 -0.1)
 ;; Salida esperada: 0.2
 
 ;; Ejemplo 5: Caso inválido (no se forma un trapecio)
-(areaTrapecio 0 0 1 1 2 2 3 3)
+;;(areaTrapecio 0 0 1 1 2 2 3 3)
 ;; Salida esperada: No es un trapecio válido
 
 
@@ -682,7 +682,163 @@ Resultado:
 Descripción de la solucion:
    1. Calcula las 6 posibles diagonales que pueden formarse entre los 4 puntos dados, utilizando la fórmula de la distancia euclidiana.
    2. Identifica cuáles de las diagonales son perpendiculares usando la función `perpendiculares?`. Busca combinaciones de las diagonales perpendiculares y los define como las diagonales del rombo.
-   4. Aplica la fórmula del área del rombo:
+   4. Aplica la fórmula del área del rombo: A = (d1 * d2) / 2, donde `d1` y `d2` son las longitudes de las diagonales perpendiculares.
 Funciones auxiliares a las que llama:
-   D2, perpendiculares?, pendiente, distanciaPuntoRecta, areaRomboLetVertices
+   D2, perpendiculares?, pendiente, distanciaPuntoRecta, areaRomboVerticesLet
 |#
+
+;; Función que calcula el área del rombo dado por las diagonales
+(define (areaRomboVerticesLet x1 y1 x2 y2 x3 y3 x4 y4)
+  (let ((d1 (D2 x1 y1 x2 y2)) ;; Diagonal 1
+        (d2 (D2 x3 y3 x4 y4))) ;; Diagonal 2
+    (/ (* d1 d2) 2))) ;; Área del rombo
+
+;; Función principal que calcula el área del rombo
+(define (areaRombo x1 y1 x2 y2 x3 y3 x4 y4)
+  (let ((diag12-34 (perpendiculares? x1 y1 x2 y2 x3 y3 x4 y4))
+        (diag13-24 (perpendiculares? x1 y1 x3 y3 x2 y2 x4 y4))
+        (diag14-23 (perpendiculares? x1 y1 x4 y4 x2 y2 x3 y3)))
+    (cond
+      (diag12-34 (areaRomboVerticesLet x1 y1 x2 y2 x3 y3 x4 y4)) ;; Diagonales P1P2 y P3P4
+      (diag13-24 (areaRomboVerticesLet x1 y1 x3 y3 x2 y2 x4 y4)) ;; Diagonales P1P3 y P2P4
+      (diag14-23 (areaRomboVerticesLet x1 y1 x4 y4 x2 y2 x3 y3)) ;; Diagonales P1P4 y P2P3
+      (else 0)))) ;; Si no es un rombo, devuelve 0
+
+
+;; Ejemplo 1: Rombo con diagonales perpendiculares
+;;(areaRombo 0 0 4 0 2 3 2 -3) ;; Salida esperada: 12
+
+;; Ejemplo 2: Rombo con diagonales perpendiculares
+;;(areaRombo 1 2 2 1 1 0 0 1) ;; Salida esperada: 2
+
+;; Ejemplo 3: Caso inválido (no es un rombo)
+;;(areaRombo 0 0 1 1 2 2 3 3) ;; Salida esperada: 0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 13.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+
+Nombre:
+   clasificarCuadrilatero
+Objetivo:
+   Codificar una función que reciba las coordenadas de cuatro puntos del plano 
+   y determine qué tipo de cuadrilátero convexo forman.
+Parámetros:
+ - x1: coordenada x del punto P1.
+ - y1: coordenada y del punto P1.
+ - x2: coordenada x del punto P2.
+ - y2: coordenada y del punto P2.
+ - x3: coordenada x del punto P3.
+ - y3: coordenada y del punto P3.
+ - x4: coordenada x del punto P4.
+ - y4: coordenada y del punto P4.
+
+Resultado:
+   Devuelve el tipo de cuadrilátero formado por los cuatro puntos dados. El resultado puede ser uno de los siguientes tipos:
+     - "Cuadrado":             Todos los lados iguales // ángulos rectos.
+     - "Rectángulo":           Lados desiguales        // ángulos rectos.
+     - "Rombo":                Lados iguales           // ángulos opuestos iguales.
+     - "Romboide":             Lados opuestos          // ángulos opuestos iguales.
+     - "Trapecio rectangular": Dos lados paralelos     // un ángulo recto.
+     - "Trapecio isósceles":   Dos lados paralelos     // otros dos lados iguales.
+     - "Trapecio escaleno":    Dos lados paralelos     // otros dos lados desiguales.
+     - "Cometa":               Lados contiguos iguales dos a dos.
+     - "Cometa oblicuo":       Un solo par de lados contiguos iguales.
+     - "Trapezoide":           Todos los lados distintos.
+
+Descripción de la solución:
+   1. Se calcula la longitud de los lados y las diagonales del cuadrilátero utilizando la fórmula de la distancia euclidiana `D2`.
+   2. Se verifican cuáles lados son paralelos utilizando la función `ladosParalelos?`.
+   3. Se calculan los ángulos formados por los lados, y se determina si los ángulos son rectos.
+   4. Dependiendo de las propiedades de los lados y los ángulos (si son iguales, desiguales, o si son paralelos), la función clasifica el cuadrilátero en una de las categorías mencionadas.
+
+   Hay 6 combinaciones de lados posibles (4 lados y 2 diagonales). Serian 12, 13, 14, 23, 24, 34. Cada combinación entre lados es 12-34, 13-24, 23-14, 
+Funciones auxiliares a las que llama:
+   D2, ladosParalelos?, perpendiculares?, ladosIguales?
+
+|#
+
+;; Función auxiliar para verificar si dos lados tienen la misma longitud
+(define (ladosIguales? x1 y1 x2 y2 x3 y3 x4 y4)
+  (let ((lado1 (D2 x1 y1 x2 y2))
+        (lado2 (D2 x3 y3 x4 y4)))
+    (< (abs (- lado1 lado2)) 1e-6))) ;; Compara las longitudes con una tolerancia de 1e-6
+
+;; Función principal que clasifica el cuadrilátero
+(define (clasificarCuadrilatero x1 y1 x2 y2 x3 y3 x4 y4)
+  (let ((lados-paralelos-12-34 (ladosParalelos? x1 y1 x2 y2 x3 y3 x4 y4))
+        (lados-paralelos-13-24 (ladosParalelos? x1 y1 x3 y3 x2 y2 x4 y4))
+        (lados-paralelos-14-23 (ladosParalelos? x1 y1 x4 y4 x2 y2 x3 y3))
+        (lados-iguales-12-34 (ladosIguales? x1 y1 x2 y2 x3 y3 x4 y4))
+        (lados-iguales-13-24 (ladosIguales? x1 y1 x3 y3 x2 y2 x4 y4))
+        (lados-iguales-14-23 (ladosIguales? x1 y1 x4 y4 x2 y2 x3 y3))
+        (perpendiculares-12-14 (perpendiculares? x1 y1 x2 y2 x1 y1 x4 y4))
+        (perpendiculares-12-23 (perpendiculares? x1 y1 x2 y2 x2 y2 x3 y3))
+        (perpendiculares-23-34 (perpendiculares? x2 y2 x3 y3 x3 y3 x4 y4 ))
+        (perpendiculares-34-14 (perpendiculares? x3 y3 x4 y4 x1 y1 x4 y4)))
+    
+    (cond
+      ;; Cuadrado: Todos los lados iguales y ángulos rectos
+      ((and lados-iguales-12-34 lados-iguales-13-24 (perpendiculares? x1 y1 x2 y2 x1 y1 x4 y4) (perpendiculares? x1 y1 x2 y2 x1 y1 x4 y4)) "Cuadrado")
+      
+      ;; Rectángulo: Ángulos rectos pero lados no necesariamente iguales
+      ((and perpendiculares-12-34 perpendiculares-13-24 (not lados-iguales-12-34)) "Rectángulo")
+      
+      ;; Rombo: Todos los lados iguales, pero no ángulos rectos
+      ((and lados-iguales-12-34 lados-iguales-13-24 (not perpendiculares-12-34)) "Rombo")
+      
+      ;; Romboide: Lados opuestos iguales y no ángulos rectos
+      ((and lados-paralelos-12-34 lados-paralelos-13-24 lados-iguales-12-34 lados-iguales-13-24 (not perpendiculares-12-34)) "Romboide")
+      
+      ;; Trapecio rectangular: Un par de lados paralelos y un ángulo recto
+      ((and lados-paralelos-12-34 perpendiculares-12-34) "Trapecio rectangular")
+      
+      ;; Trapecio isósceles: Un par de lados paralelos y lados iguales
+      ((and lados-paralelos-12-34 lados-iguales-13-24) "Trapecio isósceles")
+      
+      ;; Trapecio escaleno: Un par de lados paralelos y lados desiguales
+      ((and lados-paralelos-12-34 (not lados-iguales-13-24)) "Trapecio escaleno")
+      
+      ;; Cometa: Dos pares de lados contiguos iguales
+      ((and lados-iguales-13-24 lados-iguales-14-23 (not lados-paralelos-12-34)) "Cometa")
+      
+      ;; Cometa oblicuo: Un solo par de lados contiguos iguales
+      ((and (or lados-iguales-13-24 lados-iguales-14-23) (not lados-paralelos-12-34)) "Cometa oblicuo")
+      
+      ;; Trapezoide: Todos los lados son diferentes y no paralelos
+      ((and (not lados-paralelos-12-34) (not lados-iguales-12-34) (not lados-iguales-13-24)) "Trapezoide")
+      
+      ;; Por defecto, devolver que no se ha podido clasificar
+      (else "Cuadrilátero no clasificado"))))
+
+;; Ejemplo de Cuadrado: Todos los lados iguales y ángulos rectos
+(clasificarCuadrilatero 0 0 2 0 2 2 0 2)  ;; Cuadrado
+
+;; Ejemplo de Rectángulo: Lados desiguales y ángulos rectos
+(clasificarCuadrilatero 0 0 4 0 4 2 0 2)  ;; Rectángulo
+
+;; Ejemplo de Rombo: Todos los lados iguales y ángulos no rectos
+(clasificarCuadrilatero 0 0 2 1 4 0 2 -1)  ;; Rombo
+
+;; Ejemplo de Romboide: Lados opuestos iguales y ángulos no rectos
+(clasificarCuadrilatero 0 0 4 1 6 5 2 4)  ;; Romboide
+
+;; Ejemplo de Trapecio Rectangular: Un par de lados paralelos y un ángulo recto
+(clasificarCuadrilatero 0 0 4 0 3 2 0 2)  ;; Trapecio rectangular
+
+;; Ejemplo de Trapecio Isósceles: Un par de lados paralelos y los lados no paralelos son iguales
+(clasificarCuadrilatero 0 0 4 0 3 2 1 2)  ;; Trapecio isósceles
+
+;; Ejemplo de Trapecio Escaleno: Un par de lados paralelos y los lados no paralelos son desiguales
+(clasificarCuadrilatero 0 0 4 0 3 2 2 2)  ;; Trapecio escaleno
+
+;; Ejemplo de Cometa: Dos pares de lados contiguos iguales
+(clasificarCuadrilatero 0 0 2 1 3 3 1 2)  ;; Cometa
+
+;; Ejemplo de Cometa Oblicuo: Un solo par de lados contiguos iguales
+(clasificarCuadrilatero 0 0 2 1 4 2 1 3)  ;; Cometa oblicuo
+
+;; Ejemplo de Trapezoide: Todos los lados son distintos y no hay lados paralelos
+(clasificarCuadrilatero 0 0 1 2 3 1 2 3)  ;; Trapezoide
