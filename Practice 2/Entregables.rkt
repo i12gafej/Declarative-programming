@@ -250,14 +250,19 @@ Funciones auxiliares a las que llama:
 )
 
 
-;; Ejemplo de iguales
+
 ;; (posicionRelativaRectas 1 1 1 1 1 1)
-;; Ejemplo de paralelas
 ;; (posicionRelativaRectas 1 1 1 1 1 2)
-;; Ejemplo de secantes
 ;; (posicionRelativaRectas 1 1 1 2 1 2)
-;; Ejemplo de perpendiculares
 ;; (posicionRelativaRectas 1 1 1 -1 1 1)
+
+#|
+Resultados:
+"Iguales"
+"Paralelas"
+"Secantes"
+"Perpendiculares"
+|#
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 7.
@@ -320,23 +325,26 @@ Funciones auxiliares a las que llama:
 )
 
 
-;; Ejemplo de iguales
- ;;(posicionRelativaCircunferencias 0 0 1 0 0 1)
-;; Ejemplo de concentricas
- ;;(posicionRelativaCircunferencias 0 0 1 0 0 2)
-;; Ejemplo de tangentes por dentro
- ;;(posicionRelativaCircunferencias 0 0 1 1 0 2)
-;; Ejemplo de tangentes por fuera
- ;;(posicionRelativaCircunferencias 0 0 1 2 0 1)
-;; Ejemplo de exteriores
-;; (posicionRelativaCircunferencias 0 0 1 4 0 1)
-;; Ejemplo de interiores
-;; (posicionRelativaCircunferencias 0 0 1 0 1 4)
-;; Ejemplo de secantes por dentro
+
+;;(posicionRelativaCircunferencias 0 0 1 0 0 1)
+;;(posicionRelativaCircunferencias 0 0 1 0 0 2)
+;;(posicionRelativaCircunferencias 0 0 1 1 0 2)
+;;(posicionRelativaCircunferencias 0 0 1 2 0 1)
+;;(posicionRelativaCircunferencias 0 0 1 4 0 1)
+;;(posicionRelativaCircunferencias 0 0 1 0 1 4)
 ;;(posicionRelativaCircunferencias 0 0 3 2 1 1)
-;; Secante por fuera
 ;;(posicionRelativaCircunferencias 0 0 3 3 -2 1)
 
+#|
+1
+2
+3
+4
+5
+6
+7
+8
+|#
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -401,26 +409,25 @@ Funciones auxiliares a las que llama:
   )
 )
 
-;; Ejemplo 1: El punto pertenece a la circunferencia o a los lados del cuadrado/rombo
+
 ;;(posicionPunto 1 0)
-
-;; Ejemplo 2: El punto está dentro del círculo y fuera del cuadrado
 ;;(posicionPunto -1.1 0)
-
-;; Ejemplo 3: El punto está dentro del círculo y del cuadrado
 ;;(posicionPunto -0.5 0)
-
-;; Ejemplo 4: El punto está dentro del cuadrado y fuera del círculo y del rombo
 ;;(posicionPunto 0 0.7)
-
-;; Ejemplo 5: El punto está dentro del cuadrado y del rombo
 ;;(posicionPunto 0.5 0)
-
-;; Ejemplo 6: El punto está dentro del rombo y fuera del cuadrado
 ;;(posicionPunto 1.5 0)
-
-;; Ejemplo 7: En otro caso
 ;;(posicionPunto 2 2)
+
+#|
+Resultados:
+1
+2
+3
+1
+5
+6
+7
+|#
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  
 ;; 9.
@@ -484,18 +491,19 @@ Funciones auxiliares a las que llama:
   )
 )
 
-;; Prueba con un triángulo rectángulo
-;;(tipoTrianguloPorAngulos 3 0 0 0 0 4)  
 
-;; Prueba con un triángulo donde los puntos están alineados
-;;(tipoTrianguloPorAngulos 0 0 1 1 2 2)  
-
-;; Prueba con un triángulo acutángulo
-;;(tipoTrianguloPorAngulos 0 0 2 1 1 2)  
-
-;;Prueba con un triangulo obtusangulo
+;;(tipoTrianguloPorAngulos 3 0 0 0 0 4)
+;;(tipoTrianguloPorAngulos 0 0 1 1 2 2)
+;;(tipoTrianguloPorAngulos 0 0 2 1 1 2)
 ;;(tipoTrianguloPorAngulos 0 0 -2 1 2 0)
 
+#|
+Resultados:
+"Triángulo rectángulo"
+"Triángulo nulo"
+"Triángulo acutángulo"
+"Triángulo obtusángulo"
+|#
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  
 ;; 10.a.
@@ -674,25 +682,21 @@ Funciones auxiliares a las que llama:
       (paralelo14-23 (areaTrapecioLetVertices x1 y1 x4 y4 x2 y2 x3 y3))
       )))
 
-;; Ejemplo 1: Trapecio con bases paralelas horizontales
+
 ;;(areaTrapecio 0 0 4 0 3 3 -1 3)
-;; Salida esperada: 12
-
-;; Ejemplo 2: Trapecio rotado, con bases paralelas inclinadas
 ;;(areaTrapecio 0 0 3 3 6 3 9 0)
-;; Salida esperada: 18
-
-;; Ejemplo 3: Trapecio donde los puntos no están en orden
 ;;(areaTrapecio 1 1 4 1 3 5 0 5)
-;; Salida esperada: 16
-
-;; Ejemplo 4: Trapecio muy angosto
 ;;(areaTrapecio 0 0 2 0 1 0.1 1 -0.1)
-;; Salida esperada: 0.2
-
-;; Ejemplo 5: Caso inválido (no se forma un trapecio)
 ;;(areaTrapecio 0 0 1 1 2 2 3 3)
-;; Salida esperada: No es un trapecio válido
+
+#|
+Resultados:
+12.0
+18.0
+12.0
+0.2
+0
+|#
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  
@@ -731,7 +735,7 @@ Funciones auxiliares a las que llama:
       ((d1 (D2 x1 y1 x2 y2)) 
         (d2 (D2 x3 y3 x4 y4)))
     ;;Cuerpo del let
-    (/ (* d1 d2) 2))) 
+    (/ (* d1 d2) 2.))) 
 
 ;; Función principal que calcula el área del rombo
 (define (areaRombo x1 y1 x2 y2 x3 y3 x4 y4)
@@ -752,14 +756,17 @@ Funciones auxiliares a las que llama:
       (else 0)))) 
 
 
-;; Ejemplo 1: Rombo con diagonales perpendiculares
-;;(areaRombo 0 0 4 0 2 3 2 -3) ;; Salida esperada: 12
 
-;; Ejemplo 2: Rombo con diagonales perpendiculares
-;;(areaRombo 1 2 2 1 1 0 0 1) ;; Salida esperada: 2
+;;(areaRombo 0 0 4 0 2 3 2 -3)
+;;(areaRombo 1 2 2 1 1 0 0 1)
+;;(areaRombo 0 0 1 1 2 2 3 3)
 
-;; Ejemplo 3: Caso inválido (no es un rombo)
-;;(areaRombo 0 0 1 1 2 2 3 3) ;; Salida esperada: 0
+#|
+Resultados:
+12
+2
+0
+|#
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 13.
@@ -917,32 +924,29 @@ Funciones auxiliares a las que llama:
       ;; Por defecto, devolver que no se ha podido clasificar
       (else "Trapezoide"))))
 
-;; Ejemplo de Cuadrado: Todos los lados iguales y ángulos rectos
-;;(clasificarCuadrilatero 0 0 2 0 2 2 0 2)  ;; Cuadrado
 
-;; Ejemplo de Rectángulo: Lados desiguales y ángulos rectos
-;;(clasificarCuadrilatero 0 0 4 0 4 2 0 2)  ;; Rectángulo
+;;(clasificarCuadrilatero 0 0 2 0 2 2 0 2)
+;;(clasificarCuadrilatero 0 0 4 0 4 2 0 2)
+;;(clasificarCuadrilatero 0 0 1 2 0 4 -1 2)
+;;(clasificarCuadrilatero 0 0 4 1 6 5 2 4)
+;;(clasificarCuadrilatero 0 0 4 0 3 2 0 2)
+;;(clasificarCuadrilatero 0 0 4 0 3 2 1 2)
+;;(clasificarCuadrilatero 0 0 4 0 3 2 2 2)
+;;(clasificarCuadrilatero 0 0 1 1 0 3 -1 1)
+;;(clasificarCuadrilatero 0 0 1 1 -0.5 3 -1 1)
+;;(clasificarCuadrilatero 0 0 1 2 3 1 2 3)
 
-;; Ejemplo de Rombo: Todos los lados iguales y ángulos no rectos
-;;(clasificarCuadrilatero 0 0 1 2 0 4 -1 2)  ;; Rombo
 
-;; Ejemplo de Romboide: Lados opuestos iguales y ángulos no rectos
-;;(clasificarCuadrilatero 0 0 4 1 6 5 2 4)  ;; Romboide
-
-;; Ejemplo de Trapecio Rectangular: Un par de lados paralelos y un ángulo recto
-;;(clasificarCuadrilatero 0 0 4 0 3 2 0 2)  ;; Trapecio rectangular
-
-;; Ejemplo de Trapecio Isósceles: Un par de lados paralelos y los lados no paralelos son iguales
-;;(clasificarCuadrilatero 0 0 4 0 3 2 1 2)  ;; Trapecio isósceles
-
-;; Ejemplo de Trapecio Escaleno: Un par de lados paralelos y los lados no paralelos son desiguales
-;;(clasificarCuadrilatero 0 0 4 0 3 2 2 2)  ;; Trapecio escaleno
-
-;; Ejemplo de Cometa: Dos pares de lados contiguos iguales
-;;(clasificarCuadrilatero 0 0 1 1 0 3 -1 1)  ;; Cometa
-
-;; Ejemplo de Cometa Oblicuo: Un solo par de lados contiguos iguales
-;;(clasificarCuadrilatero 0 0 1 1 -0.5 3 -1 1)  ;; Cometa oblicuo
-
-;; Ejemplo de Trapezoide: Todos los lados son distintos y no hay lados paralelos
-;;(clasificarCuadrilatero 0 0 1 2 3 1 2 3)  ;; Trapezoide
+#|
+Resultados:
+"Cuadrado"
+"Rectángulo"
+"Rombo"
+"Romboide"
+"Trapecio rectangular"
+"Trapecio isósceles"
+"Trapecio escaleno"
+"Cometa"
+"Cometa oblicuo"
+"Trapezoide"
+|#
