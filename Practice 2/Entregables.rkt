@@ -918,10 +918,7 @@ Funciones auxiliares a las que llama:
        )
        "Cometa oblicuo")
       
-      ;; Trapezoide: Todos los lados son diferentes y no paralelos
-      ;;((and (not lados-paralelos-12-34) (not lados-iguales-12-34) (not lados-iguales-13-24)) "Trapezoide")
-      
-      ;; Por defecto, devolver que no se ha podido clasificar
+      ;; Trapezoide: Todos los lados son diferentes y no paralelos      
       (else "Trapezoide"))))
 
 
