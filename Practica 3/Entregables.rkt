@@ -299,12 +299,12 @@ Resultado:
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 5.
+;; 5. a.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
 Nombre:
-   sumaAureo
+   sumaAureo-recursiva
 Objetivo:
    Calcula el número aureo según el número de sumas realizadas
 Parámetros:
@@ -318,12 +318,171 @@ Funciones auxiliares a las que llama:
    ninguno
 |#
 
-(define (sumaAureo n)
-  (if (> n 0)
-      (sqrt (+ 1 sumaAureo (- n 1)))
-      1
+(define (sumaAureo-recursiva n)
+  (cond
+    ((= n 0) 0)
+    (else (sqrt (+ 1 (sumaAureo (- n 1)))))
+  )
+)
+
+;(sumaAureo-recursiva 0)
+;(sumaAureo-recursiva 1)
+;(sumaAureo-recursiva 2)
+;(sumaAureo-recursiva 10)
+;(sumaAureo-recursiva 100)
+
+#|
+Resultados:
+0
+1
+1.4142135623730951
+1.6180165422314876
+1.618033988749895
+|#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 5. b.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   sumaAureo-iterativa
+Objetivo:
+   Calcula el número aureo según el número de sumas realizadas
+Parámetros:
+ - n: número de sumas realizadas.
+Resultado:
+   Numérico.
+Descripción de la solucion:
+   Calcula el número áureo usando la siguiente suma infinita:
+   (raiz 1 + (raiz 1 + (raiz 1+ ... )))
+Funciones auxiliares a las que llama:
+   ninguno
+|#
+
+(define (sumaAureo-iterativa n)
+   (do
+       ;; Variables
+       (
+        (i n (- i 1))
+        (resultado 0 (sqrt (+ 1 resultado)))
+       )
+       ;; Condición de parada
+       ((= i 0) resultado)
+       ;; No hay cuerpo
    )
 )
 
-(sumaAureo 0)
+;(sumaAureo-iterativa 0)
+;(sumaAureo-iterativa 1)
+;(sumaAureo-iterativa 2)
+;(sumaAureo-iterativa 10)
+;(sumaAureo-iterativa 100)
 
+#|
+Resultados:
+0
+1
+1.4142135623730951
+1.6180165422314876
+1.618033988749895
+|#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 6. a.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   fraccion-continua-iterativa
+Objetivo:
+   Calcula una fracción continua infinita.
+Parámetros:
+ - N: función de un argumento que calcula el valor de N(k)
+ - D: función de un argumento que calcula el valor de D(k)
+ - k: número de términos de la fracción continua
+Resultado:
+   Numérico.
+Descripción de la solucion:
+   Calcula una fracción infinita de la siguiente forma:
+   f = (N1 / (D1 + (N2 / (D2 + (N3 / D3 + ...))))) donde
+   N_k se calcula mediante una función N(x) y
+   D_k se calcula mediante una función D(x).   
+Funciones auxiliares a las que llama:
+   ninguno
+|#
+
+(define (fraccion-continua-iterativa N D k)
+  (cond
+    ((= k 0) 0)
+  (else (do
+       ;; Variables
+       (
+        (i 2 (+ i 1))
+        (resultado 1 (/ (N i) (+ (D i ) resultado)))
+       )
+       ;; Condición de parada
+       ((> i k) resultado)
+       ;; No hay cuerpo
+    )))
+)
+
+;(fraccion-continua-iterativa (lambda (x) 1.0) (lambda (x) 1.0) 1)
+;(fraccion-continua-iterativa (lambda (x) 1.0) (lambda (x) 1.0) 2)
+;(fraccion-continua-iterativa (lambda (x) 1.0) (lambda (x) 1.0) 3)
+;(fraccion-continua-iterativa (lambda (x) 1.0) (lambda (x) 1.0) 4)
+;(fraccion-continua-iterativa (lambda (x) 1.0) (lambda (x) 1.0) 5)
+;(fraccion-continua-iterativa (lambda (x) 1.0) (lambda (x) 1.0) 100)
+
+
+#|
+Resultados:
+1
+0.5
+0.6666666666666666
+0.6000000000000001
+0.625
+0.6180339887498948
+|#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 6. b.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   fraccion-continua-recursiva
+Objetivo:
+   Calcula una fracción continua infinita.
+Parámetros:
+ - N: función de un argumento que calcula el valor de N(k)
+ - D: función de un argumento que calcula el valor de D(k)
+ - k: número de términos de la fracción continua
+Resultado:
+   Numérico.
+Descripción de la solucion:
+   Calcula una fracción infinita de la siguiente forma:
+   f = (N1 / (D1 + (N2 / (D2 + (N3 / D3 + ...))))) donde
+   N_k se calcula mediante una función N(x) y
+   D_k se calcula mediante una función D(x).
+   En el caso de la recursión, se calcula N(k) / D(k), luego N(k -1) / (D (K-1) + N(k) / D(k)) y así.
+Funciones auxiliares a las que llama:
+   ninguno
+|#
+
+;; Tener en cuenta que empieza por 1 y termina por n. Al principio si fuese 9, es 1 (k - (k -1), 2, 3, 4, 5, 6, 7, 8, 9
+(define (fraccion-continua-recursiva N D k)
+  (cond
+    ((= k 0) 0)
+    (else (/ (N k) (D k)))
+))
+
+(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 1)
+(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 2)
+(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 3)
+(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 4)
+(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 5)
+(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 100)
+
+(fraccion-continua-iterativa (lambda (x) (* x x)) (lambda (x) (* x x)) 3)
+(fraccion-continua-recursiva (lambda (x) (* x x)) (lambda (x) (* x x)) 3)
