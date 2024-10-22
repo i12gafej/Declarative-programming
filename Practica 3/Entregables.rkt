@@ -134,7 +134,7 @@ Descripción de la solucion:
    Ahora, vamos dividiendo 20 entre los números del 1 al 4 (porque es natural)
    Si no se cuenta más que 1, entonces es primo. Devuelve #t
 Funciones auxiliares a las que llama:
-   ninguno
+   primoRecursivo?
 |#
 
 (define (primoRecursivo? n contar i)
@@ -174,7 +174,7 @@ Descripción de la solucion:
      primos usando el polinomio de Euler k² – k + n, donde “n” es un número
      afortunado de Euler.
 Funciones auxiliares a las que llama:
-   ninguno
+   primoIterativo?
 |#
 
 (define (numeroAfortunadoEuler? n)
@@ -476,7 +476,9 @@ Funciones auxiliares a las que llama:
 ;; Tener en cuenta que empieza por 1 y termina por n. Al principio si fuese 9, es 1 (k - (k -1), 2, 3, 4, 5, 6, 7, 8, 9
 (define (fraccion-continua-recursiva N D k)
   (cond
+    ;; Criterio de finalización
     ((= k 0) 0)
+    ;; Caso genérico
     (else (/ (N k) (+ (D k) (fraccion-continua-recursiva N D (- k 1.)))))
 ))
 
@@ -532,6 +534,7 @@ Funciones auxiliares a las que llama:
         )
        ;; Criterio de parada
        ((< (abs (- a_n a_n+1)) cota) a_n)
+       ;; No hay cuerpo
     )
 )
 
@@ -594,13 +597,105 @@ Funciones auxiliares a las que llama:
 
 #|
 Resultados:
-x [0,4] = 8
- - 8
-x^2 [0,4] = 21.333
- - 21.44
-1/x [1,2] = 0,69314718055994530941723212145818
- - 0.6932471711859476
+- x [0,4] = 
+Valor real:      8
+Valor calculado: 8
+- x^2 [0,4] = 
+Valor real:      21.333
+Valor calculado: 21.44
+- 1/x [1,2] =
+Valor real:      0.6931471805599453
+Valor calculado: 0.6932471711859476
 |#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 9. a.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   serie-iterativa
+Objetivo:
+   Calcula la suma de cualquier serie numérica convergente teniendo en cuenta
+   una cota de error.
+Parámetros:
+ - f: a función que represente el término general de la serie
+ - inicial: El índice del primer término
+ - siguiente: función que permite pasar al siguiente términode la serie
+ - cota: Una cota de error de forma que la suma de la serie finalizará
+ cuando el valor absoluto del término actual que se vaya a
+ sumar sea menor que dicha cota de error
+Resultado:
+   Numérico.
+Descripción de la solucion:
+   Calcula el sumatorio de cualquier serie numérica convergente teniendo
+   en cuenta la cota de error. Empezando por le valor inicial, la serie
+   continua hasta que el valor absoluto del término actual a sumar sea menor
+   a la cota.
+Funciones auxiliares a las que llama:
+   ninguna
+|#
+
+(define (serie-iterativa f inicial siguiente cota)
+   (do
+       ;; Variables
+       (
+        (i inicial (siguiente i))
+        (f_i 0 (f i))
+        (resultado 0. (+ f_i resultado))
+        )
+       ;; Condición de parada
+       ((and (< f_i cota) (not (= i inicial)))  resultado)
+       ;; No hay cuerpo
+    )
+)
+
+(define (fact n)
+   (cond ((or (= n 0 ) (= n 1)) 1)
+         (else (* n (fact (- n 1)))))
+)
+
+;(serie-iterativa (lambda (x) (/ 1 (fact x))) 0 (lambda (x) (+ x 1)) 0.001)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 9. b.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   serie-recursiva
+Objetivo:
+   Calcula la suma de cualquier serie numérica convergente teniendo en cuenta
+   una cota de error.
+Parámetros:
+ - f: a función que represente el término general de la serie
+ - inicial: El índice del primer término
+ - siguiente: función que permite pasar al siguiente términode la serie
+ - cota: Una cota de error de forma que la suma de la serie finalizará
+ cuando el valor absoluto del término actual que se vaya a
+ sumar sea menor que dicha cota de error
+Resultado:
+   Numérico.
+Descripción de la solucion:
+   Calcula el sumatorio de cualquier serie numérica convergente teniendo
+   en cuenta la cota de error. Empezando por le valor inicial, la serie
+   continua hasta que el valor absoluto del término actual a sumar sea menor
+   a la cota.
+Funciones auxiliares a las que llama:
+   ninguna
+|#
+
+(define (serie-recursiva f inicial siguiente cota)
+  (cond
+    ;; La imagen actual de la función es menor a la cota y no es la primera iteración
+    ((and (< (abs (f inicial)) cota) (not (= (f inicial) inicial)) 0.))
+    ;; Caso genérico
+    (else (+ (f inicial) (serie-recursiva f (siguiente inicial) siguiente cota)))
+  )
+)
+
+;(serie-recursiva (lambda (x) (/ 1 (fact x))) 0 (lambda (x) (+ x 1)) 0.001)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 10.
@@ -608,20 +703,29 @@ x^2 [0,4] = 21.333
 
 #|
 Nombre:
-   integral
+   suavizar
 Objetivo:
-   Calcula  la aproximación a la integral definida según el método de los trapecios.
+   Calcular la función suavizada.
 Parámetros:
- - a: extremo inicial
- - b: extremo final
- - f: función que sea positiva en [a, b]
- - n: número de particiones
+ - f: función dada
+ - dx: pequeña cantidad positiva
 Resultado:
    Numérico.
 Descripción de la solucion:
-   Dado un itnervalo y una función positiva en dicho intervalo, que devuelva la aproximación de la
-   integral definida por dicho intervalo con el método de los trapecios. Se hacen n particiones y
-   se calcula: ∑(f(xi) + f(xi-1) / 2))∗ h desde i = 0 a i = n-1
+   Dada una función f, se devuelve la función suavizada dada esta expresión:
+   (f (x - dx) + f (x) + (x + dx)) / 3
 Funciones auxiliares a las que llama:
-   ninguno
+   ninguna
 |#
+
+(define (suavizar f dx)
+  (lambda (x)
+    (/ (+ (f (- x dx)) (f x) (f (+ x dx))) 3)
+    )
+)
+
+;(define suavizar-sqrt (suavizar sqrt 0.01))
+;(suavizar-sqrt 2)
+
+
+
