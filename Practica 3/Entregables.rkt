@@ -419,7 +419,7 @@ Funciones auxiliares a las que llama:
        ;; Variables
        (
         (i 2 (+ i 1))
-        (resultado 1 (/ (N i) (+ (D i ) resultado)))
+        (resultado 1. (/ (N i) (+ (D i ) resultado)))
        )
        ;; Condición de parada
        ((> i k) resultado)
@@ -434,6 +434,8 @@ Funciones auxiliares a las que llama:
 ;(fraccion-continua-iterativa (lambda (x) 1.0) (lambda (x) 1.0) 5)
 ;(fraccion-continua-iterativa (lambda (x) 1.0) (lambda (x) 1.0) 100)
 
+;(fraccion-continua-iterativa (lambda (x) (* x x)) (lambda (x) (* x x)) 3)
+
 
 #|
 Resultados:
@@ -443,6 +445,7 @@ Resultados:
 0.6000000000000001
 0.625
 0.6180339887498948
+0.9183673469387754
 |#
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -465,7 +468,7 @@ Descripción de la solucion:
    f = (N1 / (D1 + (N2 / (D2 + (N3 / D3 + ...))))) donde
    N_k se calcula mediante una función N(x) y
    D_k se calcula mediante una función D(x).
-   En el caso de la recursión, se calcula N(k) / D(k), luego N(k -1) / (D (K-1) + N(k) / D(k)) y así.
+   
 Funciones auxiliares a las que llama:
    ninguno
 |#
@@ -474,15 +477,151 @@ Funciones auxiliares a las que llama:
 (define (fraccion-continua-recursiva N D k)
   (cond
     ((= k 0) 0)
-    (else (/ (N k) (D k)))
+    (else (/ (N k) (+ (D k) (fraccion-continua-recursiva N D (- k 1.)))))
 ))
 
-(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 1)
-(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 2)
-(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 3)
-(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 4)
-(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 5)
-(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 100)
+;(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 1)
+;(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 2)
+;(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 3)
+;(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 4)
+;(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 5)
+;(fraccion-continua-recursiva (lambda (x) 1.0) (lambda (x) 1.0) 100)
+;(fraccion-continua-recursiva (lambda (x) (* x x)) (lambda (x) (* x x)) 3)
 
-(fraccion-continua-iterativa (lambda (x) (* x x)) (lambda (x) (* x x)) 3)
-(fraccion-continua-recursiva (lambda (x) (* x x)) (lambda (x) (* x x)) 3)
+#|
+Resultados:
+1.0
+0.5
+0.6666666666666666
+0.6000000000000001
+0.625
+0.6180339887498948
+0.9183673469387754
+|#
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 7.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   limiteIterativa
+Objetivo:
+   Calcula una aproximación al límite de cualquier sucesión numérica convergente.
+Parámetros:
+ - f: función que represente el término general de la sucesión numérica convergente.
+ - cota: permitirá terminar la función cuando dos elementos consecutivos de la sucesión disten menos que
+   dicha cota de error
+Resultado:
+   Numérico.
+Descripción de la solucion:
+   Para una serie convergente, dada la cota de error, esta función devuelve el valor del límite para cuando
+   se da con una cota de error igual a la dada.
+Funciones auxiliares a las que llama:
+   ninguno
+|#
+
+(define (limiteIterativa f cota)
+   (do
+       ;; Variables
+       (
+        (i 1 (+ i 1))
+        (a_n 0 (f i))
+        (a_n+1 (f 1) (f (+ i 1)))
+        )
+       ;; Criterio de parada
+       ((< (abs (- a_n a_n+1)) cota) a_n)
+    )
+)
+
+;(limiteIterativa (lambda (x) (expt (+ 1 (/ 1. x)) x)) 0.001)
+;(limiteSucesionNumeroE 0.001)
+
+#|
+Resultados:
+2.6814644203008586
+2.6814644203008586
+|#
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 8.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   integral
+Objetivo:
+   Calcula  la aproximación a la integral definida según el método de los trapecios.
+Parámetros:
+ - a: extremo inicial
+ - b: extremo final
+ - f: función que sea positiva en [a, b]
+ - n: número de particiones
+Resultado:
+   Numérico.
+Descripción de la solucion:
+   Dado un itnervalo y una función positiva en dicho intervalo, que devuelva la aproximación de la
+   integral definida por dicho intervalo con el método de los trapecios. Se hacen n particiones y
+   se calcula: ∑(f(xi) + f(xi-1) / 2))∗ h desde i = 0 a i = n-1
+Funciones auxiliares a las que llama:
+   ninguno
+|#
+
+(define (integral a b f n)
+  (if (and (< (f a) 0) (< (f b) 0))
+      "No es positiva"
+      (do
+          ;; Variable
+          (
+           (i 1 (+ i 1))
+           (h (/ (- b a) n))
+           (xi (+ a (* 1 (/ (- b a) n))) (+ a (* i h)))
+           (xi-1 a xi)
+           (resultado 0 (+ (* (/ (+ (f xi) (f xi-1)) 2.) h) resultado))
+           )
+           ;; Criterio de parada
+           ((> xi b) resultado)
+        ;; No hay cuerpo
+      )
+   )
+)
+
+;(integral 0 4 (lambda (x) x) 2)
+;(integral 0 4 (lambda (x) (* x x)) 10)
+;(integral 1 2 (lambda (x) (/ 1 x)) 10000)
+
+#|
+Resultados:
+x [0,4] = 8
+ - 8
+x^2 [0,4] = 21.333
+ - 21.44
+1/x [1,2] = 0,69314718055994530941723212145818
+ - 0.6932471711859476
+|#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 10.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   integral
+Objetivo:
+   Calcula  la aproximación a la integral definida según el método de los trapecios.
+Parámetros:
+ - a: extremo inicial
+ - b: extremo final
+ - f: función que sea positiva en [a, b]
+ - n: número de particiones
+Resultado:
+   Numérico.
+Descripción de la solucion:
+   Dado un itnervalo y una función positiva en dicho intervalo, que devuelva la aproximación de la
+   integral definida por dicho intervalo con el método de los trapecios. Se hacen n particiones y
+   se calcula: ∑(f(xi) + f(xi-1) / 2))∗ h desde i = 0 a i = n-1
+Funciones auxiliares a las que llama:
+   ninguno
+|#
