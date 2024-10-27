@@ -1,0 +1,9 @@
+#lang racket
+
+;(require "C:/Users/USUARIO/Downloads/cosas uni/Programación Declarativa/Prácticas/Declarative-programming/Final practice/FIGURAS_constructores.rkt")
+(require "FIGURAS_constructores.rkt")
+
+
+
+
+(dibujar-carta 200 400 0.3 'corazon lista-t)
