@@ -122,8 +122,10 @@ Objetivo:
    Devuleve si el número es primo o no.
 Parámetros:
  - n: número de entrada
- - contar: contador de divisores (inizializa en 0)
- - i: iterador para calcular si es divisor (inizializa en 1)
+ 
+ Parámetros auxiliares internos:
+   - contar: contador de divisores (inizializa en 0)
+   - i: iterador para calcular si es divisor (inizializa en 1)
 Resultado:
    Booleano.
 Descripción de la solucion:
@@ -137,15 +139,19 @@ Funciones auxiliares a las que llama:
    primoRecursivo?
 |#
 
-(define (primoRecursivo? n contar i)
-  ;; Si i es mayor a la raiz de n, devuelve si es primo o no
+(define (primoRecursivo? n)
+  ; Función anidada
+  (define (aux contar i)
+   ;; Si i es mayor a la raiz de n, devuelve si es primo o no
   (if (> i (sqrt n))
       (<= contar 1)
-      (primoRecursivo? n (if (= (modulo n i) 0) (+ contar 1) contar) (+ i 1)))
+      (aux (if (= (modulo n i) 0) (+ contar 1) contar) (+ i 1)))
+    )
+  (aux 0 1)
 )
 
-;(primoRecursivo? 13 0 1)
-;(primoRecursivo? 16 0 1)
+;(primoRecursivo? 13)
+;(primoRecursivo? 16)
 
 #|Resultados
  #t
@@ -593,7 +599,7 @@ Funciones auxiliares a las que llama:
 
 ;(integral 0 4 (lambda (x) x) 2)
 ;(integral 0 4 (lambda (x) (* x x)) 10)
-;(integral 1 2 (lambda (x) (/ 1 x)) 10000)
+(integral 1 2 (lambda (x) (/ 1 x)) 100000)
 
 #|
 Resultados:
