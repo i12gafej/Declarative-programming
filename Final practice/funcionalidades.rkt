@@ -1,7 +1,5 @@
-#lang racket
 
-(require "FIGURAS_constructores.rkt")
-
+(load "FIGURAS_constructores.rkt")
 
 
 ;; Llama a la función después de importar el archivo

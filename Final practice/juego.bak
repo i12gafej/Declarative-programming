@@ -160,20 +160,23 @@
 (define (jugar-turno-crupier)
   (let loop ((total (sacar-carta)))
     (cond
-      ;; Si el crupier está en 17-21, se planta
-      ((and (>= total 17) (<= total 21)) 
+      ;; Si el crupier está en 18-21, se planta
+      ((and (>= total 18) (<= total 21)) 
        (begin (displayln (string-append "El crupier se planta con " (number->string total))) total))
+      ;; Si el crupier está en más de 17, se planta
+      ((> total 16)        
+           (begin
+             (displayln (string-append "El crupier se planta con " (number->string total))) total))
+      ;; Si el crupier tiene entre 0 y 15, sigue tomando cartas
+      ((and (>= total 0) (<= total 15))
+       (begin
+         (displayln "El crupier toma otra carta.")
+         (loop (+ total (sacar-carta)))))
       ;; Si el crupier se pasa de 21, devuelve el total (pierde)
       ((> total 21)
        (begin
          (displayln (string-append "El crupier se pasó con " (number->string total)))
-         total))
-      ;; Si el crupier tiene entre 0 y 15, sigue tomando cartas
-      ((and (>= total 0) (<= total 16))
-       (begin
-         (displayln "El crupier toma otra carta.")
-         (loop (+ total (sacar-carta)))))
-      )))
+         total)))))
 
 ;; Función que decide el resultado de la ronda
 (define (resultado-ronda total-jugador total-crupier)
@@ -192,6 +195,10 @@
     ((> total-crupier total-jugador) 'crupier)
     ;; Si tienen los mismos puntos es empate
     (else 'empate)))
+
+;; Función para sacar una carta (número aleatorio entre 1 y 11)
+(define (sacar-carta)
+  (+ 1 (random 11)))
 
 ;; Función para sacar una carta (número aleatorio entre 1 y 11)
 (define (sacar-carta)
