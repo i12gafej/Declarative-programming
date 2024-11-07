@@ -192,5 +192,5 @@
       )
    )
 )
-
+;(dibujar-ficha 200 200 1.5 color3)
 (inicio)

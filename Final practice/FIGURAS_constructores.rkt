@@ -1,8 +1,14 @@
 (define color1 (make-rgb 0.9 0.1 0.2))
+(define blanco (make-rgb 1.0 1.0 1.0))
+(define gris (make-rgb 0.5 0.5 0.5))
+(define morosa (make-rgb 0.9 0.7 0.85))
 (define color2 (make-rgb 0.1 0.2 0.9))
-(define color3 (make-rgb 0.2 0.9 0.1))
+(define tapete (make-rgb 0.2 0.8 0.3))
 (define color4 (make-rgb 0.2 0.1 0.9))
 (define color5 (make-rgb 0.0 0.0 0.0))
+(define negro (make-rgb 0.0 0.0 0.0))
+(define fondo (make-rgb 0.9 0.9 0.9))
+(define beish (make-rgb 0.925 0.855 0.549))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dibujar CIRCULO
@@ -625,34 +631,29 @@
 
     ;; Dibujar los bordes de la carta con líneas y cuartos de círculo
 
-    ;; Borde izquierdo y esquina superior izquierda
-    ((draw-line v1) 
-     (make-posn (+ cx (* escala (- 50 centroide-x))) (+ cy (* escala (- 100 centroide-y))))
-     (make-posn (+ cx (* escala (- 50 centroide-x))) (+ cy (* escala (- 400 centroide-y)))) color5)
-    (dibujar-cuarto-circulo v1 (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 100 centroide-y)))
-                            (* escala 50) 20 color5 'arriba-izquierda)
-
-    ;; Borde superior y esquina superior derecha
-    ((draw-line v1) 
-     (make-posn (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 50 centroide-y))))
-     (make-posn (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 50 centroide-y)))) color5)
-    (dibujar-cuarto-circulo v1 (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 100 centroide-y)))
-                            (* escala 50) 20 color5 'arriba-derecha)
-
-    ;; Borde derecho y esquina inferior derecha
-    ((draw-line v1) 
-     (make-posn (+ cx (* escala (- 300 centroide-x))) (+ cy (* escala (- 100 centroide-y))))
-     (make-posn (+ cx (* escala (- 300 centroide-x))) (+ cy (* escala (- 400 centroide-y)))) color5)
-    (dibujar-cuarto-circulo v1 (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 400 centroide-y)))
-                            (* escala 50) 20 color5 'abajo-derecha)
-
-    ;; Borde inferior y esquina inferior izquierda
-    ((draw-line v1) 
-     (make-posn (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 450 centroide-y))))
-     (make-posn (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 450 centroide-y)))) color5)
-    (dibujar-cuarto-circulo v1 (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 400 centroide-y)))
-                            (* escala 50) 20 color5 'abajo-izquierda)
-
+    (define list-cuerpo
+      (append
+       (list (make-posn (+ cx (* escala (- 50 centroide-x))) (+ cy (* escala (- 100 centroide-y))))
+             (make-posn (+ cx (* escala (- 50 centroide-x))) (+ cy (* escala (- 400 centroide-y)))))
+       (lista-cuarto-circulo (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 100 centroide-y)))
+                             (* escala 50) 20 'arriba-izquierda 'antihorario)
+       (list (make-posn (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 50 centroide-y))))
+             (make-posn (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 50 centroide-y)))))
+       (lista-cuarto-circulo (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 100 centroide-y)))
+                             (* escala 50) 20 'arriba-derecha 'horario)
+       (list (make-posn (+ cx (* escala (- 300 centroide-x))) (+ cy (* escala (- 100 centroide-y))))
+             (make-posn (+ cx (* escala (- 300 centroide-x))) (+ cy (* escala (- 400 centroide-y)))))
+       (lista-cuarto-circulo (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 400 centroide-y)))
+                             (* escala 50) 20 'abajo-derecha 'antihorario)
+       (list (make-posn (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 450 centroide-y))))
+            (make-posn (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 450 centroide-y)))))
+       (lista-cuarto-circulo (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 400 centroide-y)))
+                             (* escala 50) 20 'abajo-izquierda 'horario)
+      
+      ))
+    
+    ((draw-solid-polygon v1) list-cuerpo (make-posn 0 0) blanco)
+    ((draw-polygon v1) list-cuerpo (make-posn 0 0) negro)
     ;; Dibujar el número de la carta, ajustado con las coordenadas relativas
     (dibujar-lista lista desplazamiento-numero-x desplazamiento-numero-y escala-objetos color)
 
@@ -667,6 +668,47 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FIN FUNCIÓN DIBUJAR CARTA
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DIBUJAR CARTA POR DETRAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (dibujar-carta-por-detras cx cy escala)
+  ;; Función interna para transformar coordenadas según el centro y escala
+  (define (transformar-coordenadas punto esc)
+    (make-posn (+ cx (* esc (- (posn-x punto) 175)))
+               (+ cy (* esc (- (posn-y punto) 350)))))
+  
+  (let* ((escala-objetos (* escala 1.2))
+         (escala2 (* escala 0.9))
+         
+         ;; Transformar cada punto en list-cuerpo y list-interior usando transformar-coordenadas
+         (list-cuerpo-transformado
+          (map (lambda (p)
+                 (transformar-coordenadas p escala))
+               list-cuerpo))
+         (list-interior-transformado
+          (map (lambda (p)
+                 (transformar-coordenadas p escala2))
+               list-interior)))
+
+    ;; Dibujar el contorno de la carta y el interior
+    ((draw-solid-polygon v1) list-cuerpo-transformado (make-posn 0 0) blanco)
+    ;((draw-polygon v1) list-cuerpo-transformado (make-posn 0 0) negro)
+    ((draw-solid-polygon v1) list-interior-transformado (make-posn 0 0) morosa)
+
+    ;; Dibujar la patita del gato escalada y centrada en la carta
+    ((draw-solid-polygon v1)
+     (escalar-desplaza-construye2 interior interior
+                                  (+ cx (* escala +5))
+                                  (+ cy (* escala -100))
+                                  escala-objetos)
+     (make-posn 0 0) blanco)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FIN FUNCIÓN DIBUJAR CARTA POR DETRAS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

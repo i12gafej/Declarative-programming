@@ -421,10 +421,24 @@
         (0.749 1.99)
         (0.749 1.98)
         ))
+   ("+"(
+        (0.75 0.75)
+        (0 0.75)
+        (1.5 0.75)
+        (0.75 0.75)
+        (0.75 1.5)
+        (0.75 0.75)
+        (0.75 0)
+        ))
+   ("-"(
+        (0 1)
+        (1.5 1)
+        )
+    )
    ))
 
 ;; Función para escalar y desplazar los puntos de cada letra
-(define (escalar-y-desplazar puntos x y escala)
+(define (escalar-desplaza-construye puntos x y escala)
   (map (lambda (p)
          (make-posn (+ x (* escala (car p)))
                     (+ y (* escala (cadr p)))))
@@ -434,7 +448,7 @@
 (define (dibujar-letra letra x y escala color)
   (let ((puntos (assoc letra letras))) ; convierte el carácter en cadena
     (if puntos
-        ((draw-polygon v1) (escalar-y-desplazar (cadr puntos) x y escala) (make-posn 0 0) color)
+        ((draw-polygon v1) (escalar-desplaza-construye (cadr puntos) x y escala) (make-posn 0 0) color)
         (displayln "Carácter no encontrado"))))
 
 ;; Función para dibujar una secuencia de texto
