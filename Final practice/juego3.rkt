@@ -1,38 +1,38 @@
 (load "mesa.rkt")
 (define (crear-mazo)
   (append
-   (map (lambda (valor) (list valor 'corazones))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'corazones))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'corazones))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'corazones))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'diamantes))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'diamantes))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'diamantes))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'diamantes))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'tréboles))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'tréboles))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'tréboles))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'tréboles))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'picas))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'picas))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'picas))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))
-   (map (lambda (valor) (list valor 'picas))
-               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 '10 'J 'Q 'K))))
+   (map (lambda (valor) (list valor 'corazon))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'corazon))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'corazon))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'corazon))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'diamante))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'diamante))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'diamante))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'diamante))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'trebol))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'trebol))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'trebol))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'trebol))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'pica))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'pica))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'pica))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'pica))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))))
 
 ;; Función para generar una lista de números desde 0 hasta n-1
 (define (range n)
@@ -61,8 +61,16 @@
 
 
 ;; Devuelve los nuevos mano y mazo
-(define (add-carta-mano mano mazo)
-  (cons (append mano (list (car mazo))) (cdr mazo))
+(define (add-carta-mano mano mazo turno)
+  (let
+      ((nueva-carta (car mazo))
+       (pos-y (if (eq? turno 'jugador) 400 250))
+       (pos-x (* (+ 2 (length mano)) 100)))
+    (mover-patita-carta 700 pos-y pos-x pos-y 0.3 1. tapete)
+    (dibujar-carta pos-x pos-y 0.3 (cadr nueva-carta) (car nueva-carta) valores)
+    (mover-patita (+ 100 pos-x) pos-y 700 pos-y 0.4 1. tapete)
+    (cons (append mano (list nueva-carta)) (cdr mazo))
+    )
   )
 
 (define (extraer-mazo mazo)
@@ -85,6 +93,7 @@
   (let ((valor (car carta)))
     (cond
       ((equal? valor 'A) 11)
+      ((equal? valor 'T) 10)
       ((member valor '(J Q K)) 10)
       (else (string->number (number->string valor))))))
 
@@ -210,6 +219,8 @@
 ; Si se elige doblar, se devuelve el objeto (append mano (list (sacar-carta mazo)), (- (* 2 apuesta) fichas-disponibles) (* 2 apuesta)
 
 (define (turno-jugador-fichas mano-mazo fichas-disponibles apuesta pidio?)
+  (mover-patita 750 550 750 550 0.4 0.01 tapete)
+  (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
   (let
     (
      (valor-mano-actual (valor-mano (car mano-mazo)))
@@ -221,22 +232,41 @@
      (cond
        ; La mano ya supera o iguala el valor de 21
        ((>= valor-mano-actual 21)
+        (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
         (cons (crear-jugada mano (- fichas-disponibles apuesta) apuesta)
               mazo))
        (else
-        (display "Qué prefieres?\n 1. Pedir\n 2. Plantarte\n 3. Doblar\n")
+        ;(display "Qué prefieres?\n 1. Pedir\n 2. Plantarte\n 3. Doblar\n")
         (let
          (
-          (eleccion (string->number (read-line)))
+          (eleccion
+           (do
+               ((click (get-mouse-click v1) (get-mouse-click v1))
+               (x 0 (posn-x (mouse-click-posn click)))
+               (y 0 (posn-y (mouse-click-posn click)))
+               )
+             ((and (<= 520 y 580)
+                   (or
+                    (<= 240 x 500)
+                    (<= 520 x 600)
+                    (<= 620 x 700)))
+              (cond
+                ((<= 240 x 500) 3)
+                ((<= 520 x 600) 1)
+                ((<= 620 x 700) 2)
+                                  ))
+           ))
           )
+          
           (cond
             ; Pedir carta
             ((eq? eleccion 1)
              (display "Pide carta.\n")
-             (turno-jugador-fichas (add-carta-mano mano mazo) fichas-disponibles apuesta #t))
+             (turno-jugador-fichas (add-carta-mano mano mazo 'jugador) fichas-disponibles apuesta #t))
             ; Plantarse
             ((eq? eleccion 2)
              (display "Se planta.\n")
+             (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
              (cons
               (crear-jugada mano (- fichas-disponibles apuesta) apuesta) mazo))
             ; Doblar 
@@ -245,14 +275,17 @@
                ; Si ya pidió, no puede doblar
                (pidio?
                  (display "No puedes doblar una vez pides.\n")
-                 (turno-jugador-fichas (add-carta-mano mano mazo) fichas-disponibles apuesta #t))
+                 (turno-jugador-fichas (add-carta-mano mano mazo 'jugador) fichas-disponibles apuesta #t))
                ; Hay suficientes fichas
                ((>= fichas-disponibles (* 2 apuesta))
+                
                   (printf "Doblar la apuesta ~a * 2 = ~a\n" apuesta (* 2 apuesta))
                   (let*
-                      ((resultado (add-carta-mano mano mazo))
+                      ((resultado (add-carta-mano mano mazo 'jugador))
                        (mano (car resultado))
                        (mazo (cdr resultado)))
+                  (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
+                  (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
                   (printf "Jugador: ~a (~a)\n" mano (valor-mano mano))
                   (cons (crear-jugada mano (- fichas-disponibles (* 2 apuesta)) (* 2 apuesta))
                         mazo))
@@ -260,7 +293,8 @@
                ; No hay suficientes fichas
                (else
                 (display "No hay suficientes fichas para doblar.\n")
-                (turno-jugador-fichas (add-carta-mano mano mazo) fichas-disponibles apuesta #t))
+                (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
+                (turno-jugador-fichas (cons mano mazo) fichas-disponibles apuesta #t))
                 ))
             (else (display "FUERA"))
              )
@@ -269,6 +303,7 @@
        ))
 
 (define (turno-crupier mano-mazo fichas-disponibles apuesta)
+  (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
   (let
       (
        (valor-mano-actual (valor-mano (car mano-mazo)))
@@ -282,7 +317,7 @@
          (cons (crear-jugada mano (- fichas-disponibles apuesta) apuesta)
                mazo)
          )
-        (else (turno-crupier (add-carta-mano mano mazo) fichas-disponibles apuesta))
+        (else (turno-crupier (add-carta-mano mano mazo 'crupier) fichas-disponibles apuesta))
         ))
   )
   
@@ -292,11 +327,34 @@
        (mano-crupier (list (car mazo)))
        (mano-jugador (list (cadr mazo) (caddr mazo)))
        )
-    (printf " Crupier: ~a\n Jugador: ~a\n" (car mano-crupier) mano-jugador)
+    ;(printf " Crupier: ~a\n Jugador: ~a\n" (car mano-crupier) mano-jugador)
+    ; Carta crupier
+    (mover-patita-carta 700 250 200 250 0.3 1. tapete)
+    (dibujar-carta 200 250 0.3 (cadar mano-crupier) (caar mano-crupier) valores)
+    (mover-patita 300 250 700 250 0.4 1. tapete)
+    
+    (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
+    ; Carta jugador
+    (mover-patita-carta 700 400 200 400 0.3 1. tapete)
+    (dibujar-carta 200 400 0.3 (cadar mano-jugador) (caar mano-jugador) valores)
+    (mover-patita 300 400 700 400 0.4 1. tapete)
+    (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
+    (mover-patita-carta 700 400 300 400 0.3 1. tapete)
+    (dibujar-carta 300 400 0.3 (cadadr mano-jugador) (caadr mano-jugador) valores)
+    (mover-patita 400 400 700 400 0.4 1. tapete)
+    (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
     (append (list mano-crupier) (list mano-jugador) (list (cdddr mazo)))
     )
   )
-
+;(dibujar-carta 300 400 0.3 (cadadr mano-jugador) (caadr mano-jugador) valores)
+;(dibujar-carta 200 250 0.3 (cadar mano-crupier) (caar mano-crupier) valores)
+;(dibujar-carta 200 400 0.3 (cadar mano-jugador) (caar mano-jugador) valores)
+(define (actualizar-mesa mano-c mano-j f-c f-j)
+  (mesa f-c f-j)
+  (dibujar-carta 300 400 0.3 (cadadr mano-j) (caadr mano-j) valores)
+  (dibujar-carta 200 250 0.3 (cadar mano-c) (caar mano-c) valores)
+  (dibujar-carta 200 400 0.3 (cadar mano-j) (caar mano-j) valores)
+  )
 (define (ronda mazo fichas-crupier fichas-jugador)
   (let*
       (
@@ -304,7 +362,8 @@
        (mano-crupier (car reparto))
        (mano-jugador (cadr reparto))
        (mazo (caddr reparto))
-       (apuesta (apostar-fichas fichas-jugador))
+       (apuesta (apostar fichas-jugador))
+       (actualizacion (actualizar-mesa mano-crupier mano-jugador fichas-crupier fichas-jugador))
        (resultado-jugador (turno-jugador-fichas (cons mano-jugador mazo) fichas-jugador apuesta #f))
        (resultado-crupier (turno-crupier (cons mano-crupier (cdr resultado-jugador)) fichas-crupier (apuesta? (car resultado-jugador))))
        (valor-jugador (valor-mano (mano? (car resultado-jugador))))
@@ -334,11 +393,15 @@
 ; En cada ronda, se actualiza el valor de fichas y el mazo
 ; termina cuando alguno de los dos tiene 20 o menos fichas
 (define (blackjack-fichas)
+  (mesa 0 0)
   (let
     (
-     (fichas (cantidad-fichas!))
+     (fichas
+      ;(cantidad-fichas!)
+      (cantidad))
      )
-    (printf "Fichas jugador: ~a\nFichas crupier: ~a\n" fichas fichas)
+    ;(printf "Fichas jugador: ~a\nFichas crupier: ~a\n" fichas fichas)
+    (mesa fichas fichas)
     (let juego
     (
      (resultado-ronda (ronda (barajar (crear-mazo)) fichas fichas))
@@ -352,10 +415,11 @@
            ((eq? (ganador? resultado-ronda) 'jugador) (display "Jugador gana la Ronda\n"))
            ((eq? (ganador? resultado-ronda) 'crupier) (display "Crupier gana la Ronda\n"))
            (else (display "Empate\n")))
-         (printf "Fichas jugador: ~a\nFichas crupier: ~a\n" (fichas-jugador? resultado-ronda) (fichas-crupier? resultado-ronda))
+         ;(printf "Fichas jugador: ~a\nFichas crupier: ~a\n" (fichas-jugador? resultado-ronda) (fichas-crupier? resultado-ronda))
+         (mesa (fichas-crupier? resultado-ronda) (fichas-jugador? resultado-ronda))
          (juego
           (ronda (mazo? resultado-ronda) (fichas-crupier? resultado-ronda) (fichas-jugador? resultado-ronda)))))
   )))
 
 
-;(blackjack-fichas)
+(blackjack-fichas)

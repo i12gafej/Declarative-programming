@@ -30,8 +30,31 @@
 (define mas-opp (make-rgb 0.06 0.16 0.27))
 (define menos (make-rgb 0.94 0.28 0.078))
 (define fondo (make-rgb 0.9 0.9 0.9))
-(define contador-crupier (make-rgb 0.8 0.8 0.8))
+(define contador2 (make-rgb 0.8 0.8 0.8))
 (define beish (make-rgb 0.925 0.855 0.549))
+
+(define (contador-jugador fichas)
+  ;; Contador
+  ((draw-solid-polygon v1)
+   (list (make-posn 0 500) (make-posn 220 500) (make-posn 220 600)(make-posn 0 600)) (make-posn 0 0) contador)
+     ;; Recuadrito interior
+  ((draw-solid-polygon v1)
+   (list (make-posn 10 530) (make-posn 210 530) (make-posn 210 590)(make-posn 10 590)) (make-posn 0 0) blanco)
+  ((draw-solid-polygon v1)
+   (list (make-posn 15 535) (make-posn 205 535) (make-posn 205 585)(make-posn 15 585)) (make-posn 0 0) negro)
+  (dibujar-texto "FICHAS" 60 507 8 fondo)
+  (dibujar-texto (number->string fichas) 25 550 8 blanco)
+  )
+
+(define (contador-crupier fichas)
+  ((draw-solid-polygon v1)
+   (list (make-posn 290 10) (make-posn 510 10) (make-posn 510 80)(make-posn 290 80)) (make-posn 0 0) contador2)
+  ((draw-solid-polygon v1)
+   (list (make-posn 295 15) (make-posn 505 15) (make-posn 505 75)(make-posn 295 75)) (make-posn 0 0) blanco)
+  ((draw-solid-polygon v1)
+   (list (make-posn 300 20) (make-posn 500 20) (make-posn 500 70)(make-posn 300 70)) (make-posn 0 0) negro)
+  (dibujar-texto (number->string fichas) 305 35 10 blanco)
+  )
 
 (define (mesa fichas-crupier fichas-jugador)
   ; Tapete
@@ -52,16 +75,7 @@
   ;; Cuadrante de operaciones
   ((draw-polygon v1)
    (list (make-posn 0 500) (make-posn 800 500) (make-posn 800 600)(make-posn 0 600)) (make-posn 0 0) fondo)
-  ;; Contador
-  ((draw-solid-polygon v1)
-   (list (make-posn 0 500) (make-posn 220 500) (make-posn 220 600)(make-posn 0 600)) (make-posn 0 0) contador)
-     ;; Recuadrito interior
-  ((draw-solid-polygon v1)
-   (list (make-posn 10 530) (make-posn 210 530) (make-posn 210 590)(make-posn 10 590)) (make-posn 0 0) blanco)
-  ((draw-solid-polygon v1)
-   (list (make-posn 15 535) (make-posn 205 535) (make-posn 205 585)(make-posn 15 585)) (make-posn 0 0) negro)
-  (dibujar-texto "FICHAS" 60 507 8 fondo)
-  (dibujar-texto (number->string fichas-jugador) 25 550 8 blanco)
+  (contador-jugador fichas-jugador)
 
   ;; Botones de juego
   ((draw-solid-polygon v1)
@@ -74,16 +88,10 @@
    (list (make-posn 620 520) (make-posn 700 520) (make-posn 700 580)(make-posn 620 580)) (make-posn 0 0) menos)
   (dibujar-texto "-" 645 530 20 mas-opp)
   ;; Cuadrante fichas crupier
-  ((draw-solid-polygon v1)
-   (list (make-posn 290 10) (make-posn 510 10) (make-posn 510 80)(make-posn 290 80)) (make-posn 0 0) contador-crupier)
-  ((draw-solid-polygon v1)
-   (list (make-posn 295 15) (make-posn 505 15) (make-posn 505 75)(make-posn 295 75)) (make-posn 0 0) blanco)
-  ((draw-solid-polygon v1)
-   (list (make-posn 300 20) (make-posn 500 20) (make-posn 500 70)(make-posn 300 70)) (make-posn 0 0) negro)
-  (dibujar-texto (number->string fichas-crupier) 310 35 10 blanco)
+  (contador-crupier fichas-crupier)
 )
-(mesa 100 200)
-(define (apostar)
+
+(define (apostar fichas-jugador)
   ((draw-solid-polygon v1)
     (list
      (make-posn 140 120)
@@ -132,12 +140,12 @@
            )
      ; El radio es 40
      (cond
-       ((<= (D2 x y 200 420)  40) 20)
-       ((<= (D2 x y 250 340)  40) 50)
-       ((<= (D2 x y 330 280)  40) 100)
-       ((<= (D2 x y 470 280)  40) 200)
-       ((<= (D2 x y 550 340)  40) 500)
-       ((<= (D2 x y 600 420)  40) 1000)
+       ((and (<= (D2 x y 200 420)  40) (>= fichas-jugador 20))  20)
+       ((and (<= (D2 x y 250 340)  40) (>= fichas-jugador 50)) 50)
+       ((and (<= (D2 x y 330 280)  40) (>= fichas-jugador 100)) 100)
+       ((and (<= (D2 x y 470 280)  40) (>= fichas-jugador 200)) 200)
+       ((and (<= (D2 x y 550 340)  40) (>= fichas-jugador 500)) 500)
+       ((and (<= (D2 x y 600 420)  40) (>= fichas-jugador 1000)) 1000)
        (else (loop))
      )
     )
@@ -178,7 +186,7 @@
        (valores "" (cond
                      ; No sea igual a cartorce, se hace todo normal
                      ;((eq? (dibujar-texto valores (+ 10 pos-x) (+ 10 pos-y) 10 negro) 'null) "")
-                     ((< (string-length valores) 14)
+                     ((< (string-length valores) 10)
                       (cond
                         ((symbol? tecla) valores)
                         
@@ -199,7 +207,7 @@
                               )
                           ))
                      ))
-                     ((>= (string-length valores) 14)
+                     ((>= (string-length valores) 10)
                       (if (eq? tecla #\backspace)
                              (substring valores 0 (sub1 (string-length valores)))
                              valores))
@@ -411,6 +419,9 @@
     
   ))
 
+(define (lista-a-posn puntos)
+  (map (lambda (p) (make-posn (car p) (cadr p))) puntos))
+
 (define (mover-patita-carta x-inicio y-inicio x-fin y-fin escala tiempo-duracion fondo)
   ;; Calcular el número de pasos y la pausa entre ellos
   (let* ((pasos 20)
@@ -467,11 +478,11 @@
 ;(dibujar-carta-por-detras 100 400 0.4)
 ;(dibujar-carta 100 400 0.3 'trebol 'T valores)
 
-(mover-patita-carta 700 400 200 400 0.4 1. tapete)
-(dibujar-carta 200 400 0.4 'diamante 'T valores)
-(mover-patita 300 400 700 400 0.4 1. tapete)
-(mover-patita-carta 700 400 300 400 0.4 1. tapete)
-(mover-patita 400 400 700 400 0.4 1. tapete)
+;(mover-patita-carta 700 400 200 400 0.4 1. tapete)
+;(dibujar-carta 200 400 0.4 'diamante 'T valores)
+;(mover-patita 300 400 700 400 0.4 1. tapete)
+;(mover-patita-carta 700 400 300 400 0.4 1. tapete)
+;(mover-patita 400 400 700 400 0.4 1. tapete)
 
 
 
