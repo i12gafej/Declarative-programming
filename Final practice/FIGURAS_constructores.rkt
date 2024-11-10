@@ -35,6 +35,32 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Convertir A POSNs
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (convertir-a-posns lista)
+    (map (lambda (par) (make-posn (car par) (cadr par))) lista))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FIN Convertir A POSNs
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Distancia D2
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (D2 x1 y1 x2 y2)
+  (sqrt (+ (sqr (- x1 x2)) (sqr (- y1 y2))))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FIN Distancia D2
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dibujar cuarto de círculo
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -87,21 +113,19 @@
           (y (* r (sin theta))))
       ;; Ajustar los signos según el cuadrante usando cond
       (cond
-        ((eq? cuadrante 'arriba-derecha) (make-posn (+ centrox x) (+ centroy (- y))))  ;; Cuadrante 1
-        ((eq? cuadrante 'arriba-izquierda) (make-posn (+ centrox (- x)) (+ centroy (- y))))  ;; Cuadrante 2
-        ((eq? cuadrante 'abajo-izquierda) (make-posn (+ centrox (- x)) (+ centroy y)))  ;; Cuadrante 3
-        ((eq? cuadrante 'abajo-derecha) (make-posn (+ centrox x) (+ centroy y)))  ;; Cuadrante 4
+        ((eq? cuadrante 'arriba-derecha) (list (+ centrox x) (+ centroy (- y))))  ;; Cuadrante 1
+        ((eq? cuadrante 'arriba-izquierda) (list (+ centrox (- x)) (+ centroy (- y))))  ;; Cuadrante 2
+        ((eq? cuadrante 'abajo-izquierda) (list (+ centrox (- x)) (+ centroy y)))  ;; Cuadrante 3
+        ((eq? cuadrante 'abajo-derecha) (list (+ centrox x) (+ centroy y)))  ;; Cuadrante 4
         (else (error "Cuadrante no válido")))))
 
   ;; Generar la lista de puntos en función del sentido
-  (let ((puntos
-         (build-list num-puntos
-                     (lambda (i)
-                       (let ((theta (if (eq? sentido 'horario)
-                                        (* (- num-puntos i 1) (/ pi 2 (- num-puntos 1)))  ;; Sentido horario
-                                        (* i (/ pi 2 (- num-puntos 1))))))
-                         (punto-circulo radio theta))))))
-    puntos))
+  (build-list num-puntos
+              (lambda (i)
+                (let ((theta (if (eq? sentido 'horario)
+                                 (* (- num-puntos i 1) (/ pi 2 (- num-puntos 1)))  ;; Sentido horario
+                                 (* i (/ pi 2 (- num-puntos 1))))))
+                  (punto-circulo radio theta)))))
 
 
 
@@ -391,190 +415,130 @@
 ;; Listas de puntos que definen los valores de las cartas
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define lista-0
-  (append
-   (list
-    ;; Primer circulo
-    (make-posn 70 320)
-    (make-posn 50 300)
-    (make-posn 50 170)
-    (make-posn 70 150)
-    (make-posn 130 150)
-    (make-posn 150 170)
-    (make-posn 150 190);; Interior
-    (make-posn 130 190)
-    (make-posn 120 170)
-    (make-posn 80 170)
-    (make-posn 70 190)
-    (make-posn 70 280)
-    (make-posn 80 300)
-    (make-posn 120 300)
-    (make-posn 130 280)
-    (make-posn 130 190) ; Fuera
-    (make-posn 150 190)
-    (make-posn 150 300)
-    (make-posn 130 320))))
-
-(define lista-1 (list
-         (make-posn 50 200)
-         (make-posn 75 200)
-         (make-posn 100 150)
-         (make-posn 125 150)
-         (make-posn 125 320)
-         (make-posn 100 320)
-         (make-posn 100 200)))
-
-(define lista-2
-(append
- (lista-cuarto-circulo 100 200 50 20 'arriba-izquierda 'antihorario)
- (lista-cuarto-circulo 100 200 50 20 'arriba-derecha 'horario)
- (list (make-posn 80 300)
- (make-posn 150 300)
- (make-posn 150 320)
- (make-posn 50 320)
- (make-posn 50 300))
- (lista-cuarto-circulo 100 200 25 20 'arriba-derecha 'antihorario)
- (lista-cuarto-circulo 100 200 25 20 'arriba-izquierda 'horario) 
- )
-  )
-
-(define lista-3
-(append
- (list (make-posn 120 170)(make-posn 50 170) (make-posn 50 150)(make-posn 150 150) (make-posn 150 170))
- (lista-cuarto-circulo 100 275 50 20 'arriba-derecha 'horario)
- (lista-cuarto-circulo 100 275 50 20 'abajo-derecha 'antihorario)
- (lista-cuarto-circulo 100 275 50 20 'abajo-izquierda 'horario)
- (lista-cuarto-circulo 100 275 25 20 'abajo-izquierda 'antihorario)
- (lista-cuarto-circulo 100 275 25 20 'abajo-derecha 'horario)
- (lista-cuarto-circulo 100 275 25 20 'arriba-derecha 'antihorario)
- (list (make-posn 75 250) (make-posn 75 225))
- ))
-
-(define lista-4
-(append
- (list
-  (make-posn 50 225)
-  (make-posn 120 150)
-  (make-posn 150 150)
-  (make-posn 80 225)
-  (make-posn 130 225)
-  (make-posn 130 205)
-  (make-posn 150 205)
-  (make-posn 150 225)
-  (make-posn 150 320)
-  (make-posn 125 320)
-  (make-posn 125 250)
-  (make-posn 50 250))))
-
-(define lista-5
-(append
- (list (make-posn 50 235)(make-posn 50 150)(make-posn 150 150) (make-posn 150 170)(make-posn 75 170) (make-posn 75 210))
- (lista-cuarto-circulo 100 260 50 20 'arriba-derecha 'horario)
- (lista-cuarto-circulo 100 275 50 20 'abajo-derecha 'antihorario)
- (lista-cuarto-circulo 100 275 50 20 'abajo-izquierda 'horario)
- (lista-cuarto-circulo 100 275 25 20 'abajo-izquierda 'antihorario)
- (lista-cuarto-circulo 100 275 25 20 'abajo-derecha 'horario)
- (lista-cuarto-circulo 100 260 25 20 'arriba-derecha 'antihorario)
- ))
-
-(define lista-6
-(append
- (list (make-posn 50 320) (make-posn 50 150) (make-posn 150 150) (make-posn 150 180)
-       (make-posn 80 180) (make-posn 80 225) (make-posn 150 225)
-       ;;Interior
-       (make-posn 150 275) (make-posn 120 275) (make-posn 120 245)
-       (make-posn 80 245) (make-posn 80 295) (make-posn 120 295)
-       (make-posn 120 275) (make-posn 150 275)
-       ;;Esterior
-       (make-posn 150 320)
-       )))
-
-(define lista-7
-(append
-(list
- (make-posn 50 180) (make-posn 50 150) (make-posn 150 150)
- (make-posn 150 180) (make-posn 80 320) (make-posn 50 320)
- (make-posn 120 180)
- )))
-
-(define lista-8
-  (append
-   (list
-    ;; Primer circulo
-    (make-posn 70 230) (make-posn 50 210)
-    (make-posn 50 170) (make-posn 70 150)
-    (make-posn 130 150) (make-posn 150 170)
-    (make-posn 150 190);; Interior
-    (make-posn 130 190)
-    (make-posn 110 170)
-    (make-posn 90 170)(make-posn 70 190)(make-posn 90 210)
-    (make-posn 110 210)
-    (make-posn 130 190);; Fuera
-    (make-posn 150 190)
-    (make-posn 150 210)(make-posn 130 230)(make-posn 150 250)
-    (make-posn 150 270);;Dentro
-    (make-posn 130 270)
-    (make-posn 110 250)
-    (make-posn 90 250) (make-posn 70 270)(make-posn 70 280)(make-posn 90 300)
-    (make-posn 110 300) (make-posn 130 280)
-    (make-posn 130 270);; Fuera
-    (make-posn 150 270)(make-posn 150 300)(make-posn 130 320)(make-posn 70 320)
-    (make-posn 50 300)(make-posn 50 250))))
-
-(define lista-9
-  (append
-   (lista-cuarto-circulo 100 200 50 20 'abajo-izquierda 'horario)
-   (lista-cuarto-circulo 100 200 50 20 'arriba-izquierda 'antihorario)
-   (lista-cuarto-circulo 100 200 50 20 'arriba-derecha 'horario)
-   (list (make-posn 150 200) (make-posn 125 200));;Dentro
-   (lista-cuarto-circulo 100 200 25 20 'arriba-derecha 'antihorario)
-   (lista-cuarto-circulo 100 200 25 20 'arriba-izquierda 'horario)
-   (lista-cuarto-circulo 100 200 25 20 'abajo-izquierda 'horario)
-   (lista-cuarto-circulo 100 200 25 20 'abajo-derecha 'horario)
-   (list (make-posn 125 200)(make-posn 150 200)(make-posn 150 225)(make-posn 100 320) (make-posn 80 320) (make-posn 130 225))))
-(define lista-t
+(define valores
   (list
-   (make-posn 50 190)(make-posn 50 150)(make-posn 150 150) (make-posn 150 190)
-   (make-posn 115 190) (make-posn 115 320)(make-posn 85 320)(make-posn 85 190)
+   (cons '0 (append
+             (list
+              (list 70 320) (list 50 300) (list 50 170) (list 70 150)
+              (list 130 150) (list 150 170) (list 150 190) ;; Interior
+              (list 130 190) (list 120 170) (list 80 170) (list 70 190)
+              (list 70 280) (list 80 300) (list 120 300) (list 130 280)
+              (list 130 190) (list 150 190) (list 150 300) (list 130 320))))
+   
+   (cons '1 (list (list 50 200) (list 75 200) (list 100 150) (list 125 150)
+                  (list 125 320) (list 100 320) (list 100 200)))
+
+   (cons '2 (append (lista-cuarto-circulo 100 200 50 20 'arriba-izquierda 'antihorario)
+                    (lista-cuarto-circulo 100 200 50 20 'arriba-derecha 'horario)
+                    (list (list 80 300) (list 150 300) (list 150 320) (list 50 320) (list 50 300))
+                    (lista-cuarto-circulo 100 200 25 20 'arriba-derecha 'antihorario)
+                    (lista-cuarto-circulo 100 200 25 20 'arriba-izquierda 'horario)))
+
+   (cons '3 (append (list (list 120 170) (list 50 170) (list 50 150) (list 150 150) (list 150 170))
+                    (lista-cuarto-circulo 100 275 50 20 'arriba-derecha 'horario)
+                    (lista-cuarto-circulo 100 275 50 20 'abajo-derecha 'antihorario)
+                    (lista-cuarto-circulo 100 275 50 20 'abajo-izquierda 'horario)
+                    (lista-cuarto-circulo 100 275 25 20 'abajo-izquierda 'antihorario)
+                    (lista-cuarto-circulo 100 275 25 20 'abajo-derecha 'horario)
+                    (lista-cuarto-circulo 100 275 25 20 'arriba-derecha 'antihorario)
+                    (list (list 75 250) (list 75 225))))
+   
+   ;; Añadir el resto de números y letras de manera similar
+   (cons '4 (list (list 50 225) (list 120 150) (list 150 150) (list 80 225) (list 130 225)
+                  (list 130 205) (list 150 205) (list 150 225) (list 150 320) (list 125 320)
+                  (list 125 250) (list 50 250)))
+   
+   (cons '5 (append (list (list 50 235) (list 50 150) (list 150 150) (list 150 170) (list 75 170) (list 75 210))
+                    (lista-cuarto-circulo 100 260 50 20 'arriba-derecha 'horario)
+                    (lista-cuarto-circulo 100 275 50 20 'abajo-derecha 'antihorario)
+                    (lista-cuarto-circulo 100 275 50 20 'abajo-izquierda 'horario)
+                    (lista-cuarto-circulo 100 275 25 20 'abajo-izquierda 'antihorario)
+                    (lista-cuarto-circulo 100 275 25 20 'abajo-derecha 'horario)
+                    (lista-cuarto-circulo 100 260 25 20 'arriba-derecha 'antihorario)))
+   
+   (cons '6 (append
+             (list (list 50 320) (list 50 150) (list 150 150) (list 150 180)
+                   (list 80 180) (list 80 225) (list 150 225)
+                   ;; Interior
+                   (list 150 275) (list 120 275) (list 120 245)
+                   (list 80 245) (list 80 295) (list 120 295)
+                   (list 120 275) (list 150 275)
+                   ;; Exterior
+                   (list 150 320))))
+   
+   ;; Número 7
+   (cons '7 (list
+             (list 50 180) (list 50 150) (list 150 150)
+             (list 150 180) (list 80 320) (list 50 320)
+             (list 120 180)))
+   
+   ;; Número 8
+   (cons '8 (append
+             (list
+              ;; Primer círculo
+              (list 70 230) (list 50 210) (list 50 170) (list 70 150)
+              (list 130 150) (list 150 170) (list 150 190) ;; Interior
+              (list 130 190) (list 110 170) (list 90 170) (list 70 190) (list 90 210)
+              (list 110 210) (list 130 190) ;; Exterior
+              (list 150 190) (list 150 210) (list 130 230) (list 150 250)
+              (list 150 270) ;; Interior
+              (list 130 270) (list 110 250) (list 90 250)
+              (list 70 270) (list 70 280) (list 90 300) (list 110 300) (list 130 280)
+              (list 130 270) ;; Exterior
+              (list 150 270) (list 150 300) (list 130 320) (list 70 320)
+              (list 50 300) (list 50 250))))
+   
+   ;; Número 9
+   (cons '9 (append
+             (lista-cuarto-circulo 100 200 50 20 'abajo-izquierda 'horario)
+             (lista-cuarto-circulo 100 200 50 20 'arriba-izquierda 'antihorario)
+             (lista-cuarto-circulo 100 200 50 20 'arriba-derecha 'horario)
+             (list (list 150 200) (list 125 200)) ;; Interior
+             (lista-cuarto-circulo 100 200 25 20 'arriba-derecha 'antihorario)
+             (lista-cuarto-circulo 100 200 25 20 'arriba-izquierda 'horario)
+             (lista-cuarto-circulo 100 200 25 20 'abajo-izquierda 'horario)
+             (lista-cuarto-circulo 100 200 25 20 'abajo-derecha 'horario)
+             (list (list 125 200) (list 150 200) (list 150 225) (list 100 320) (list 80 320) (list 130 225))))
+   (cons 'T (list
+             (list 50 190) (list 50 150) (list 150 150) (list 150 190)
+             (list 115 190) (list 115 320) (list 85 320) (list 85 190)))
+   
+   ;; Letra J
+   (cons 'J (append
+             (list (list 50 190) (list 50 150) (list 150 150) (list 150 190))
+             (lista-cuarto-circulo 100 270 50 20 'abajo-derecha 'antihorario)
+             (list (list 60 320) (list 60 290))
+             (lista-cuarto-circulo 100 270 20 20 'abajo-derecha 'horario)
+             (list (list 120 190))))
+   
+   ;; Letra Q
+   (cons 'Q (append
+             (lista-cuarto-circulo 80 180 30 20 'arriba-izquierda 'antihorario)
+             (lista-cuarto-circulo 120 180 30 20 'arriba-derecha 'horario)
+             (list (list 150 260) (list 130 260))
+             (lista-cuarto-circulo 120 180 10 20 'arriba-derecha 'antihorario)
+             (lista-cuarto-circulo 80 180 10 20 'arriba-izquierda 'horario)
+             (lista-cuarto-circulo 80 280 10 20 'abajo-izquierda 'antihorario)
+             (list (list 110 290) (list 100 270) (list 120 270) (list 143 320)
+                   (list 123 320) (list 120 310))
+             (lista-cuarto-circulo 80 280 30 20 'abajo-izquierda 'horario)))
+   
+   ;; Letra K
+   (cons 'K (list
+             (list 50 150) (list 70 150) (list 70 210)
+             (list 130 150) (list 150 150) (list 70 230)
+             (list 150 320) (list 130 320) (list 70 250)
+             (list 70 320) (list 50 320)))
+   
+   ;; Letra A
+   (cons 'A (list
+             (list 50 320) (list 90 150) (list 110 150) (list 150 320)
+             (list 130 320) (list 115 250) (list 100 250) (list 100 240)
+             (list 110 240) (list 100 190) (list 90 240)
+             (list 100 240) (list 100 250) (list 85 250) (list 70 320)))
+   
+   ;; Continúa agregando cada número y letra similarmente
    ))
-
-(define lista-j
-  (append
-  (list (make-posn 50 190)(make-posn 50 150)(make-posn 150 150) (make-posn 150 190))
-  (lista-cuarto-circulo 100 270 50 20 'abajo-derecha 'antihorario)
-  (list (make-posn 60 320) (make-posn 60 290))
-  (lista-cuarto-circulo 100 270 20 20 'abajo-derecha 'horario)
-  (list (make-posn 120 190))
-  ))
-
-(define lista-q
- (append
-  (lista-cuarto-circulo 80 180 30 20 'arriba-izquierda 'antihorario)
-  (lista-cuarto-circulo 120 180 30 20 'arriba-derecha 'horario)
-  (list (make-posn 150 260) (make-posn 130 260))
-  (lista-cuarto-circulo 120 180 10 20 'arriba-derecha 'antihorario)
-  (lista-cuarto-circulo 80 180 10 20 'arriba-izquierda 'horario)
-  (lista-cuarto-circulo 80 280 10 20 'abajo-izquierda 'antihorario)
-  (list (make-posn 110 290) (make-posn 100 270) (make-posn 120 270)(make-posn 143 320)
-        (make-posn 123 320)(make-posn 120 310))
-  (lista-cuarto-circulo 80 280 30 20 'abajo-izquierda 'horario)))
-
-(define lista-k
- (append
-  (list (make-posn 50 150) (make-posn 70 150) (make-posn 70 210)
-        (make-posn 130 150) (make-posn 150 150) (make-posn 70 230)
-        (make-posn 150 320) (make-posn 130 320) (make-posn 70 250)
-        (make-posn 70 320) (make-posn 50 320))))
-
-(define lista-a
-(append
- (list
-  (make-posn 50 320)(make-posn 90 150)(make-posn 110 150)(make-posn 150 320)
-  (make-posn 130 320)(make-posn 115 250)(make-posn 100 250)(make-posn 100 240)
-  (make-posn 110 240)(make-posn 100 190)(make-posn 90 240)
-  (make-posn 100 240)
-  (make-posn 100 250) (make-posn 85 250) (make-posn 70 320)
-  )))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -584,23 +548,29 @@
 ;; Función dibujar lista de puntos
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (dibujar-lista lista coordx coordy escala color)
-  (let ((puntos-transformados '()))  ;; Inicializamos una lista vacía para los puntos transformados
+(define (dibujar-lista lista-asociacion letra coordx coordy escala color)
+  ;; Obtener la lista de puntos de la letra en la lista de asociación
+  (let* ((puntos-originales (cdr (assoc letra lista-asociacion)))  ;; Extrae la lista de puntos de la letra
+         (puntos-transformados '()))  ;; Inicializamos una lista vacía para los puntos transformados
+
     (do ((i 0 (+ i 1)))  ;; Inicialización de i en 0, lo incrementamos en cada iteración
-        ((= i (length lista))  ;; Condición de parada: cuando i alcanza la longitud de la lista
+        ((= i (length puntos-originales))  ;; Condición de parada: cuando i alcanza la longitud de la lista
          ;; Cuando el bucle termine, dibujamos el polígono con los puntos transformados
          ((draw-solid-polygon v1) puntos-transformados (make-posn 0 0) color))
+      
       ;; Cuerpo del bucle
-      (let* ((p (list-ref lista i))  ;; Obtenemos el i-ésimo elemento de la lista
-             (x (posn-x p))  ;; Extraemos la coordenada x
-             (y (posn-y p))  ;; Extraemos la coordenada y
+      (let* ((p (list-ref puntos-originales i))  ;; Obtenemos el i-ésimo punto en formato '(x y)
+             (x (car p))  ;; Extraemos la coordenada x
+             (y (cadr p))  ;; Extraemos la coordenada y
              ;; Aplicamos la transformación de escalado y desplazamiento
              (punto-transformado (escalar-y-desplazar x y coordx coordy escala 100 85))
              ;; Convertimos el vector transformado de vuelta a un `posn`
              (punto-posn (make-posn (vector-ref punto-transformado 0)
                                     (vector-ref punto-transformado 1))))
+        
         ;; Agregamos el punto `posn` transformado a la lista
         (set! puntos-transformados (append puntos-transformados (list punto-posn)))))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FIN Función dibujar lista de puntos
@@ -613,58 +583,60 @@
 ;; DIBUJAR CARTA
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (dibujar-carta cx cy escala palo lista)
+(define (dibujar-carta cx cy escala palo valor lista-asociacion)
+  ;; Función interna para transformar coordenadas según el centro y escala y devolver un par `(x, y)`
+  (define (transformar-coordenadas x y esc)
+    (list (+ cx (* esc (- x 175)))
+          (+ cy (* esc (- y 350)))))
+
+  ;; Variables de escala y color para el palo
   (let* ((escala-objetos (* escala 0.75))
          (color (cond ((or (eq? palo 'corazon) (eq? palo 'diamante)) color1)
                       ((or (eq? palo 'pica) (eq? palo 'trebol)) color5)
                       (else (error "Palo no válido"))))
-         (centroide-x 175)  ;; El centroide absoluto de la carta
-         (centroide-y 350)  ;; Corregido el centroide para ajustar a las coordenadas de la carta
+         (desplazamiento-numero-x (+ cx (* escala (- 175 175))))
+         (desplazamiento-numero-y (+ cy (* escala (- 350 480))))
+         (desplazamiento-palo-x (+ cx (* escala (- 175 175))))
+         (desplazamiento-palo-y (+ cy (* escala (- 350 530))))
+         
+         ;; Definir las listas de puntos transformados para el contorno de la carta
+         (list-cuerpo
+          (append
+           (list (transformar-coordenadas 50 100 escala)
+                 (transformar-coordenadas 50 400 escala))
+           (lista-cuarto-circulo (car (transformar-coordenadas 100 100 escala))
+                                 (cadr (transformar-coordenadas 100 100 escala))
+                                 (* escala 50) 20 'arriba-izquierda 'antihorario)
+           (list (transformar-coordenadas 100 50 escala)
+                 (transformar-coordenadas 250 50 escala))
+           (lista-cuarto-circulo (car (transformar-coordenadas 250 100 escala))
+                                 (cadr (transformar-coordenadas 250 100 escala))
+                                 (* escala 50) 20 'arriba-derecha 'horario)
+           (list (transformar-coordenadas 300 100 escala)
+                 (transformar-coordenadas 300 400 escala))
+           (lista-cuarto-circulo (car (transformar-coordenadas 250 400 escala))
+                                 (cadr (transformar-coordenadas 250 400 escala))
+                                 (* escala 50) 20 'abajo-derecha 'antihorario)
+           (list (transformar-coordenadas 100 450 escala)
+                 (transformar-coordenadas 250 450 escala))
+           (lista-cuarto-circulo (car (transformar-coordenadas 100 400 escala))
+                                 (cadr (transformar-coordenadas 100 400 escala))
+                                 (* escala 50) 20 'abajo-izquierda 'horario))))
 
-         ;; Desplazamientos relativos
-         (desplazamiento-numero-x (+ cx (* escala (- centroide-x 175))))
-         (desplazamiento-numero-y (+ cy (* escala (- centroide-y 480))))
-
-         ;; Ajustes para las posiciones del palo (ligeramente por encima del número)
-         (desplazamiento-palo-x (+ cx (* escala (- centroide-x 175))))
-         (desplazamiento-palo-y (+ cy (* escala (- centroide-y 530)))))
-
-    ;; Dibujar los bordes de la carta con líneas y cuartos de círculo
-
-    (define list-cuerpo
-      (append
-       (list (make-posn (+ cx (* escala (- 50 centroide-x))) (+ cy (* escala (- 100 centroide-y))))
-             (make-posn (+ cx (* escala (- 50 centroide-x))) (+ cy (* escala (- 400 centroide-y)))))
-       (lista-cuarto-circulo (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 100 centroide-y)))
-                             (* escala 50) 20 'arriba-izquierda 'antihorario)
-       (list (make-posn (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 50 centroide-y))))
-             (make-posn (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 50 centroide-y)))))
-       (lista-cuarto-circulo (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 100 centroide-y)))
-                             (* escala 50) 20 'arriba-derecha 'horario)
-       (list (make-posn (+ cx (* escala (- 300 centroide-x))) (+ cy (* escala (- 100 centroide-y))))
-             (make-posn (+ cx (* escala (- 300 centroide-x))) (+ cy (* escala (- 400 centroide-y)))))
-       (lista-cuarto-circulo (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 400 centroide-y)))
-                             (* escala 50) 20 'abajo-derecha 'antihorario)
-       (list (make-posn (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 450 centroide-y))))
-            (make-posn (+ cx (* escala (- 250 centroide-x))) (+ cy (* escala (- 450 centroide-y)))))
-       (lista-cuarto-circulo (+ cx (* escala (- 100 centroide-x))) (+ cy (* escala (- 400 centroide-y)))
-                             (* escala 50) 20 'abajo-izquierda 'horario)
-      
-      ))
+    ;; Dibujar el contorno de la carta
+    ((draw-solid-polygon v1) (convertir-a-posns list-cuerpo) (make-posn 0 0) blanco)
+    ((draw-polygon v1) (convertir-a-posns list-cuerpo) (make-posn 0 0) negro)
     
-    ((draw-solid-polygon v1) list-cuerpo (make-posn 0 0) blanco)
-    ((draw-polygon v1) list-cuerpo (make-posn 0 0) negro)
-    ;; Dibujar el número de la carta, ajustado con las coordenadas relativas
-    (dibujar-lista lista desplazamiento-numero-x desplazamiento-numero-y escala-objetos color)
+    ;; Dibujar el número de la carta, ajustado con las coordenadas relativas, usando la lista de asociación
+    (dibujar-lista lista-asociacion valor desplazamiento-numero-x desplazamiento-numero-y escala-objetos color)
 
     ;; Dibujar el símbolo del palo, ajustado con las coordenadas relativas
     (cond
-      ((eq? palo 'corazon) (dibujar-corazon desplazamiento-palo-x desplazamiento-palo-y escala-objetos))  ;; Dibuja un corazón
-      ((eq? palo 'pica) (dibujar-pica desplazamiento-palo-x desplazamiento-palo-y escala-objetos))        ;; Dibuja una pica
-      ((eq? palo 'trebol) (dibujar-trebol desplazamiento-palo-x desplazamiento-palo-y escala-objetos))    ;; Dibuja un trébol
-      ((eq? palo 'diamante) (dibujar-diamante desplazamiento-palo-x desplazamiento-palo-y escala-objetos)) ;; Dibuja un diamante
+      ((eq? palo 'corazon) (dibujar-corazon desplazamiento-palo-x desplazamiento-palo-y escala-objetos))
+      ((eq? palo 'pica) (dibujar-pica desplazamiento-palo-x desplazamiento-palo-y escala-objetos))
+      ((eq? palo 'trebol) (dibujar-trebol desplazamiento-palo-x desplazamiento-palo-y escala-objetos))
+      ((eq? palo 'diamante) (dibujar-diamante desplazamiento-palo-x desplazamiento-palo-y escala-objetos))
       (else (error "Palo no válido")))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FIN FUNCIÓN DIBUJAR CARTA
@@ -676,14 +648,14 @@
 
 (define (dibujar-carta-por-detras cx cy escala)
   ;; Función interna para transformar coordenadas según el centro y escala
-  (define (transformar-coordenadas punto esc)
-    (make-posn (+ cx (* esc (- (posn-x punto) 175)))
-               (+ cy (* esc (- (posn-y punto) 350)))))
-  
+  (define (transformar-coordenadas par esc)
+    (make-posn (+ cx (* esc (- (car par) 175)))
+               (+ cy (* esc (- (cadr par) 350)))))
+
+  ;; Transformar cada punto en list-cuerpo y list-interior usando transformar-coordenadas
   (let* ((escala-objetos (* escala 1.2))
          (escala2 (* escala 0.9))
          
-         ;; Transformar cada punto en list-cuerpo y list-interior usando transformar-coordenadas
          (list-cuerpo-transformado
           (map (lambda (p)
                  (transformar-coordenadas p escala))
@@ -705,6 +677,7 @@
                                   (+ cy (* escala -100))
                                   escala-objetos)
      (make-posn 0 0) blanco)))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

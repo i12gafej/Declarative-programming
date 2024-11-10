@@ -15,6 +15,7 @@
 (define color5 (make-rgb 0.0 0.0 0.0))
 
 (define blanco (make-rgb 1.0 1.0 1.0))
+(define rojo (make-rgb 0.9 0.1 0.2))
 (define oro (make-rgb 0.8 0.8 0.03))
 (define amarillo (make-rgb 0.9 0.9 0.09))
 (define gris (make-rgb 0.5 0.5 0.5))
@@ -29,17 +30,10 @@
 (define mas-opp (make-rgb 0.06 0.16 0.27))
 (define menos (make-rgb 0.94 0.28 0.078))
 (define fondo (make-rgb 0.9 0.9 0.9))
+(define contador-crupier (make-rgb 0.8 0.8 0.8))
 (define beish (make-rgb 0.925 0.855 0.549))
 
-#|
-fichas: 
-
-Aparece un menú donde dice: Cuantas fichas quieres apostar:
-
-Y salen de 20 100 200 500 2000 5000
-|#
-
-(define (mesa)
+(define (mesa fichas-crupier fichas-jugador)
   ; Tapete
   ((draw-solid-polygon v1)
    (list (make-posn 0 0) (make-posn 800 0) (make-posn 800 600)(make-posn 0 600)) (make-posn 0 0) fondo)
@@ -58,9 +52,16 @@ Y salen de 20 100 200 500 2000 5000
   ;; Cuadrante de operaciones
   ((draw-polygon v1)
    (list (make-posn 0 500) (make-posn 800 500) (make-posn 800 600)(make-posn 0 600)) (make-posn 0 0) fondo)
+  ;; Contador
   ((draw-solid-polygon v1)
    (list (make-posn 0 500) (make-posn 220 500) (make-posn 220 600)(make-posn 0 600)) (make-posn 0 0) contador)
-  (dibujar-texto "FICHAS" 50 510 10 fondo)
+     ;; Recuadrito interior
+  ((draw-solid-polygon v1)
+   (list (make-posn 10 530) (make-posn 210 530) (make-posn 210 590)(make-posn 10 590)) (make-posn 0 0) blanco)
+  ((draw-solid-polygon v1)
+   (list (make-posn 15 535) (make-posn 205 535) (make-posn 205 585)(make-posn 15 585)) (make-posn 0 0) negro)
+  (dibujar-texto "FICHAS" 60 507 8 fondo)
+  (dibujar-texto (number->string fichas-jugador) 25 550 8 blanco)
 
   ;; Botones de juego
   ((draw-solid-polygon v1)
@@ -72,36 +73,197 @@ Y salen de 20 100 200 500 2000 5000
   ((draw-solid-polygon v1)
    (list (make-posn 620 520) (make-posn 700 520) (make-posn 700 580)(make-posn 620 580)) (make-posn 0 0) menos)
   (dibujar-texto "-" 645 530 20 mas-opp)
+  ;; Cuadrante fichas crupier
+  ((draw-solid-polygon v1)
+   (list (make-posn 290 10) (make-posn 510 10) (make-posn 510 80)(make-posn 290 80)) (make-posn 0 0) contador-crupier)
+  ((draw-solid-polygon v1)
+   (list (make-posn 295 15) (make-posn 505 15) (make-posn 505 75)(make-posn 295 75)) (make-posn 0 0) blanco)
+  ((draw-solid-polygon v1)
+   (list (make-posn 300 20) (make-posn 500 20) (make-posn 500 70)(make-posn 300 70)) (make-posn 0 0) negro)
+  (dibujar-texto (number->string fichas-crupier) 310 35 10 blanco)
 )
-(mesa)
+(mesa 100 200)
+(define (apostar)
+  ((draw-solid-polygon v1)
+    (list
+     (make-posn 140 120)
+     (make-posn 140 480)
+     (make-posn 660 480)
+     (make-posn 660 120)
+     ) (make-posn 0 0) morosa)
+  ((draw-polygon v1)
+   (list
+    (make-posn 140 120)
+    (make-posn 140 480)
+    (make-posn 660 480)
+    (make-posn 660 120)
+    ) (make-posn 0 0) negro)
+  
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 198 171 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 199 171 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 171 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 170 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 171 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 172 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 173 10 blanco)
+  ;; Ficha 20
+  (dibujar-ficha 200 420 0.8 tapete)
+  (dibujar-texto "2O" 183 410 10 blanco)
+  ;; FIcha 50
+  (dibujar-ficha 250 340 0.8 amarillo)
+  (dibujar-texto "5O" 233 330 10 blanco)
+  ;; Ficha 100
+  (dibujar-ficha 330 280 0.8 navy)
+  (dibujar-texto "1OO" 313 275 6 blanco)
+  ;; Ficha 200
+  (dibujar-ficha 470 280 0.8 morado)
+  (dibujar-texto "2OO" 453 275 6 blanco)
+  ;; Ficha 500
+  (dibujar-ficha 550 340 0.8 menos)
+  (dibujar-texto "5OO" 533 335 6 blanco)
+  ;; Ficha 1000
+  (dibujar-ficha 600 420 0.8 oro)
+  (dibujar-texto "1OOO" 580 415 5 blanco)
+  (let loop ()
+    (let* (
+           (click (get-mouse-click v1))
+           (x (posn-x (mouse-click-posn click)))
+           (y (posn-y (mouse-click-posn click)))
+           )
+     ; El radio es 40
+     (cond
+       ((<= (D2 x y 200 420)  40) 20)
+       ((<= (D2 x y 250 340)  40) 50)
+       ((<= (D2 x y 330 280)  40) 100)
+       ((<= (D2 x y 470 280)  40) 200)
+       ((<= (D2 x y 550 340)  40) 500)
+       ((<= (D2 x y 600 420)  40) 1000)
+       (else (loop))
+     )
+    )
+  )
+)
+(define (esLetra? caracter)
+  (if (and (>= (char->integer caracter) (char->integer #\A))
+            (<= (char->integer caracter) (char->integer #\Z))
+       )
+      #t
+      #f)
+)
+(define (esNumero? caracter)
+  (if (and (>= (char->integer caracter) (char->integer #\0))
+           (<= (char->integer caracter) (char->integer #\9)))
+      #t
+      #f)
+)
+(define (input-field x y pos-x pos-y)
+  (let*
+      ((y (if (< y 40) 40 y))
+       (letra-pos (- (/ y 2) 10)))   
+  ((draw-solid-polygon v1)
+   (list
+    (make-posn pos-x pos-y)
+    (make-posn (+ pos-x x) pos-y)
+    (make-posn (+ pos-x x) (+ pos-y y))
+    (make-posn pos-x (+ pos-y y))) (make-posn 0 0) negro)
+  ((draw-solid-polygon v1)
+   (list
+    (make-posn (+ 5 pos-x) (+ 5 pos-y))
+    (make-posn (- (+ pos-x x) 5) (+ 5 pos-y))
+    (make-posn (- (+ pos-x x) 5) (- (+ pos-y y) 5))
+    (make-posn (+ 5 pos-x) (+ pos-y y -5))) (make-posn 0 0) blanco)
+  (do
+      (
+       (tecla (key-value (get-key-press v1)) (key-value (get-key-press v1)))
+       (valores "" (cond
+                     ; No sea igual a cartorce, se hace todo normal
+                     ;((eq? (dibujar-texto valores (+ 10 pos-x) (+ 10 pos-y) 10 negro) 'null) "")
+                     ((< (string-length valores) 14)
+                      (cond
+                        ((symbol? tecla) valores)
+                        
+                        ((char? tecla)
+                         (if (eq? tecla #\space)
+                             valores
+                             (if (eq? tecla #\backspace)
+                                 (cond
+                                   ((> (string-length valores) 0)
+                                    (substring valores 0 (sub1 (string-length valores))))
+                                   ((or (= (string-length valores) 1) (= (string-length valores) 0))
+                                    ""
+                                    ))
+                                 (if (or (esNumero? tecla) (esLetra? tecla))
+                                     (string-append valores (string tecla))
+                                     valores)
+                                 
+                              )
+                          ))
+                     ))
+                     ((>= (string-length valores) 14)
+                      (if (eq? tecla #\backspace)
+                             (substring valores 0 (sub1 (string-length valores)))
+                             valores))
+                     
+                      )))
+      ((eq? tecla #\return) (string->number valores))
+    ((draw-solid-polygon v1)
+     (list
+      (make-posn pos-x pos-y)
+      (make-posn (+ pos-x x) pos-y)
+      (make-posn (+ pos-x x) (+ pos-y y))
+      (make-posn pos-x (+ pos-y y))) (make-posn 0 0) negro)
+    ((draw-solid-polygon v1)
+     (list
+      (make-posn (+ 5 pos-x) (+ 5 pos-y))
+      (make-posn (- (+ pos-x x) 5) (+ 5 pos-y))
+      (make-posn (- (+ pos-x x) 5) (- (+ pos-y y) 5))
+      (make-posn (+ 5 pos-x) (+ pos-y y -5))) (make-posn 0 0) blanco)
+    (dibujar-texto valores (+ 10 pos-x) (+ letra-pos pos-y) 10 negro)
+      (printf "~a\n" valores)
+      ))
+  
+  )
 
-((draw-solid-polygon v1)
- (list
-  (make-posn 140 120)
-  (make-posn 140 480)
-  (make-posn 660 480)
-  (make-posn 660 120)
-  ) (make-posn 0 0) morosa)
-((draw-polygon v1)
- (list
-  (make-posn 140 120)
-  (make-posn 140 480)
-  (make-posn 660 480)
-  (make-posn 660 120)
-  ) (make-posn 0 0) negro)
+(define (cantidad)
+  ((draw-solid-polygon v1)
+    (list
+     (make-posn 140 120)
+     (make-posn 140 480)
+     (make-posn 660 480)
+     (make-posn 660 120)
+     ) (make-posn 0 0) morosa)
+  ((draw-polygon v1)
+   (list
+    (make-posn 140 120)
+    (make-posn 140 480)
+    (make-posn 660 480)
+    (make-posn 660 120)
+    ) (make-posn 0 0) negro)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 163 171 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 164 171 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 171 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 170 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 171 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 172 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 173 10 blanco)
+  (let loop
+    (
+     (resultado (input-field 300 20 250 250))
+     )
+    (cond ((not resultado)
+       (dibujar-texto "ENTRADA ERRONEA\n" 250 300 10 blanco)
+       (sleep 2)
+       (limpiar-figura
+        (list (make-posn 250 300) (make-posn 550 300) (make-posn 550 340) (make-posn 250 340))
+        morosa)
+       (loop (input-field 300 20 250 250))
+       )
+      (else resultado)
+ )
+    )
+  )
 
-(dibujar-ficha 200 420 0.8 tapete)
-(dibujar-texto "2O" 183 410 10 blanco)
-(dibujar-ficha 250 340 0.8 amarillo)
-(dibujar-texto "5O" 233 330 10 blanco)
-(dibujar-ficha 330 280 0.8 navy)
-(dibujar-texto "1OO" 313 275 6 blanco)
-(dibujar-ficha 470 280 0.8 morado)
-(dibujar-texto "2OO" 453 275 6 blanco)
-(dibujar-ficha 550 340 0.8 menos)
-(dibujar-texto "5OO" 533 335 6 blanco)
-(dibujar-ficha 600 420 0.8 oro)
-(dibujar-texto "1OOO" 580 415 5 blanco)
+
 
 
 (define contorno
@@ -171,24 +333,24 @@ Y salen de 20 100 200 500 2000 5000
 
 (define list-cuerpo
   (append
-   (list (make-posn 50 100) (make-posn 50 400))
+   (list (list 50 100) (list 50 400))
    (lista-cuarto-circulo 100 100 50 20 'arriba-izquierda 'antihorario)
-   (list (make-posn 100 50) (make-posn 250 50))
+   (list (list 100 50) (list 250 50))
    (lista-cuarto-circulo 250 100 50 20 'arriba-derecha 'horario)
-   (list (make-posn 300 100) (make-posn 300 400))
+   (list (list 300 100) (list 300 400))
    (lista-cuarto-circulo 250 400 50 20 'abajo-derecha 'antihorario)
-   (list (make-posn 100 450) (make-posn 250 450))
+   (list (list 100 450) (list 250 450))
    (lista-cuarto-circulo 100 400 50 20 'abajo-izquierda 'horario)))
 
 (define list-interior
   (append
-   (list (make-posn 50 100) (make-posn 50 400))
+   (list (list 50 100) (list 50 400))
    (lista-cuarto-circulo 100 100 50 20 'arriba-izquierda 'antihorario)
-   (list (make-posn 100 50) (make-posn 250 50))
+   (list (list 100 50) (list 250 50))
    (lista-cuarto-circulo 250 100 50 20 'arriba-derecha 'horario)
-   (list (make-posn 300 100) (make-posn 300 400))
+   (list (list 300 100) (list 300 400))
    (lista-cuarto-circulo 250 400 50 20 'abajo-derecha 'antihorario)
-   (list (make-posn 100 450) (make-posn 250 450))
+   (list (list 100 450) (list 250 450))
    (lista-cuarto-circulo 100 400 50 20 'abajo-izquierda 'horario)))
 
 
@@ -208,9 +370,10 @@ Y salen de 20 100 200 500 2000 5000
        puntos))
 
 
-(define (limpiar-figura viewport puntos color-fondo)
+(define (limpiar-figura puntos color-fondo)
   ;; Dibuja la figura con el color de fondo para simular el borrado
-  ((draw-solid-polygon viewport) puntos (make-posn 0 0) color-fondo))
+  ((draw-solid-polygon v1) puntos (make-posn 0 0) color-fondo)
+  ((draw-polygon v1) puntos (make-posn 0 0) color-fondo))
 
 
 (define (mover-patita x-inicial y-inicial x-final y-final escala tiempo-duracion color-fondo)
@@ -239,8 +402,8 @@ Y salen de 20 100 200 500 2000 5000
     (sleep tiempo-paso)
 
     ;; Borrar la figura en la posición anterior con el color de fondo
-    (limpiar-figura v1 (escalar-desplaza-construye2 puntos puntos-interior x-pos y-pos escala) color-fondo)
-    (limpiar-figura v1 (escalar-desplaza-construye2 puntos-interior puntos-interior x-pos y-pos escala) color-fondo)
+    (limpiar-figura (escalar-desplaza-construye2 puntos puntos-interior x-pos y-pos escala) color-fondo)
+    (limpiar-figura (escalar-desplaza-construye2 puntos-interior puntos-interior x-pos y-pos escala) color-fondo)
 
     )
     ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos puntos-interior x-final y-final escala) (make-posn 0 0) gris)
@@ -257,8 +420,8 @@ Y salen de 20 100 200 500 2000 5000
 
     ;; Función para transformar puntos según el centro y la escala
     (define (transformar-coordenadas punto esc cx cy)
-      (make-posn (+ cx (* esc (- (posn-x punto) 175)))
-                 (+ cy (* esc (- (posn-y punto) 350)))))
+      (make-posn (+ cx (* esc (- (car punto) 175)))
+                 (+ cy (* esc (- (cadr punto) 350)))))
 
     ;; Función auxiliar para obtener una lista de puntos transformados
     (define (transformar-lista puntos esc cx cy)
@@ -289,9 +452,9 @@ Y salen de 20 100 200 500 2000 5000
         (sleep pausa)
 
         ;; Limpiar la carta y la patita en la posición anterior
-        (limpiar-figura v1 puntos-cuerpo fondo)
-        (limpiar-figura v1 puntos-patita fondo)
-        (limpiar-figura v1 puntos-patita2 fondo)
+        (limpiar-figura puntos-cuerpo fondo)
+        (limpiar-figura puntos-patita fondo)
+        (limpiar-figura puntos-patita2 fondo)
         ))
     (dibujar-carta-por-detras x-fin y-fin escala)))
 
@@ -299,21 +462,17 @@ Y salen de 20 100 200 500 2000 5000
 
 
 
-
+;(cantidad)
 
 ;(dibujar-carta-por-detras 100 400 0.4)
+;(dibujar-carta 100 400 0.3 'trebol 'T valores)
 
-;(mover-patita-carta 700 400 200 400 0.5 1. tapete)
-;(dibujar-carta 200 400 0.5 'diamante lista-t)
-;(mover-patita 300 400 700 400 0.5 1. tapete)
-;(mover-patita-carta 700 400 300 400 0.5 1. tapete)
-;(mover-patita 400 400 700 400 0.5 1. tapete)
+(mover-patita-carta 700 400 200 400 0.4 1. tapete)
+(dibujar-carta 200 400 0.4 'diamante 'T valores)
+(mover-patita 300 400 700 400 0.4 1. tapete)
+(mover-patita-carta 700 400 300 400 0.4 1. tapete)
+(mover-patita 400 400 700 400 0.4 1. tapete)
 
 
 
-
-;((draw-solid-polygon v1) (escalar-desplaza-construye2 contorno interior 200 200 2) (make-posn 0 0) gris)
-;((draw-solid-polygon v1) (escalar-desplaza-construye2 interior interior 200 200 2) (make-posn 0 0) beish)
-;(limpiar-figura v1 (escalar-desplaza-construye2 contorno interior 200 200 2) (make-posn 0 0) tapete)
-;((clear-solid-polygon v1) (escalar-desplaza-construye2 contorno interior 200 200 2) (make-posn 0 0))
 
