@@ -1,3 +1,9 @@
+#|
+Archivo: Catjack.rkt
+Descripción: programa principal y menús del juego
+Autor: Javier García Fernández
+|#
+
 (require (lib "graphics.ss" "graphics"))
 
 (open-graphics)
@@ -6,12 +12,23 @@
 (define ver 600)
 (define v1 (open-viewport "Ejemplo de figuras" hor ver))
 
+#|
+El proyecto está dividido en 6 ficheros
+ - Letras: define los puntos que conforman a cada letra y las funciones de impresión de textos
+ - Figuras: defino la generación de las cartas, fichas, simbolos y valores de las cartas, además de los puntos que forman las figuras nombradas
+ - Caratula: define los puntos de la caratula
+ - Mesa: define las funciónes de generación de elementos gráficos de la mesa, además de animaciones e implementación de campo de introducción de texto.
+ - Juego: implementa las funciones del funcionamiento del juego.
+ - Catjack: programa principal donde se definen los menús tambien.
+
+No tienen ningun elemento gráfico no generado por la librería graphics.
+|#
 
 (load "letras.rkt")
-(load "FIGURAS_constructores.rkt")
+(load "figuras.rkt")
 (load "caratula.rkt")
 (load "mesa.rkt")
-(load "juego3.rkt")
+(load "juego.rkt")
 
 
 (define (menu-inicio)

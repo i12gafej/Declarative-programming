@@ -1,4 +1,3 @@
-(load "mesa.rkt")
 (define (crear-mazo)
   (append
    (map (lambda (valor) (list valor 'corazon))
