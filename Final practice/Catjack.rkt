@@ -1,6 +1,17 @@
-(load "caratula.rkt")
+(require (lib "graphics.ss" "graphics"))
+
+(open-graphics)
+
+(define hor 800)
+(define ver 600)
+(define v1 (open-viewport "Ejemplo de figuras" hor ver))
+
+
 (load "letras.rkt")
 (load "FIGURAS_constructores.rkt")
+(load "caratula.rkt")
+(load "mesa.rkt")
+(load "juego3.rkt")
 
 
 (define (menu-inicio)
@@ -16,8 +27,8 @@
 ((draw-solid-polygon v1) list-c2 (make-posn 0 0) blanco)
 ((draw-solid-polygon v1) list-k (make-posn 0 0) blanco)
 
-((draw-string v1) (make-posn 300 550) "PRESS THE SCREEN TO START" blanco)
- (let ((click (get-mouse-click v1)))
+(dibujar-texto "PRESIONA CUALQUIER TECLA PARA EMPEZAR" 30 550 10 blanco)
+ (let ((click (get-key-press v1)))
     (when click #t))
  )
 
@@ -184,9 +195,9 @@
                  (rondas (menu-rondas))
                 )
              (cond
-               ((number? rondas) (printf "Rondas seleccionadas: ~a\n" rondas))
+               ((number? rondas)   (blackjack-ganar rondas) (loop (menu-juegos)))
                ((eq? rondas 'back) (loop (menu-juegos))))))
-          ((eq? seleccion 'fichas) (printf "Modo fichas seleccionado\n"))
+          ((eq? seleccion 'fichas) (blackjack-fichas) (loop (menu-juegos)))
           ((eq? seleccion 'inicio) (inicio))
         )
       )

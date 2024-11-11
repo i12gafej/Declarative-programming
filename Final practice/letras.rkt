@@ -459,7 +459,7 @@
   (let ((puntos (assoc letra letras))) ; convierte el carácter en cadena
     (if puntos
         ((draw-polygon v1) (escalar-desplaza-construye (cadr puntos) x y escala) (make-posn 0 0) color)
-        (displayln "Carácter no encontrado"))))
+        (printf "Carácter no encontrado (~a)" letra))))
 
 ;; Función para dibujar una secuencia de texto
 (define (dibujar-texto texto x y escala color)

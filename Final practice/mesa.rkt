@@ -1,39 +1,4 @@
-
-(require (lib "graphics.ss" "graphics"))
-(load "letras.rkt")
-(load "FIGURAS_constructores.rkt")
-
-(open-graphics)
-
-(define hor 800)
-(define ver 600)
-(define v1 (open-viewport "Ejemplo de figuras" hor ver))
-
-(define color1 (make-rgb 0.9 0.1 0.2))
-(define color2 (make-rgb 0.1 0.2 0.9))
-(define color4 (make-rgb 0.2 0.1 0.9))
-(define color5 (make-rgb 0.0 0.0 0.0))
-
-(define blanco (make-rgb 1.0 1.0 1.0))
-(define rojo (make-rgb 0.9 0.1 0.2))
-(define oro (make-rgb 0.8 0.8 0.03))
-(define amarillo (make-rgb 0.9 0.9 0.09))
-(define gris (make-rgb 0.5 0.5 0.5))
-(define navy (make-rgb 0.04 0.04 0.8))
-(define morosa (make-rgb 0.9 0.7 0.85))
-(define morado (make-rgb 0.6 0.04 0.85))
-(define tapete (make-rgb 0.2 0.8 0.3))
-(define naranja (make-rgb 0.9 0.45 0.08))
-(define negro (make-rgb 0.0 0.0 0.0))
-(define contador (make-rgb 0.3 0.3 0.3))
-(define mas (make-rgb 0.07 0.94 0.74))
-(define mas-opp (make-rgb 0.06 0.16 0.27))
-(define menos (make-rgb 0.94 0.28 0.078))
-(define fondo (make-rgb 0.9 0.9 0.9))
-(define contador2 (make-rgb 0.8 0.8 0.8))
-(define beish (make-rgb 0.925 0.855 0.549))
-
-(define (contador-jugador fichas)
+(define (contador-jugador valor tipo)
   ;; Contador
   ((draw-solid-polygon v1)
    (list (make-posn 0 500) (make-posn 220 500) (make-posn 220 600)(make-posn 0 600)) (make-posn 0 0) contador)
@@ -42,8 +7,15 @@
    (list (make-posn 10 530) (make-posn 210 530) (make-posn 210 590)(make-posn 10 590)) (make-posn 0 0) blanco)
   ((draw-solid-polygon v1)
    (list (make-posn 15 535) (make-posn 205 535) (make-posn 205 585)(make-posn 15 585)) (make-posn 0 0) negro)
-  (dibujar-texto "FICHAS" 60 507 8 fondo)
-  (dibujar-texto (number->string fichas) 25 550 8 blanco)
+  (cond
+    ((eq? tipo 'fichas)
+     (dibujar-texto "FICHAS" 60 507 8 fondo)
+     )
+    (else
+     (dibujar-texto "GANADAS" 60 507 8 fondo)
+     ))
+  
+  (dibujar-texto (number->string valor) 25 550 8 blanco)
   )
 
 (define (contador-crupier fichas)
@@ -56,7 +28,7 @@
   (dibujar-texto (number->string fichas) 305 35 10 blanco)
   )
 
-(define (mesa fichas-crupier fichas-jugador)
+(define (mesa valor-crupier valor-jugador tipo)
   ; Tapete
   ((draw-solid-polygon v1)
    (list (make-posn 0 0) (make-posn 800 0) (make-posn 800 600)(make-posn 0 600)) (make-posn 0 0) fondo)
@@ -75,12 +47,16 @@
   ;; Cuadrante de operaciones
   ((draw-polygon v1)
    (list (make-posn 0 500) (make-posn 800 500) (make-posn 800 600)(make-posn 0 600)) (make-posn 0 0) fondo)
-  (contador-jugador fichas-jugador)
+  (contador-jugador valor-jugador tipo)
 
   ;; Botones de juego
-  ((draw-solid-polygon v1)
-   (list (make-posn 240 520) (make-posn 500 520) (make-posn 500 580)(make-posn 240 580)) (make-posn 0 0) naranja)
-  (dibujar-texto "DOBLAR" 250 530 20 fondo)
+  (cond
+    ((eq? tipo 'fichas)
+     ((draw-solid-polygon v1)
+      (list (make-posn 240 520) (make-posn 500 520) (make-posn 500 580)(make-posn 240 580)) (make-posn 0 0) naranja)
+     (dibujar-texto "DOBLAR" 250 530 20 fondo)
+     ))
+  
   ((draw-solid-polygon v1)
    (list (make-posn 520 520) (make-posn 600 520) (make-posn 600 580)(make-posn 520 580)) (make-posn 0 0) mas)
   (dibujar-texto "+" 545 533 20 mas-opp)
@@ -88,7 +64,9 @@
    (list (make-posn 620 520) (make-posn 700 520) (make-posn 700 580)(make-posn 620 580)) (make-posn 0 0) menos)
   (dibujar-texto "-" 645 530 20 mas-opp)
   ;; Cuadrante fichas crupier
-  (contador-crupier fichas-crupier)
+  (contador-crupier valor-crupier)
+  (dibujar-texto "CRUPIER" 60 200 5 blanco)
+  (dibujar-texto "JUGADOR" 60 350 5 blanco)
 )
 
 (define (apostar fichas-jugador)
@@ -402,7 +380,7 @@
       ((= i pasos))  ;; Condición de parada cuando hemos hecho todos los pasos
     
     ;; Dibujar la figura en la nueva posición
-    ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos puntos-interior x-pos y-pos escala) (make-posn 0 0) gris)
+    ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos puntos-interior x-pos y-pos escala) (make-posn 0 0) negro)
     ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos-interior puntos-interior x-pos y-pos escala) (make-posn 0 0) beish)
     ;(dibujar-carta-por-detras)
     
@@ -414,7 +392,7 @@
     (limpiar-figura (escalar-desplaza-construye2 puntos-interior puntos-interior x-pos y-pos escala) color-fondo)
 
     )
-    ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos puntos-interior x-final y-final escala) (make-posn 0 0) gris)
+    ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos puntos-interior x-final y-final escala) (make-posn 0 0) negro)
     ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos-interior puntos-interior x-final y-final escala) (make-posn 0 0) beish)
     
   ))
@@ -455,7 +433,7 @@
         ;((draw-solid-polygon v1) puntos-cuerpo (make-posn 0 0) blanco)
         ;((draw-solid-polygon v1) puntos-interior (make-posn 0 0) morosa)
         (dibujar-carta-por-detras pos-x pos-y escala)
-        ((draw-solid-polygon v1) puntos-patita (make-posn 0 0) gris)
+        ((draw-solid-polygon v1) puntos-patita (make-posn 0 0) negro)
         ((draw-solid-polygon v1) puntos-patita2 (make-posn 0 0) beish)
         
 
