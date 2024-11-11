@@ -1,8 +1,5 @@
-(define color1 (make-rgb 0.9 0.1 0.2))
-(define color2 (make-rgb 0.1 0.2 0.9))
-(define color4 (make-rgb 0.2 0.1 0.9))
-(define color5 (make-rgb 0.0 0.0 0.0))
-
+;;                           Colores utilizados en el juego
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define blanco (make-rgb 1.0 1.0 1.0))
 (define rojo (make-rgb 0.9 0.1 0.2))
 (define oro (make-rgb 0.8 0.8 0.03))
@@ -21,17 +18,25 @@
 (define fondo (make-rgb 0.9 0.9 0.9))
 (define contador2 (make-rgb 0.8 0.8 0.8))
 (define beish (make-rgb 0.925 0.855 0.549))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Dibujar CIRCULO
-;; Descripción: Dibuja un circulo dadas
-;; Parametros:
-;; - Coordenadas x e y
-;; - Radio
-;; - Color
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                FUNCIONES ÚTILES MATEMÁTICAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (dibujar-circulo v1 centro radio color)
+#|
+ Nombre: dibujar-circulo
+ Descripción: Dibuja un circulo sólido con el tamaño y posición indicados
+ Parametros:
+ - Make-posn con coordenadas
+ - Radio
+ - Color
+ Devuelve:
+ Impresión de círculo
+|#
+
+(define (dibujar-circulo centro radio color)
   (let* ((cx (posn-x centro))        ; Coordenada X del centro
          (cy (posn-y centro))        ; Coordenada Y del centro
          (diametro (* 2 radio))      ; Diámetro es dos veces el radio
@@ -40,43 +45,59 @@
     ;; Dibuja una elipse sólida, que es un círculo cuando sus lados son iguales (diámetro, diámetro)
     ((draw-solid-ellipse v1) (make-posn esquina-x esquina-y) diametro diametro color)))
 
-;(dibujar-circulo v1 (make-posn 100 100) 100 color1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCIÓN DIBUJAR CIRCULO
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Convertir A POSNs
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+ Nombre: lista-a-posn 
+ Descripción: convierte una lista de pares con coordeandas de puntos
+   al tipo make-posn
+ Parametros:
+ - puntos
+ Devuelve:
+  lista
+|#
 
-(define (convertir-a-posns lista)
-    (map (lambda (par) (make-posn (car par) (cadr par))) lista))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN Convertir A POSNs
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(define (lista-a-posn puntos)
+  (map (lambda (p) (make-posn (car p) (cadr p))) puntos))
   
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Distancia D2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+ Nombre: D2 
+ Descripción: Distancia Eclidea entre dos puntos
+ Parametros:
+ - x1, y1
+ - x2, y2
+ Devuelve:
+  Valor numérico de la distancia
+|#
 
 (define (D2 x1 y1 x2 y2)
   (sqrt (+ (sqr (- x1 x2)) (sqr (- y1 y2))))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN Distancia D2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+#|
+ Nombre: dibujar-cuarto-circlo 
+ Descripción: dados los parámetros de un círculo, dibuja n puntos a n color sobre uno de los cuatro
+  cuartos que tiene dicho círculo
+ Parametros:
+ - centrox
+ - centroy
+ - radio
+ - num-puntos
+ - color
+ - cuadrante
+ Devuelve:
+  impresión del cuarto de círculo
+|#
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Dibujar cuarto de círculo
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define (dibujar-cuarto-circulo v1 centrox centroy radio num-puntos color cuadrante)
+(define (dibujar-cuarto-circulo centrox centroy radio num-puntos color cuadrante)
   ;; Definir una función para calcular los puntos de la circunferencia
   (define (punto-circulo r theta)
     (let ((x (* r (cos theta)))
@@ -110,13 +131,24 @@
       ;; Dibujar la línea
       ((draw-line v1) (make-posn x1 y1) (make-posn x2 y2) color))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN Dibujar cuarto de circulo
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Funciones obtener puntos de curva
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+ Nombre: lista-cuarto-circlo 
+ Descripción: dados los parámetros de un círculo, devuelve n puntos de uno de los cuatro
+  cuartos que tiene dicho círculo y en un sentido concreto
+ Parametros:
+ - centrox
+ - centroy
+ - radio
+ - num-puntos
+ - sentido
+ - cuadrante
+ Devuelve:
+  lista con los puntos
+|#
 
 (define (lista-cuarto-circulo centrox centroy radio num-puntos cuadrante sentido)
   ;; Definir una función para calcular los puntos de la circunferencia
@@ -139,25 +171,37 @@
                                  (* i (/ pi 2 (- num-puntos 1))))))
                   (punto-circulo radio theta)))))
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Fin Funciones obtener puntos curva
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Calcular Centroide
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+ Nombre: calcular-centroide 
+ Descripción: dados tres puntos, calcula el centroide
+ Parametros:
+ - x1,y1
+ - x2,y2
+ - x3,y3
+ Devuelve:
+  vector con ambos valores
+|#
 
 (define (calcular-centroide x1 y1 x2 y2 x3 y3)
   (vector (/ (+ x1 x2 x3) 3) (/ (+ y1 y2 y3) 3)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCIÓN CALCULAR CENTROIDE
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Escalar y desplazar
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+ Nombre: escalar-y-desplazar 
+ Descripción: dado un punto, lo escala con respecto a su centroide y luego lo desplaza
+ Parametros:
+ - x,y: cuanto desplazar
+ - centroy,centroy: nuevo centro 
+ - escala: cuanta cantidad de distancia desplazar
+ - centroide-x, centroide-y: centroide original del objeto
+ Devuelve:
+  vector con el punto desplazado y escalado
+|#
 
 (define (escalar-y-desplazar x y centrox centroy escala centroide-x centroide-y)
   ;; Calcular desplazamiento en x y y respecto al centroide
@@ -167,12 +211,18 @@
     (vector (+ centrox (* escala dx)) (+ centroy (* escala dy)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCIÓN ESCALAR Y DESPLAZAR
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FUNCION TANGENTES
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+ Nombre: tangentes
+ Descripción: dado una circunferencia y un punto, se calculan sus puntos de tangencia.
+ Parametros:
+ - xc1,yc1: centro circuunferencia
+ - x-tangente,y-tangente: punto por el que pasa.
+ - radio: radio de la circunferencia
+ Devuelve:
+  vector con los dos puntos de tangencia
+|#
 
 (define (tangentes xc1 yc1 x-tangente y-tangente radio)
   
@@ -207,15 +257,24 @@
 
   (vector (vector x3_1 y3_1) (vector x3_2 y3_2))
  )
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCION TANGENTES
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FUNCION DIBUJAR CORAZON
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 FUNCIONES QUE GENERAN FIGURAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+ Nombre: dibujar-corazon
+ Descripción: se dibuja un corazón en las coordenadas indicadas
+ Parametros:
+ - centrox,centroy: centro corazón
+ - escala: cuan grande va a ser
+ Devuelve:
+  impresión del corazón
+|#
 (define (dibujar-corazon centrox centroy escala)
   ;; Centro original del triángulo
   (define centroide-x 315)
@@ -247,24 +306,29 @@
 
   ;; Dibujar los lóbulos derecho e izquierdo
 
-  (dibujar-circulo v1 (make-posn xc1 yc1) radio color1)
-  (dibujar-circulo v1 (make-posn xc2 yc2) radio color1)
+  (dibujar-circulo v1 (make-posn xc1 yc1) radio rojo)
+  (dibujar-circulo v1 (make-posn xc2 yc2) radio rojo)
 
   ;; Dibujar el triángulo que une los lóbulos
   ((draw-solid-polygon v1) 
    (list (make-posn xv yv)
          (make-posn x3_1 y3_1)
          (make-posn x3_2 y3_2)) (make-posn 0 0)
-   color1))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCION DIBUJAR CORAZON
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   rojo))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FUNCION DIBUJAR TRÉBOL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+ Nombre: dibujar-trebol
+ Descripción: se dibuja un trébol en las coordenadas indicadas
+ Parametros:
+ - centrox,centroy: centro trébol
+ - escala: cuan grande va a ser
+ Devuelve:
+  impresión del trébol
+|#
 
 (define (dibujar-trebol centrox centroy escala)
   ;; Centroide original del trébol
@@ -300,29 +364,30 @@
   (define radio (* escala 50))
 
   ;; Dibujar los círculos del trébol
-  (dibujar-circulo v1 (make-posn xc1 yc1) radio color5)
-  (dibujar-circulo v1 (make-posn xc2 yc2) radio color5)
-  (dibujar-circulo v1 (make-posn xc3 yc3) radio color5)
-  ;((draw-solid-ellipse v1) (make-posn (- xc1 50) (- yc1 50)) (* 2 escala 50) (* 2 escala 50) color5)
-  ;((draw-solid-ellipse v1) (make-posn (- xc2 50) (- yc2 50)) (* 2 escala 50) (* 2 escala 50) color5)
-  ;((draw-solid-ellipse v1) (make-posn (- xc3 50) (- yc3 50)) (* 2 escala 50) (* 2 escala 50) color5)
+  (dibujar-circulo v1 (make-posn xc1 yc1) radio negro)
+  (dibujar-circulo v1 (make-posn xc2 yc2) radio negro)
+  (dibujar-circulo v1 (make-posn xc3 yc3) radio negro)
 
   ;; Dibujar el triangulito inferior
   ((draw-solid-polygon v1) 
    (list (make-posn xv1 yv1)
          (make-posn xv2 yv2)
          (make-posn xv3 yv3)) (make-posn 0 0)
-   color5)
+   negro)
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCION DIBUJAR TRÉBOL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FUNCION DIBUJAR PICA
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+ Nombre: dibujar-pica
+ Descripción: se dibuja una pica en las coordenadas indicadas
+ Parametros:
+ - centrox,centroy: centro pica
+ - escala: cuan grande va a ser
+ Devuelve:
+  impresión de la pica
+|#
 (define (dibujar-pica centrox centroy escala)
   ;; Definir el radio de los círculos
   (define radio (* escala 50))
@@ -343,8 +408,8 @@
   (define yv (vector-ref xv-yv 1))
 
   ;; Dibujar los dos círculos de la pica
-  (dibujar-circulo v1 (make-posn xc1 yc1) radio color5)
-  (dibujar-circulo v1 (make-posn xc2 yc2) radio color5)
+  (dibujar-circulo v1 (make-posn xc1 yc1) radio negro)
+  (dibujar-circulo v1 (make-posn xc2 yc2) radio negro)
 
   ;; Calcular las tangentes entre los círculos y el vértice
   (define der (tangentes xc1 yc1 xv yv radio))
@@ -361,7 +426,7 @@
    (list (make-posn x3_1 y3_1)
          (make-posn x3_2 y3_2)
          (make-posn xv yv))(make-posn 0 0)
-   color5)
+   negro)
 
   ;; Dibujar el polígono inferior (la parte baja de la pica)
   (define xv1-yv1 (escalar-y-desplazar 290 380 centrox centroy escala 290 350))
@@ -379,15 +444,22 @@
    (list (make-posn xv1 yv1)
          (make-posn xv2 yv2)
          (make-posn xv3 yv3)) (make-posn 0 0)
-   color5)
+   negro)
  )
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCION DIBUJAR PICA
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FUNCIÓN DIBUJAR DIAMANTE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+ Nombre: dibujar-diamante
+ Descripción: se dibuja un diamante en las coordenadas indicadas
+ Parametros:
+ - centrox,centroy: centro diamante
+ - escala: cuan grande va a ser
+ Devuelve:
+  impresión del diamante
+|#
+
 (define (dibujar-diamante centrox centroy escala)
   ;; Centroide original del diamante (puedes ajustar si es necesario)
   (define centroide-x 300)
@@ -416,16 +488,11 @@
     (make-posn x2 y2)
     (make-posn x3 y3)
     (make-posn x4 y4)) (make-posn 0 0)
-   color1))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCION DIBUJAR DIAMANTE
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+   rojo))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Listas de puntos que definen los valores de las cartas
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;              MAPAS DE PUNTOS DE LOS VALORES DE LAS CARTAS
 
 (define valores
   (list
@@ -454,8 +521,6 @@
                     (lista-cuarto-circulo 100 275 25 20 'abajo-derecha 'horario)
                     (lista-cuarto-circulo 100 275 25 20 'arriba-derecha 'antihorario)
                     (list (list 75 250) (list 75 225))))
-   
-   ;; Añadir el resto de números y letras de manera similar
    (cons '4 (list (list 50 225) (list 120 150) (list 150 150) (list 80 225) (list 130 225)
                   (list 130 205) (list 150 205) (list 150 225) (list 150 320) (list 125 320)
                   (list 125 250) (list 50 250)))
@@ -477,14 +542,10 @@
                    (list 120 275) (list 150 275)
                    ;; Exterior
                    (list 150 320))))
-   
-   ;; Número 7
    (cons '7 (list
              (list 50 180) (list 50 150) (list 150 150)
              (list 150 180) (list 80 320) (list 50 320)
              (list 120 180)))
-   
-   ;; Número 8
    (cons '8 (append
              (list
               ;; Primer círculo
@@ -548,17 +609,27 @@
              (list 130 320) (list 115 250) (list 100 250) (list 100 240)
              (list 110 240) (list 100 190) (list 90 240)
              (list 100 240) (list 100 250) (list 85 250) (list 70 320)))
-   
-   ;; Continúa agregando cada número y letra similarmente
    ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Función dibujar lista de puntos
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+ Nombre: dibujar-lista
+ Descripción: dada una lista de puntos, dibuja dichos puntos en las coordenadas
+ indicadas
+ Parametros:
+ - lista-asociacion: lista con todas las letras
+ - letra: valor a dibujar
+ - coordx,coordy: coordenadas donde dibujarlo
+ - escala: cuan grande va a ser
+ - color
+ Devuelve:
+  impresión de los puntos en un polígono sólido
+|#
+
+
 
 (define (dibujar-lista lista-asociacion letra coordx coordy escala color)
   ;; Obtener la lista de puntos de la letra en la lista de asociación
@@ -583,18 +654,27 @@
         ;; Agregamos el punto `posn` transformado a la lista
         (set! puntos-transformados (append puntos-transformados (list punto-posn)))))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN Función dibujar lista de puntos
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;                              FUNCIONES PARA GENERAR CARTAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; DIBUJAR CARTA
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+#|
+ Nombre: dibujar-carta
+ Descripción: dibuja una carta dada una posición, el palo y el valor.
+ Parametros:
+ - lista-asociacion: lista con todas las letras
+ - cx,cy: coordenadas donde dibujarlo
+ - escala: cuan grande va a ser
+ - palo
+ - valor
+ Devuelve:
+  impresión de la carta
+|#
 (define (dibujar-carta cx cy escala palo valor lista-asociacion)
   ;; Función interna para transformar coordenadas según el centro y escala y devolver un par `(x, y)`
   (define (transformar-coordenadas x y esc)
@@ -603,8 +683,8 @@
 
   ;; Variables de escala y color para el palo
   (let* ((escala-objetos (* escala 0.75))
-         (color (cond ((or (eq? palo 'corazon) (eq? palo 'diamante)) color1)
-                      ((or (eq? palo 'pica) (eq? palo 'trebol)) color5)
+         (color (cond ((or (eq? palo 'corazon) (eq? palo 'diamante)) rojo)
+                      ((or (eq? palo 'pica) (eq? palo 'trebol)) negro)
                       (else (error "Palo no válido"))))
          (desplazamiento-numero-x (+ cx (* escala (- 175 175))))
          (desplazamiento-numero-y (+ cy (* escala (- 350 480))))
@@ -650,13 +730,18 @@
       ((eq? palo 'diamante) (dibujar-diamante desplazamiento-palo-x desplazamiento-palo-y escala-objetos))
       (else (error "Palo no válido")))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCIÓN DIBUJAR CARTA
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; DIBUJAR CARTA POR DETRAS
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+ Nombre: dibujar-carta-por-detras
+ Descripción: dibuja la parte trasera de la carta
+ Parametros:
+ - cx,cy: coordenadas donde dibujarlo
+ - escala: cuan grande va a ser
+ Devuelve:
+  impresión de la carta por detras
+|#
 
 (define (dibujar-carta-por-detras cx cy escala)
   ;; Función interna para transformar coordenadas según el centro y escala
@@ -690,15 +775,20 @@
                                   escala-objetos)
      (make-posn 0 0) blanco)))
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCIÓN DIBUJAR CARTA POR DETRAS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; DIBUJAR FICHA
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+ Nombre: dibujar-ficha
+ Descripción: dibuja una ficha dado un centro, escala y color
+ Parametros:
+ - centrox,centroy: coordenadas donde dibujarlo
+ - escala: cuan grande va a ser
+ - color
+ Devuelve:
+  impresión de los puntos en un polígono sólido
+|#
+
 (define (dibujar-ficha centrox centroy escala color)
   ;; Dibujar círculos concéntricos de la ficha
   (dibujar-circulo v1 (make-posn centrox centroy) (* escala 50) color)   ;; Círculo externo negro
@@ -772,11 +862,7 @@
                                    (make-posn (vector-ref p4 0) (vector-ref p4 1))) 
      (make-posn 0 0) color)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIN FUNCIÓN DIBUJAR FICHA
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;(dibujar-carta 200 400 0.3 'corazon lista-t)
 
 
 
