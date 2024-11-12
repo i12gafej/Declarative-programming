@@ -65,7 +65,7 @@ Funciones auxiliares a las que llama:
   (do
       ;; Variables iterativas
       (
-       (i 1 (+ i 1))
+       (i         1                (+ i 1))
        (resultado (vector-ref v 0) (+ (vector-ref v i) resultado 0.))
        )
       ;; Condición de parada
@@ -118,8 +118,8 @@ Funciones auxiliares a las que llama:
    (
     (do
         (
-         (tam (vector-length m))
-         (i 1 (+ i 1))
+         (tam     (vector-length   m))
+         (i       1               (+ i 1))
          (actual (vector-ref m 0) (vector-ref m i))
         )
       ((or (not (vector? actual)) (= i tam)) (not (vector? actual)))
@@ -129,10 +129,10 @@ Funciones auxiliares a las que llama:
    (
     (do
         (
-         (tam (vector-length m))
-         (i 2 (+ i 1))
-         (actual (vector-length (vector-ref m 0)) siguiente)
-         (siguiente (vector-length (vector-ref m 1)) (vector-length (vector-ref m i)))
+         (tam        (vector-length                   m))
+         (i          2                                (+ i 1))
+         (actual     (vector-length (vector-ref m 0)) siguiente)
+         (siguiente  (vector-length (vector-ref m 1)) (vector-length (vector-ref m i)))
         )
       ((or (not (= actual siguiente)) (= i tam)) (not (= actual siguiente)))
       )
@@ -236,8 +236,8 @@ Funciones auxiliares a las que llama:
     (
     (do
         (
-         (tam (vector-length m))
-         (i 1 (+ i 1))
+         (tam    (vector-length   m))
+         (i      1                (+ i 1))
          (actual (vector-ref m 0) (vector-ref m i))
         )
       ((or (not (vector? actual)) (= i tam)) (not (vector? actual)))
@@ -247,9 +247,9 @@ Funciones auxiliares a las que llama:
    (
     (do
         (
-         (tam (vector-length m))
-         (i 2 (+ i 1))
-         (actual (vector-length (vector-ref m 0)) siguiente)
+         (tam       (vector-length                   m))
+         (i          2                               (+ i 1))
+         (actual    (vector-length (vector-ref m 0)) siguiente)
          (siguiente (vector-length (vector-ref m 1)) (vector-length (vector-ref m i)))
         )
       ((or (not (= actual siguiente)) (= i tam)) (not (= actual siguiente)))
@@ -341,18 +341,22 @@ Funciones auxiliares a las que llama:
       (do
           ;;Variables iterativas
           (
-           (i 0 (+ i 1))
+           (i 1 (+ i 1))
+           (det
+            (+ det      
+               (*(vector-ref x 0) (vector-ref y 1) (vector-ref z 2))
+               (- (* (vector-ref x 0) (vector-ref y 2)(vector-ref z 1))))
+            (+ det                                     ;; Se le suma al determinante
+               (*(vector-ref x i)                      ;; x_i donde i = i
+                 (vector-ref y (modulo (+ i 1) 3))     ;; y_i donde i = ((i+1)%3)
+                 (vector-ref z (modulo (+ i 2) 3)))    ;; z_i donde i = ((i+2)%3)
+               (- (* (vector-ref x i)                  ;; x_i donde i = i
+                     (vector-ref y (modulo (+ i 2) 3)) ;; y_i donde i = ((i+2)%3)
+                     (vector-ref z (modulo (+ i 1) 3))))))
            )
          ;; Condición de parada
         ((= i 3) det)
         ;; Cuerpo del DO
-        (set! det (+ det      ;; Se le suma al determinante
-         (*(vector-ref x i)   ;; x_i donde i = i
-           (vector-ref y (modulo (+ i 1) 3)) ;; y_i donde i = ((i+1)%3)
-           (vector-ref z (modulo (+ i 2) 3)));; z_i donde i = ((i+2)%3)
-         (- (* (vector-ref x i) ;; x_i donde i = i
-           (vector-ref y (modulo (+ i 2) 3)) ;; y_i donde i = ((i+2)%3)
-           (vector-ref z (modulo (+ i 1) 3)))))) ;; z_i donde i = ((i+1)%3)
        )
       )
  )
@@ -490,7 +494,7 @@ Funciones auxiliares a las que llama:
        (contar 0 (if (= (modulo n i) 0) (+ contar 1) contar) )
        )
       ;;Condición de parada
-      ((> i (sqrt n)) (<= contar 1))
+      ((or (> i (sqrt n))) (<= contar 1))
       ;; Cuerpo 
    ) 
 )
@@ -554,26 +558,40 @@ Descripción de la solucion:
    ; 5, 5, (3)
    ; 5, 1, (3 5)
 Funciones auxiliares a las que llama:
-   primo?
+   primo?, divisible?
 |#
 
-(define (descomposicion-en-primos n)
-  (let ((lista '())        
-        (valor-actual n))  
+; Condición para que un valor sea divisible por un número primo
+(define (divisible? valor primo)
+  (and
+   (primo? primo)
+   (= (modulo valor primo) 0)))
+
+(define (descomposicion-en-primos n)   
     (cond
       ((< n 2) "Número no descomponible") 
       (else
        (do
            ;; Varaibles iterativas
-           ((primo-actual 2 (if (and (primo? primo-actual) (= (modulo valor-actual primo-actual) 0))
-                                primo-actual     
-                                (+ primo-actual 1)))
+           ((primo-actual
+             2
+             (if (divisible? valor-actual primo-actual)
+                 primo-actual     
+                 (+ primo-actual 1)))
+            (lista
+             (list)
+             (if (divisible? valor-actual primo-actual)
+                 (append lista (list primo-actual))
+                 lista))
+            (valor-actual
+             n
+             (if (divisible? valor-actual primo-actual)
+                 (/ valor-actual primo-actual)
+                 valor-actual))
             )
            ;; Condición de parada: cuando el valor actual sea 1
            ((= valor-actual 1) lista)  
-         (when (and (primo? primo-actual) (= (modulo valor-actual primo-actual) 0))  ;; Si es divisible
-           (set! valor-actual (/ valor-actual primo-actual))  ;; Dividimos el valor actual por el primo
-           (set! lista (append lista (list primo-actual)))))))))
+         ))))
 
 ;(descomposicion-en-primos 9)
 ;(descomposicion-en-primos 12)
@@ -610,7 +628,7 @@ Funciones auxiliares a las que llama:
   (cond
     ((not (list? l)) "Error con dato de entrada")
     ((null? l) ())
-    ((= (car l) 1) (filtrar-lista-primos (cdr l)))
+    ((not (primo? (car l))) (filtrar-lista-primos (cdr l)))
     ((primo? (car l)) (append (list (car l)) (filtrar-lista-primos (cdr l))))
     (else (filtrar-lista-primos (cdr l)))
     )
@@ -690,15 +708,22 @@ Funciones auxiliares a las que llama:
     ((not (list? l)) "Error con dato de entrada")
     ((null? l) ())
     (else
-    (let ((lista (list)))
       (do
-        ((i 1 (+ i 1)))
+        (
+         (i 0 (+ i 1))
+         (lista (list)
+                (if (and
+                     (> fin (list-ref l i) inicio)
+                     )
+                    (append lista (list (list-ref l i)))
+                    lista
+                    ))
+         )
          
         ((= (length l) i) (filtrar-lista-primos lista))
-        (if (> fin (list-ref l i) inicio)
-            (set! lista (append lista (list (list-ref l i)))))
+        
       
-        )))
+        ))
     ))
  )
 

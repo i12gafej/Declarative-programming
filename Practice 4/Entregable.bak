@@ -65,7 +65,7 @@ Funciones auxiliares a las que llama:
   (do
       ;; Variables iterativas
       (
-       (i 1 (+ i 1))
+       (i         1                (+ i 1))
        (resultado (vector-ref v 0) (+ (vector-ref v i) resultado 0.))
        )
       ;; Condición de parada
@@ -118,8 +118,8 @@ Funciones auxiliares a las que llama:
    (
     (do
         (
-         (tam (vector-length m))
-         (i 1 (+ i 1))
+         (tam     (vector-length   m))
+         (i       1               (+ i 1))
          (actual (vector-ref m 0) (vector-ref m i))
         )
       ((or (not (vector? actual)) (= i tam)) (not (vector? actual)))
@@ -403,6 +403,7 @@ Funciones auxiliares a las que llama:
 (define (area-triangulo x1 y1 x2 y2 x3 y3)
   (abs (* (/ 1 2)(determinante (vector (vector x1 y1 1)(vector x2 y2 1)(vector x3 y3 1)))))
   )
+
 ;(area-triangulo 0 0 0 4 5 0)
 ;(area-triangulo 7 2 9 4 5 2)
 
@@ -412,3 +413,529 @@ Resultados:
 2
 |#
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 6.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   construir-lista
+Objetivo:
+   Devuelve una lista con n elementos procesados
+   mediante la función indicada
+Parámetros:
+ - n: número de elementos de la lista
+ - f: proceso que aplicarle
+Resultado:
+   Lista.
+Descripción de la solucion:
+   Dados un número y un procedimiento se crea una nueva lista
+   compuesta por los resultados obtenidos al aplicar el procedimiento a los
+   valores comprendidos entre 0 y n-1.
+   (construir-lista n f) --> (f(0) f(1) f(2) ... f(n-1))
+
+Funciones auxiliares a las que llama:
+   ninguno
+|#
+
+(define (construir-lista n f)
+  (cond
+    ;; Condición de parada: es el final de la lista
+    ((= n 1) (list (f (- n 1))))
+    ;; Si no, une con los demás elementos
+    (else
+       (append
+        (construir-lista (- n 1) f)
+        (list (f (- n 1))) ;; n-1 porque es de 0 a n - 1
+       )
+     )))
+
+
+;(construir-lista 4 sqrt)
+;(construir-lista 4 (lambda (x) (* x x)))
+
+#|
+Resultados:
+(0 1 1.4142135623730951 1.7320508075688772)
+(0 1 4 9)
+|#
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 7.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   primos-menores
+Objetivo:
+   Dado un número, se devuelve una lista con los
+   primos menores o iguales a dicho número
+Parámetros:
+ - n: número del que calcular los primos menores
+Resultado:
+   Lista.
+Descripción de la solucion:
+
+Funciones auxiliares a las que llama:
+   primo?
+|#
+
+(define (primo? n)
+  (do
+      ;; Variables
+      (
+       (i 1 (+ i 1))
+       (contar 0 (if (= (modulo n i) 0) (+ contar 1) contar) )
+       )
+      ;;Condición de parada
+      ((> i (sqrt n)) (<= contar 1))
+      ;; Cuerpo 
+   ) 
+)
+
+
+
+(define (primos-menores n)
+  (cond
+    ;; Error
+    ((< n 2) "Número menor o igual a 1")
+    ; Condición de parada: n es 2
+    ((= n 2) (list 2))
+    ;; Pasa al n - 1 número
+    ((primo? n) (append (primos-menores (- n 1)) (list n)))
+    ;; Si no es primo, pasa al siguiente
+    (else
+     (primos-menores (- n 1))
+     )
+   )
+)
+
+;(primos-menores 4)
+;(primos-menores 2)
+;(primos-menores 9)
+;(primos-menores 11)
+;(primos-menores 1)
+
+
+#|
+Resultados:
+(2 3)
+(2)
+(2 3 5 7)
+(2 3 5 7 11)
+"Número menor o igual a 1"
+|#
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 8.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   descomposicion-en-primos
+Objetivo:
+   Dado un número, genera una lista con
+   su descomposición en números primos.
+Parámetros:
+ - n: número del que calcular los primos menores
+Resultado:
+   Lista.
+Descripción de la solucion:
+   Descomposición de 2: 2
+   Descomposición de 12: 2 2 3
+   ; 2, 15, ()
+   ; 3, 15, ()
+   ; 3, 5, (3)
+   ; 3, 5, (3)
+   ; 4, 5, (3)
+   ; 5, 5, (3)
+   ; 5, 1, (3 5)
+Funciones auxiliares a las que llama:
+   primo?
+|#
+
+(define (descomposicion-en-primos n)
+  (let ((lista '())        
+        (valor-actual n))  
+    (cond
+      ((< n 2) "Número no descomponible") 
+      (else
+       (do
+           ;; Varaibles iterativas
+           ((primo-actual 2 (if (and (primo? primo-actual) (= (modulo valor-actual primo-actual) 0))
+                                primo-actual     
+                                (+ primo-actual 1)))
+            )
+           ;; Condición de parada: cuando el valor actual sea 1
+           ((= valor-actual 1) lista)  
+         (when (and (primo? primo-actual) (= (modulo valor-actual primo-actual) 0))  ;; Si es divisible
+           (set! valor-actual (/ valor-actual primo-actual))  ;; Dividimos el valor actual por el primo
+           (set! lista (append lista (list primo-actual)))))))))
+
+;(descomposicion-en-primos 9)
+;(descomposicion-en-primos 12)
+;(descomposicion-en-primos 60)
+
+#|
+Resultados:
+(3 3)
+(2 2 3)
+(2 2 3 5)
+|#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 9.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   filtrar-lista-primos
+Objetivo:
+   Dada una lista de números naturales
+   Devuelve una lista con los números primos
+Parámetros:
+ - l: lista con números primos
+Resultado:
+   Lista.
+Descripción de la solucion:
+   Dada la lista (1 2 3 4 5 6 7), devuelve (2 3 5 7)
+Funciones auxiliares a las que llama:
+   primo?
+|#
+
+(define (filtrar-lista-primos l)
+  (cond
+    ((not (list? l)) "Error con dato de entrada")
+    ((null? l) ())
+    ((= (car l) 1) (filtrar-lista-primos (cdr l)))
+    ((primo? (car l)) (append (list (car l)) (filtrar-lista-primos (cdr l))))
+    (else (filtrar-lista-primos (cdr l)))
+    )
+ )
+ 
+;(filtrar-lista-primos (list 2 3 4 5 6 7))
+;(filtrar-lista-primos (list 5 11 13 17 23 77))
+;(filtrar-lista-primos (list 4 34 45 33 93 23))
+
+#|
+Resultados:
+(2 3 5 7)
+(5 11 13 17 23)
+(23)
+|#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 10.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   filtrar-primos
+Objetivo:
+   Dada una serie de números naturales
+   Devuelve una lista con los números primos
+Parámetros:
+ - l: lista con números primos
+Resultado:
+   Lista.
+Descripción de la solucion:
+   Dada la lista 1 2 3 4 5 6 7, devuelve (2 3 5 7)
+Funciones auxiliares a las que llama:
+   filtrar-lista-primos
+|#
+
+(define filtrar-primos
+(lambda lista
+     (filtrar-lista-primos lista))
+     )
+
+;(filtrar-primos 1 2 3 4 5 6 7 8 9)
+;(filtrar-primos 1 3 4 5 6)
+;(filtrar-primos )
+
+#|
+Resultados:
+(2 3 5 7)
+(3 5)
+()
+|#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 11.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   filtrar-primos-delimitados
+Objetivo:
+   Dada una serie de números naturales
+   Devuelve una lista con los números primos
+   delimitados por un rango (sin incuir dichos valores)
+Parámetros:
+ - l: lista con números primos y delimitadores
+Resultado:
+   Lista.
+Descripción de la solucion:
+   Dada la lista 1 2 3 4 5 6 7 y limite 3 7, devuelve (5)
+Funciones auxiliares a las que llama:
+   filtrar-primos
+|#
+
+(define filtrar-primos-delimitados
+  (lambda (inicio fin . l)
+  (cond
+    ((not (list? l)) "Error con dato de entrada")
+    ((null? l) ())
+    (else
+    (let ((lista (list)))
+      (do
+        ((i 1 (+ i 1)))
+         
+        ((= (length l) i) (filtrar-lista-primos lista))
+        (if (> fin (list-ref l i) inicio)
+            (set! lista (append lista (list (list-ref l i)))))
+      
+        )))
+    ))
+ )
+
+;(filtrar-primos-delimitados 3 7 1 2 3 4 5 6 7)
+;(filtrar-primos-delimitados 2 10 1 2 3 4 5 6 7)
+;(filtrar-primos-delimitados 2 10 1 2 3 4 5 6 7)
+;(filtrar-primos-delimitados 2 10)
+
+#|
+Resultados:
+(5)
+(3 5 7)
+(3 5 7)
+()
+|#
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 12.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   separar
+Objetivo:
+   Dada una lista, se devuelve una lista con
+   dos sublistas que separan por la mitad los
+   valores en posiciones pares e impares.
+Parámetros:
+ - l: lista
+Resultado:
+   Lista.
+Descripción de la solucion:
+   Dada la lista (1 2 3), devuelve ((1 2) (3))
+Funciones auxiliares a las que llama:
+   ninguna
+|#
+
+(define (separar l)
+  (cond
+    ;; Caso base: lista vacía
+    ((null? l) (list '() '()))
+    ;; Caso: lista con un solo elemento
+    ((null? (cdr l)) (list (list (car l)) '())) 
+    (else
+     ;; Separación recursiva de cddr de la lista
+     (let
+         ; Variables del Let
+         (
+          ; Esta variable se encarga de separar la lista a partir del segundo elemento
+          (subseparar (separar (cddr l)))
+         )
+       ; Se concatena
+       (list
+        ; el primero elemento de dicha separación
+        (cons (car l) (car subseparar))
+        ; el segundo elemento de dicha separación
+        (cons (cadr l) (cadr subseparar)))
+      )
+    )
+  )
+) 
+;(separar '(1 2 3 4 5 6))
+;(separar '())
+;(separar '(1))
+
+#|
+Resultados:
+((1 3 5) (2 4 6))
+(() ())
+((1) ())
+|#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 13.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   unir
+Objetivo:
+   Dadas dos listas, devuelve lso valores ordenados
+   en una lista.
+Parámetros:
+ - l1: lista impares
+ - l2: lista pares
+Resultado:
+   Lista.
+Descripción de la solucion:
+   o (unir '() '()) → ()
+   o (unir '(1) '()) → (1)
+   o (unir '(1) '(2)) → (1 2)
+   o (unir '(1 3) '(2)) → (1 2 3)
+   o (unir '(1 3) '(2 4 5)) → (1 2 3 4 5)
+   o (unir '(1 3 5) '(2 4)) → (1 2 3 4 5)
+Funciones auxiliares a las que llama:
+   ninguna
+|#
+
+(define (unir l1 l2)
+  (cond
+    ;; L1 vacio, devuelve l2
+    ((null? l1) l2)
+    ;; L2 vacio, develve l1
+    ((null? l2) l1)
+    ;; Si el primer elemento de l1 es menor igual a l2
+    ((<= (car l1) (car l2))
+     ;; lo une en ese orden
+     (cons (car l1) (unir (cdr l1) l2)))
+    ;; Si no al reves
+    (else
+     (cons (car l2) (unir l1 (cdr l2)))))) 
+  
+;(unir '() '())
+;(unir '(1) '())
+;(unir '(1) '(2))
+;(unir '(1 3) '(2))
+;(unir '(1 3) '(2 4 5))
+;(unir '(1 5 50) '(2 4))
+;(unir '() '(1 2 5 4 3))
+
+#|
+Resultados:
+()
+(1)
+(1 2)
+(1 2 3)
+(1 2 3 4 5)
+(1 2 4 5 50)
+(1 2 5 4 3)
+|#
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 14.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   mergeSort
+Objetivo:
+   Dada una lista de números, estos son fragmentados en sublistas hasta no poderse dividir más.
+   Una vez divididos, se ordenan en dichas sublistas en cada estrato, hasta unirse al final
+   de forma ordenada.
+Parámetros:
+ - lista: lista de números a ordenar
+Resultado:
+   Lista.
+Descripción de la solucion:
+  o Datos de entrada: 5 4 1 3 2
+     ▪ División
+        ✓ Primera: 5 1 2 | 4 3
+        ✓ Segunda: 5 2 | 1 || 4 | 3
+        ✓ Tercera: 5 | 2 || 1 ||| 4 | 3
+     ▪ Fusión:
+        ✓ Primera: 2 5 | 1 || 3 4
+        ✓ Segunda: 1 2 5 | 3 4
+        ✓ Tercera: 1 2 3 4 5 
+Funciones auxiliares a las que llama:
+  unir, separar
+|#
+
+
+(define (mergeSort lista)
+  (cond
+    ;; Caso nulo: cadena vacia
+    ((null? lista) '())
+    ;; Caso de un solo elemento
+    ((null? (cdr lista)) lista)
+    ;; Caso general
+    (else
+     (let*
+         ;; Variables secuenciales LET
+         (
+          ;; Listas separadas
+          (sublistas (separar lista))
+          ;; Lista izquierda
+          (izquierda (car sublistas))
+          ;; Lista derecha
+          (derecha (cadr sublistas))
+         )
+       ;; Unir derecha con izquierda ordenadamente
+       (unir (mergeSort izquierda) (mergeSort derecha)))))) 
+
+
+;(mergeSort '(5 4 1 3 2))
+;(mergeSort '(10 8 2 4 3 19 6)) 
+
+
+#|
+Resultados:
+(1 2 3 4 5)
+(2 3 4 6 8 10 19)
+|#
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 15.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   mergeSortDatos
+Objetivo:
+   Dados una cantidad variable de números, estos son ordenados mediante
+   mergeSort
+Parámetros:
+ - Números a ordenar (cantidad variable)
+Resultado:
+   Lista.
+Descripción de la solucion:
+  o Datos de entrada: 5 4 1 3 2
+     ▪ División
+        ✓ Primera: 5 1 2 | 4 3
+        ✓ Segunda: 5 2 | 1 || 4 | 3
+        ✓ Tercera: 5 | 2 || 1 ||| 4 | 3
+     ▪ Fusión:
+        ✓ Primera: 2 5 | 1 || 3 4
+        ✓ Segunda: 1 2 5 | 3 4
+        ✓ Tercera: 1 2 3 4 5 
+Funciones auxiliares a las que llama:
+  mergeSort
+|#
+
+
+(define mergeSortDatos
+  (lambda lista (mergeSort lista)))
+
+;(mergeSortDatos ) 
+;(mergeSortDatos 2)
+;(mergeSortDatos 1 3 2)
+;(mergeSortDatos 5 4 1 3 2)
+
+#|
+Resultados:
+()
+(2)
+(1 2 3)
+(1 2 3 4 5)
+|#
