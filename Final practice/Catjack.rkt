@@ -10,7 +10,7 @@ Autor: Javier García Fernández
 
 (define hor 800)
 (define ver 600)
-(define v1 (open-viewport "Ejemplo de figuras" hor ver))
+(define v1 (open-viewport "CatJack!" hor ver))
 
 #|
 El proyecto está dividido en 6 ficheros
@@ -24,11 +24,10 @@ El proyecto está dividido en 6 ficheros
 No tienen ningun elemento gráfico no generado por la librería graphics.
 |#
 
-(load "letras.rkt")
-(load "figuras.rkt")
-(load "caratula.rkt")
-(load "mesa.rkt")
-(load "juego.rkt")
+(load "funciones/letras.rkt")
+(load "funciones/graficos.rkt")
+(load "funciones/figuras.rkt")
+(load "funciones/juego.rkt")
 
 
 (define (menu-inicio)

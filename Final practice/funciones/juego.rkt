@@ -68,7 +68,6 @@
     (mover-patita-carta 700 pos-y pos-x pos-y 0.3 1. tapete)
     (dibujar-carta pos-x pos-y 0.3 (cadr nueva-carta) (car nueva-carta) valores)
     (mover-patita (+ 100 pos-x) pos-y 700 pos-y 0.4 1. tapete)
-    (display pos-x)
     (cons (append mano (list nueva-carta)) (cdr mazo))
     )
   )
@@ -141,7 +140,7 @@
   )
 
 
-(define mazo (barajar (crear-mazo)))
+;(define mazo (barajar (crear-mazo)))
 
 (define (apostar-fichas fichas-disponibles)
   (let loop ()
@@ -367,30 +366,8 @@
 ;(dibujar-carta 300 400 0.3 (cadadr mano-jugador) (caadr mano-jugador) valores)
 ;(dibujar-carta 200 250 0.3 (cadar mano-crupier) (caar mano-crupier) valores)
 ;(dibujar-carta 200 400 0.3 (cadar mano-jugador) (caar mano-jugador) valores)
-(define (actualizar-mesa mano-c mano-j f-c f-j tipo)
-  (mesa f-c f-j tipo)
-  (dibujar-carta 290 400 0.3 (cadadr mano-j) (caadr mano-j) valores)
-  (dibujar-carta 200 250 0.3 (cadar mano-c) (caar mano-c) valores)
-  (dibujar-carta 200 400 0.3 (cadar mano-j) (caar mano-j) valores)
-  
-  )
-(define (mensaje-ganador clase ganador)
-  (let*
-      (
-       (clase-t (if (eq? clase 'ronda) "RONDA" "PARTIDA"))
-       (ganador-t (if (eq? ganador 'jugador) "HAS GANADO LA" "CATJACK GANA LA"))
-       (texto (string-append ganador-t " " clase-t))
-       (escala (if (and (eq? clase 'partida)(eq? ganador 'crupier)) 12 13))
-       )
-    ((draw-polygon v1) (lista-a-posn (list (list 100 200) (list 700 200)(list 700 300)(list 100 300))) (make-posn 0 0) negro)
-    ((draw-solid-polygon v1) (lista-a-posn (list (list 100 200) (list 700 200)(list 700 300)(list 100 300))) (make-posn 0 0) morosa)
-    (dibujar-texto texto 130 230 escala blanco)
-    (dibujar-texto texto 131 230 escala blanco)
-    (dibujar-texto texto 132 230 escala blanco)
-    (dibujar-texto texto 133 230 escala blanco)
-    (sleep 5)
-   )
-  )
+
+
 (define (ronda mazo fichas-crupier fichas-jugador tipo)
   (let*
       (
