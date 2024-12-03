@@ -1,0 +1,641 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+Practica 5: tipos abstracto de datos y lectura y escritura
+Autor: Javier García Fernández
+|#
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 1.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   Tipo de datos abstracto 'club' 
+Objetivo:
+   Mediante lista de asociación, implementar las funciónes de gestión
+   para crear, acceder, consultar y modificar el tipo abstracto de datos CLUB.
+Campos:
+ - nombre
+ - ciudad (en la que está el club)
+ - año de fundación.
+Descripción de la solucion:
+   Dada una lista de asociación, podemos generar un tipo abstracto de datos CLUB
+   en el que poder consultar, crear, modificar y acceder a los datos.    
+|#
+
+(define club1
+  (list
+   (list 'nombre "La Colina")
+   (list 'ciudad "Cordoba")
+   (list 'año 2003)   
+   ))
+
+#|
+Nombre:
+   crear-club
+Objetivo:
+   Dados unos atributos creamos la lista de asociación CLUB
+   como TAD.
+Campos:
+ - nombre
+ - ciudad (en la que está el club)
+ - año (de fundación)
+Resultado:
+   lista del TAD
+Descripción de la solucion:
+
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (crear-club nombre ciudad año)
+  (list
+   (list 'nombre nombre)
+   (list 'ciudad ciudad)
+   (list 'año año)   
+   ))
+
+;(crear-club "Dolomitas" "Llobregat" 1985)
+
+#|
+Nombre:
+   consultar-nombre
+Objetivo:
+   Dado un TAD CLUB, devuelve el nombre del club.
+Campos:
+ - club
+Resultado:
+   Cadena
+Descripción de la solucion:
+  Dado (('nombre "Dolomitas")('ciudad "Llobregat")('año 1985))
+  devuelve "Dolomitas"
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (consultar-nombre club)
+  (cadr (assoc 'nombre club))
+  )
+
+;(consultar-nombre (crear-club "Dolomitas" "Llobregat" 1985))
+
+#|
+Nombre:
+   consultar-ciudad
+Objetivo:
+   Dado un TAD CLUB, devuelve la ciudad donde se encuetra el club.
+Campos:
+ - club
+Resultado:
+   Cadena
+Descripción de la solucion:
+  Dado (('nombre "Dolomitas")('ciudad "Llobregat")('año 1985))
+  devuelve "Llobregat"
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (consultar-ciudad club)
+  (cadr (assoc 'ciudad club))
+  )
+
+;(consultar-ciudad (crear-club "Dolomitas" "Llobregat" 1985))
+
+#|
+Nombre:
+   consultar-año
+Objetivo:
+   Dado un TAD CLUB, devuelve el año de fundación del club.
+Campos:
+ - club
+Resultado:
+   Numérico
+Descripción de la solucion:
+  Dado (('nombre "Dolomitas")('ciudad "Llobregat")('año 1985))
+  devuelve 1985
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (consultar-año club)
+  (cadr (assoc 'año club))
+  )
+
+;(consultar-año (crear-club "Dolomitas" "Llobregat" 1985))
+
+#|
+Nombre:
+   modificar-nombre!
+Objetivo:
+   Dado un TAD CLUB, modifica el nombre del club.
+Campos:
+ - club
+ - nombre
+Resultado:
+   void
+Descripción de la solucion:
+  Dado (('nombre "Dolomitas")('ciudad "Llobregat")('año 1985))
+  y nuevo nombre "La Colina", devuelve
+  (('nombre "La Colina")('ciudad "Llobregat")('año 1985))
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (modificar-nombre! club nombre)
+  (set-cdr! (assoc 'nombre club) (list nombre))
+  )
+
+#|
+(define ejemplo (crear-club "Dolomitas" "Llobregat" 1985))
+(modificar-nombre! ejemplo "La Colina")
+(consultar-nombre ejemplo)
+|#
+
+#|
+Nombre:
+   modificar-ciudad!
+Objetivo:
+   Dado un TAD CLUB, modifica la ciudad del club.
+Campos:
+ - club
+ - ciudad
+Resultado:
+   void
+Descripción de la solucion:
+  Dado (('nombre "Dolomitas")('ciudad "Llobregat")('año 1985))
+  y nueva ciudad "Barcelona", devuelve
+  (('nombre "La Colina")('ciudad "Barcelona")('año 1985))
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (modificar-ciudad! club ciudad)
+  (set-cdr! (assoc 'ciudad club) (list ciudad))
+  )
+
+#|
+(define ejemplo (crear-club "Dolomitas" "Llobregat" 1985))
+(modificar-ciudad! ejemplo "Barcelona")
+(consultar-ciudad ejemplo)
+|#
+
+#|
+Nombre:
+   modificar-año!
+Objetivo:
+   Dado un TAD CLUB, modifica el año de fundación del club.
+Campos:
+ - club
+ - año
+Resultado:
+   void
+Descripción de la solucion:
+  Dado (('nombre "Dolomitas")('ciudad "Llobregat")('año 1985))
+  y nuevo año 2000, devuelve
+  (('nombre "La Colina")('ciudad "Barcelona")('año 2000))
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (modificar-año! club año)
+  (set-cdr! (assoc 'año club) (list año))
+  )
+
+#|
+(define ejemplo (crear-club "Dolomitas" "Llobregat" 1985))
+(modificar-año! ejemplo 2000)
+(consultar-año ejemplo)
+|#
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 2.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre:
+   Tipo de datos abstracto 'campeonato' 
+Objetivo:
+   Implementar las funciónes de gestión para crear, acceder, consultar
+   y modificar el tipo abstracto de datos campeonato.
+Campos:
+ - clubs
+Descripción de la solucion:
+   Dada una lista de asociación, podemos generar un tipo abstracto de datos CLUB
+   en el que poder consultar, crear, modificar y acceder a los datos.    
+|#
+
+#|
+Nombre:
+   crear-campeonato!
+Objetivo:
+   Crear un campeonato vacio
+Campos:
+   ninguno
+Resultado:
+   lista de asociación sin valores
+Descripción de la solucion:
+  
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (crear-campeonato)
+  (list)
+  )
+
+#|
+Nombre:
+   campeonato-vacio?
+Objetivo:
+   Comprobar si un campeonato está vacio
+Campos:
+   - campeonato
+Resultado:
+   Booleano
+Descripción de la solucion:
+  
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (campeonato-vacio? campeonato)
+  (equal? campeonato '())
+  )
+
+
+#|
+Nombre:
+   leer-fichero
+Objetivo:
+   Carga elementos de un fichero separados por punto y coma.
+Campos:
+   - nombre-fichero
+Resultado:
+   lista de listas de elementos por fila
+Descripción de la solucion:
+  
+Funciones auxiliares:
+  formato
+|#
+
+(define (leer-fichero nombre-fichero)
+  (let
+      ; Variables locales del programa
+      (
+       ;; Abrimos el archivo
+       (entrada (open-input-file nombre-fichero))
+       )
+    
+    (let loop
+      ; Variable locales del bucle
+      (
+       ;; Lista acumulativa para filas completas
+       (resultado '())
+       ;; Lista acumulativa para una fila
+       (fila '())
+       ;; Acumulador de caracteres para un string
+       (cadena "")
+       ;; Primer carácter leído
+       (caracter (read-char entrada))) 
+      (cond
+        ;; Si llegamos al final del archivo
+        ((eof-object? caracter)
+         (begin
+           ;; Cerramos el archivo
+           (close-input-port entrada)
+           ;; Procesamos cualquier dato restante
+           ;; Uso reverse para cambiar orden de lista
+           (reverse
+            ; Fila vacia
+            (if (null? fila)
+                resultado
+                ; Si no esta vacía devuelve la cadena del reves con los elementos de la fila
+                ; del reves con el último elemento en su formato
+                (cons
+                 (reverse (if (string=? cadena "")
+                              fila
+                              (cons (formato cadena) fila)))
+                 resultado)))))
+
+        ;; Ignorar caracter del final de linea con \r
+        ((char=? caracter #\return)
+         (loop resultado fila cadena (read-char entrada)))
+
+        ;; Si encuentra un salto de línea
+        ((char=? caracter #\newline)
+         (loop
+          (cons
+           (reverse (if (string=? cadena "")
+                        fila
+                        (cons (formato cadena) fila)))
+           ;; Se añade la fila completa al resultado
+           resultado)
+          ;; Se reinicia la fila
+          '()
+          ;; Se reinicia la cadena
+          "" 
+          (read-char entrada)))
+
+        ;; Si se encuentra un punto y coma
+        ((char=? caracter #\;)
+         (loop
+          resultado
+           ;; Se añade el string a la fila
+          (cons (formato cadena) fila)
+          ;; Se reinicia la cadena
+          "" 
+          (read-char entrada)))
+
+        ;; Para cualquier otro carácter
+        (else
+         (loop
+          resultado
+          fila
+          ;; Se acumula en la cadena
+          (string-append cadena (string caracter)) 
+          (read-char entrada)))))))
+
+(define (formato cadena)
+  ;; Verifica si una cadena contiene solo números
+  ;; Si es así, la convierte en un número
+  (if (string->number cadena)
+      (string->number cadena)
+      cadena))
+
+#|
+Nombre:
+   escribir-fichero
+Objetivo:
+   Escribir elementos separados por punto y coma en un fichero.
+Campos:
+   - nombre-fichero
+Resultado:
+   void
+Descripción de la solucion:
+  
+Funciones auxiliares:
+  ninguna
+|#
+
+
+(define (escribir-fichero nombre-fichero lista-datos)  
+  ;; Abre el archivo para escritura
+  (let*      
+      ;; Variables locales del let secuencial
+      (
+       ;; Archivo de salida abierto en modo texto
+       (salida (open-output-file nombre-fichero #:mode 'text #:exists 'replace)))    
+    ;; Cuerpo de la función
+    (begin
+      ;; Itera sobre cada fila en lista-datos
+      (for-each       
+       ;; Define la lambda para procesar cada fila
+       (lambda (fila)         
+         ;; Escribe los elementos de la fila
+         (let loop             
+             ;; Variables iterativas del let
+             (
+              ;; Elementos restantes de la fila
+              (resto fila)
+              ;; Indicador de si es el primer elemento
+              (primero? #t))           
+           ;; Condicional para procesar los elementos
+           (cond
+            ;; Si no quedan elementos, escribe un salto de línea
+            ((null? resto)
+             (begin
+               (newline salida))) ;; Salto de línea           
+            ;; Si hay elementos restantes
+            (else
+             (begin               
+               ;; Escribe un punto y coma solo si no es el primer elemento
+               (if (not primero?)
+                   (write-char #\; salida))               
+               ;; Escribe el elemento actual
+               (if (string? (car resto))
+                   (display (car resto) salida)
+                   (write (car resto) salida))               
+               ;; Llama recursivamente al bucle
+               (loop
+                ;; Resto de elementos
+                (cdr resto)
+                ;; Ya no es el primer elemento
+                #f))))))       
+       ;; Itera sobre las filas
+       lista-datos)      
+      ;; Cierra el archivo de salida
+      (close-output-port salida))))
+
+
+
+#|
+Nombre:
+   cargar-campamento
+Objetivo:
+   Carga el campeonato de un fichero
+Campos:
+   - nombre-fichero
+Resultado:
+   TAD campeonato
+Descripción de la solucion:
+  
+Funciones auxiliares:
+  foldl, leer-fichero
+|#
+
+(define (foldl f acc lst)
+  ;; Aplica la función de izquierda a derecha sobre la lista.
+  (if (null? lst)
+      ;; Retorna el acumulador si la lista está vacía
+      acc
+      ;; Llama recursivamente con la función aplicada al acumulador
+      (foldl f (f (car lst) acc) (cdr lst))))
+
+(define (cargar-campeonato nombre-fichero)
+  ;; Carga los datos del fichero y convierte cada fila en un club,
+  ;; añadiéndolos al campeonato.
+  (let* 
+    ;; Variables locales del let secuencial
+    (
+     ;; Lee las filas del fichero
+     (filas (leer-fichero nombre-fichero)) 
+     ;; Crea un campeonato vacío
+     (campeonato (crear-campeonato)))     
+    ;; Procesa todas las filas y las añade al campeonato
+    (foldl
+     ;; Función lambda para procesar cada fila
+     (lambda (fila campeonato)
+       ;; Variables locales del let
+       (let         
+         ;; Convierte la fila en un club
+         ((club (crear-club
+                 ;; Nombre
+                 (car fila)                   
+                 ;; Ciudad
+                 (cadr fila)                  
+                 ;; Año
+                 (caddr fila))))              
+         ;; Inserta el club en el campeonato
+         (append campeonato (list club))))      
+     ;; Inicializa el campeonato acumulativo
+     campeonato
+     ;; Procesa todas las filas
+     filas)))
+
+;(cargar-campamento "salida.txt")
+
+#|
+Nombre:
+   grabar-campamento
+Objetivo:
+   Grabar el campeonato en un fichero.
+Campos:
+   - nombre-fichero
+   - campeonato
+Resultado:
+   void
+Descripción de la solucion:
+  
+Funciones auxiliares:
+  escribir-fichero
+|#
+
+
+(define (grabar-campamento nombre-fichero campeonato)
+  ;; Convierte el campeonato en una lista de listas de elementos
+  (let*      
+      ;; Variables locales del let secuencial
+      (
+       ;; Lista de filas a partir del campeonato
+       (filas
+        (map        
+         ;; Define la lambda para transformar un club
+         (lambda (club)
+           ;; Transforma el club en una lista de sus elementos
+           (list
+            ;; Obtiene el nombre del club
+            (consultar-nombre club)
+            ;; Obtiene la ciudad del club
+            (consultar-ciudad club)
+            ;; Obtiene el año de fundación del club
+            (consultar-año club)))        
+         ;; Itera sobre los clubes en el campeonato
+         campeonato)))
+    ;; Llama a la función escribir-fichero con las filas generadas
+    (escribir-fichero nombre-fichero filas)))
+
+#|
+(grabar-campamento "salida2.txt" (list (crear-club "Dolomitas" "Llobregat" 1985)
+                                       (crear-club "La Colina" "Valencia" 2003)))
+|#
+
+
+
+#|
+Nombre:
+   existe-club?
+Objetivo:
+   Comprueba si el club pertenece al campeonato
+Campos:
+   - campeonato
+   - club
+Resultado:
+   void
+Descripción de la solucion:
+  
+Funciones auxiliares:
+  
+|#
+
+(define (existe-club? campeonato club)
+  (do
+      ;; Variables Iterativas
+      (
+       (i 1 (+ i 1))
+       (auxiliar (list-ref campeonato 0) (list-ref campeonato i))
+       )
+      ;; Condición de parada
+      ((= i (- (length campeonato) 1)) (equal? auxiliar club))
+    ;; No hay cuerpo de DO
+      )
+  )
+
+#|
+(existe-club? (list (crear-club "Dolomitas" "Llobregat" 1985)
+                    (crear-club "La Colina" "Valencia" 2003))
+              (crear-club "Dolomitass" "Llobregat" 1985))
+
+(existe-club? (list (crear-club "Dolomitas" "Llobregat" 1985)
+                    (crear-club "La Colina" "Valencia" 2003))
+              (crear-club "Dolomitas" "Llobregat" 1985))
+|#
+
+
+#|
+Nombre:
+   insertar-club!
+Objetivo:
+   Inserta un club en el campeonato indicado
+Campos:
+   - campeonato
+   - club
+Resultado:
+   campeonato
+Descripción de la solucion:
+  
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (insertar-club! campeonato club)
+  (append campeonato (list club))
+  )
+
+#|
+(define ejemplo (insertar-club! (crear-campeonato) (crear-club "Dolomitas" "Llobregat" 1985)))
+(set! ejemplo (insertar-club! ejemplo (crear-club "La Colina" "Valencia" 2008)))
+(display ejemplo)
+|#
+
+#|
+Nombre:
+   borrar-club!
+Objetivo:
+   Borrar un club en el campeonato indicado
+Campos:
+   - campeonato
+   - club
+Resultado:
+   campeonato
+Descripción de la solucion:
+  
+Funciones auxiliares:
+  ninguna
+|#
+
+(define (borrar-club! campeonato club)
+  (let*
+      ;; Variables locales del let secuencial
+      (
+       ;; Lista acumulativa para el nuevo campeonato
+       (nuevo-campeonato '()))
+    ;; Cuerpo de la función
+    (do
+        ;; Variables Iterativas
+        (
+         ;; Índice que recorre la lista
+         (i 0 (+ i 1))
+         ;; Lista acumulativa para los clubes que no coincidan con el eliminado
+         (acumulado nuevo-campeonato
+                    (if (not (equal? (list-ref campeonato i) club))
+                        (cons (list-ref campeonato i) acumulado)
+                        acumulado)))
+        ;; Condición de parada
+        ((= i (length campeonato)) (reverse acumulado))
+      ;; No hay cuerpo de DO
+      )
+    ))
+
+(borrar-club! (list (crear-club "La Colina" "Valencia" 2003)(crear-club "Dolomitas" "Llobregat" 1985))
+              (crear-club "Dolomitas" "Llobregat" 1985))

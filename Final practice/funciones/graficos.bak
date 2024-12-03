@@ -1300,7 +1300,7 @@ Autor: Javier García Fernández
  Parametros:
  - x-inicia,y-inicial: coordenada donde empieza la animación.
  - x-final,y-final: coordenadas donde termina la animación.
- - escala: tamaño de la patita.
+ -  escala: tamaño de la patita.
  - tiempo-duración: de la animación.
  - color-fondo: color con el que se limpia la patita del frame anterior.
  Devuelve:
