@@ -1265,12 +1265,7 @@ Descripción de la solucion:
   - Consultar los clubes de una ciudad.
 Funciones auxiliares:
   crear-campeonato, campeonato-vacio?, cargar-campeonato, grabar-campeonato, insertar-club,
-  modificar-club, borrar-club, consultar-club, consultar-clubes, consultar-clubes-ciudad,
-  borrar-campeonato, consultar-clubes-ciudad-global, consultar-clubes-global,obtener-club,
-  borrar-club-campeonatos, modificar-club-campeonatos,insertar-club-campeonatos, existe-campeonato?,
-  mostrar-campeonatos,buscar-campeonato
-  
-
+  modificar-club, borrar-club, consultar-club, consultar-clubes, consultar-clubes-ciudad
 |#
 
 (define (gestor-campeonatos)
@@ -1559,11 +1554,16 @@ Funciones auxiliares:
            (else
             (display "No existe ese campamento.\n")
             (menu campeonatos)
-            )))))
-      ;---------------------------------------------------
-     ))))
+            )
+           )
+         )
+       )
+      )
+     )
+    )
+  ))
 
-(gestor-campeonatos)
+;(gestor-campeonatos)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2208,7 +2208,7 @@ Funciones auxiliares:
         ; ---------------------------------------------------------------
         ((equal? opt 0)
          (display "¡Gracias por utilizar el gestor de polígonos!\n")
-         )
+         (exit))
 
         ; ---------------------------------------------------------------
         ; Opción inválida
@@ -2216,4 +2216,4 @@ Funciones auxiliares:
         (else
          (display "Opción inválida, por favor intente nuevamente.\n")
          (menu poligonos))))))
-;(gestor-poligonos)
+(gestor-poligonos)
