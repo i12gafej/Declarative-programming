@@ -974,13 +974,14 @@ Autor: Javier García Fernández
 |#
 
 (define (contador-crupier fichas)
+  (dibujar-texto "BANCA" 350 5 10 negro)
   ((draw-solid-polygon v1)
-   (list (make-posn 290 10) (make-posn 510 10) (make-posn 510 80)(make-posn 290 80)) (make-posn 0 0) contador2)
+   (list (make-posn 290 30) (make-posn 510 30) (make-posn 510 100)(make-posn 290 100)) (make-posn 0 0) contador2)
   ((draw-solid-polygon v1)
-   (list (make-posn 295 15) (make-posn 505 15) (make-posn 505 75)(make-posn 295 75)) (make-posn 0 0) blanco)
+   (list (make-posn 295 35) (make-posn 505 35) (make-posn 505 95)(make-posn 295 95)) (make-posn 0 0) blanco)
   ((draw-solid-polygon v1)
-   (list (make-posn 300 20) (make-posn 500 20) (make-posn 500 70)(make-posn 300 70)) (make-posn 0 0) negro)
-  (dibujar-texto (number->string fichas) 305 35 10 blanco)
+   (list (make-posn 300 40) (make-posn 500 40) (make-posn 500 90)(make-posn 300 90)) (make-posn 0 0) negro)
+  (dibujar-texto (number->string fichas) 305 55 10 blanco)
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

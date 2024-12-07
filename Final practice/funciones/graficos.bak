@@ -975,11 +975,11 @@ Autor: Javier García Fernández
 
 (define (contador-crupier fichas)
   ((draw-solid-polygon v1)
-   (list (make-posn 290 10) (make-posn 510 10) (make-posn 510 80)(make-posn 290 80)) (make-posn 0 0) contador2)
+   (list (make-posn 290 20) (make-posn 510 20) (make-posn 510 90)(make-posn 290 90)) (make-posn 0 0) contador2)
   ((draw-solid-polygon v1)
-   (list (make-posn 295 15) (make-posn 505 15) (make-posn 505 75)(make-posn 295 75)) (make-posn 0 0) blanco)
+   (list (make-posn 295 25) (make-posn 505 25) (make-posn 505 85)(make-posn 295 85)) (make-posn 0 0) blanco)
   ((draw-solid-polygon v1)
-   (list (make-posn 300 20) (make-posn 500 20) (make-posn 500 70)(make-posn 300 70)) (make-posn 0 0) negro)
+   (list (make-posn 300 30) (make-posn 500 30) (make-posn 500 80)(make-posn 300 80)) (make-posn 0 0) negro)
   (dibujar-texto (number->string fichas) 305 35 10 blanco)
   )
 
@@ -1300,7 +1300,7 @@ Autor: Javier García Fernández
  Parametros:
  - x-inicia,y-inicial: coordenada donde empieza la animación.
  - x-final,y-final: coordenadas donde termina la animación.
- -  escala: tamaño de la patita.
+ - escala: tamaño de la patita.
  - tiempo-duración: de la animación.
  - color-fondo: color con el que se limpia la patita del frame anterior.
  Devuelve:
