@@ -33,37 +33,62 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: dibujar-circulo
- Descripción: Dibuja un circulo sólido con el tamaño y posición indicados
- Parametros:
- - Make-posn con coordenadas
- - Radio
- - Color
- Devuelve:
- Impresión de círculo
+Nombre: dibujar-circulo
+Descripción: Dibuja un círculo sólido con el tamaño, posición y color indicados.
+Parámetros:
+- centro: punto que representa el centro del círculo en formato `make-posn`.
+- radio: número que indica el radio del círculo.
+- color: color del círculo, definido en el entorno gráfico.
+Devuelve:
+- void
+Descripción de la solución:
+Calcula las coordenadas necesarias para definir la esquina superior izquierda del rectángulo circunscrito al círculo. Dibuja el círculo como una elipse sólida, donde los lados son iguales al diámetro.
+Funciones auxiliares:
+- ninguna
 |#
 
 (define (dibujar-circulo centro radio color)
-  (let* ((cx (posn-x centro))        ; Coordenada X del centro
-         (cy (posn-y centro))        ; Coordenada Y del centro
-         (diametro (* 2 radio))      ; Diámetro es dos veces el radio
-         (esquina-x (- cx radio))    ; Coordenada X de la esquina superior izquierda
-         (esquina-y (- cy radio)))   ; Coordenada Y de la esquina superior izquierda
-    ;; Dibuja una elipse sólida, que es un círculo cuando sus lados son iguales (diámetro, diámetro)
-    ((draw-solid-ellipse v1) (make-posn esquina-x esquina-y) diametro diametro color)))
+  ;; Define las coordenadas del círculo
+  (let*
+    ;; Variables locales del let secuencial
+    (
+     ;; Coordenada X del centro
+     (cx (posn-x centro))
+     ;; Coordenada Y del centro
+     (cy (posn-y centro))
+     ;; Diámetro es dos veces el radio
+     (diametro (* 2 radio))
+     ;; Coordenada X de la esquina superior izquierda
+     (esquina-x (- cx radio))
+     ;; Coordenada Y de la esquina superior izquierda
+     (esquina-y (- cy radio))
+    )
+    ;; Cuerpo de la función
+    ;; Dibuja una elipse sólida (círculo si diámetro = altura y anchura)
+    ((draw-solid-ellipse v1) 
+     (make-posn esquina-x esquina-y) 
+     diametro 
+     diametro 
+     color)
+  )
+)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: lista-a-posn 
- Descripción: convierte una lista de pares con coordeandas de puntos
-   al tipo make-posn
- Parametros:
- - puntos
- Devuelve:
-  lista
+Nombre: lista-a-posn
+Descripción: Convierte una lista de pares de coordenadas en una lista de puntos `make-posn`.
+Parámetros:
+- puntos: lista de pares de coordenadas en formato `(x y)`, donde `x` es la coordenada X e `y` es la coordenada Y.
+Devuelve:
+- Lista de puntos `make-posn`, cada uno representado por su posición X e Y.
+Descripción de la solución:
+Aplica una función lambda que convierte cada par `(x y)` en un objeto `make-posn` mediante `map`.
+Funciones auxiliares:
+- ninguna
 |#
 
 (define (lista-a-posn puntos)
@@ -73,13 +98,20 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: D2 
- Descripción: Distancia Eclidea entre dos puntos
- Parametros:
- - x1, y1
- - x2, y2
- Devuelve:
-  Valor numérico de la distancia
+Nombre: D2
+Descripción: Calcula la distancia euclidiana entre dos puntos en un plano 2D.
+Parámetros:
+- x1: Coordenada X del primer punto.
+- y1: Coordenada Y del primer punto.
+- x2: Coordenada X del segundo punto.
+- y2: Coordenada Y del segundo punto.
+Devuelve:
+- Un número que representa la distancia entre los dos puntos.
+Descripción de la solución:
+Utiliza la fórmula de distancia euclidiana: 
+  √((x2 - x1)2 + (y2 - y1)2)
+Funciones auxiliares:
+- ninguna
 |#
 
 (define (D2 x1 y1 x2 y2)
@@ -90,71 +122,22 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: dibujar-cuarto-circlo 
- Descripción: dados los parámetros de un círculo, dibuja n puntos a n color sobre uno de los cuatro
-  cuartos que tiene dicho círculo
- Parametros:
- - centrox
- - centroy
- - radio
- - num-puntos
- - color
- - cuadrante
- Devuelve:
-  impresión del cuarto de círculo
-|#
-
-(define (dibujar-cuarto-circulo centrox centroy radio num-puntos color cuadrante)
-  ;; Definir una función para calcular los puntos de la circunferencia
-  (define (punto-circulo r theta)
-    (let ((x (* r (cos theta)))
-          (y (* r (sin theta))))
-      ;; Ajustar los signos según el cuadrante usando cond
-      (cond
-        ((eq? cuadrante 'arriba-derecha) (vector (+ centrox x) (+ centroy (- y))))  ;; Cuadrante 1
-        ((eq? cuadrante 'arriba-izquierda) (vector (+ centrox (- x)) (+ centroy (- y))))  ;; Cuadrante 2
-        ((eq? cuadrante 'abajo-izquierda) (vector (+ centrox (- x)) (+ centroy y)))  ;; Cuadrante 3
-        ((eq? cuadrante 'abajo-derecha) (vector (+ centrox x) (+ centroy y)))  ;; Cuadrante 4
-        (else (error "Cuadrante no válido")))))
-
-  ;; Generar una lista de puntos entre 0 y pi/2 utilizando build-list
-  (define puntos
-    (build-list (+ num-puntos 1) (lambda (i)
-                                   (punto-circulo radio (* i (/ pi 2 num-puntos))))))
-
-  ;; Dibujar las líneas entre los puntos
-  (do
-      ;; Variables iniciales: i empieza en 0 y se incrementa hasta (length puntos - 2)
-      ((i 0 (+ i 1)))
-      ;; Condición de parada: cuando i llega al penúltimo punto
-      ((= i (- (length puntos) 1)))
-    ;; Cuerpo de do: dibujar la línea entre el punto i y el punto i+1
-    (let* ((p1 (list-ref puntos i))
-           (p2 (list-ref puntos (+ i 1)))
-           (x1 (vector-ref p1 0))
-           (y1 (vector-ref p1 1))
-           (x2 (vector-ref p2 0))
-           (y2 (vector-ref p2 1)))
-      ;; Dibujar la línea
-      ((draw-line v1) (make-posn x1 y1) (make-posn x2 y2) color))))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-#|
- Nombre: lista-cuarto-circlo 
- Descripción: dados los parámetros de un círculo, devuelve n puntos de uno de los cuatro
-  cuartos que tiene dicho círculo y en un sentido concreto
- Parametros:
- - centrox
- - centroy
- - radio
- - num-puntos
- - sentido
- - cuadrante
- Devuelve:
-  lista con los puntos
+Nombre: lista-cuarto-circulo
+Descripción: Genera una lista de puntos que forman un cuarto de círculo en un cuadrante específico, con un sentido de recorrido definido.
+Parámetros:
+- centrox: Coordenada X del centro del círculo.
+- centroy: Coordenada Y del centro del círculo.
+- radio: Longitud del radio del círculo.
+- num-puntos: Número de puntos que definen el arco del cuarto de círculo.
+- cuadrante: Cuadrante del círculo ('arriba-derecha, 'arriba-izquierda, 'abajo-derecha, 'abajo-izquierda).
+- sentido: Dirección del recorrido ('horario o 'antihorario).
+Devuelve:
+- Una lista de puntos (en formato `(list x y)`) que forman el cuarto de círculo.
+Descripción de la solución:
+La función utiliza trigonometría para calcular los puntos del arco según el radio y un ángulo `theta`. 
+El sentido horario o antihorario define cómo se generan los ángulos, y el cuadrante ajusta los signos de las coordenadas.
+Funciones auxiliares:
+- punto-circulo: Calcula un punto en el arco para un ángulo dado y ajusta las coordenadas según el cuadrante.
 |#
 
 (define (lista-cuarto-circulo centrox centroy radio num-puntos cuadrante sentido)
@@ -182,14 +165,18 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: calcular-centroide 
- Descripción: dados tres puntos, calcula el centroide
- Parametros:
- - x1,y1
- - x2,y2
- - x3,y3
- Devuelve:
-  vector con ambos valores
+Nombre: calcular-centroide
+Descripción: Calcula el centroide de un triángulo definido por tres vértices dados.
+Parámetros:
+- x1, y1: Coordenadas del primer vértice del triángulo.
+- x2, y2: Coordenadas del segundo vértice del triángulo.
+- x3, y3: Coordenadas del tercer vértice del triángulo.
+Devuelve:
+- Un vector con las coordenadas `(x, y)` del centroide.
+Descripción de la solución:
+El centroide de un triángulo es el punto de intersección de sus medianas. Se calcula promediando las coordenadas X e Y de los tres vértices.
+Funciones auxiliares:
+- Ninguna.
 |#
 
 (define (calcular-centroide x1 y1 x2 y2 x3 y3)
@@ -199,16 +186,22 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: escalar-y-desplazar 
- Descripción: dado un punto, lo escala con respecto a su centroide y luego lo desplaza
- Parametros:
- - x,y: cuanto desplazar
- - centroy,centroy: nuevo centro 
- - escala: cuanta cantidad de distancia desplazar
- - centroide-x, centroide-y: centroide original del objeto
- Devuelve:
-  vector con el punto desplazado y escalado
+Nombre: escalar-y-desplazar  
+Descripción: Escala y desplaza un punto en función de un centro de referencia y un factor de escala.  
+Parámetros:  
+- x: Coordenada X del punto inicial.  
+- y: Coordenada Y del punto inicial.  
+- centrox: Coordenada X del centro de desplazamiento.  
+- centroy: Coordenada Y del centro de desplazamiento.  
+- escala: Factor de escala aplicado al desplazamiento.  
+- centroide-x: Coordenada X del centroide de referencia.  
+- centroide-y: Coordenada Y del centroide de referencia.  
+Devuelve:  
+Un vector con las nuevas coordenadas escaladas y desplazadas.  
+Funciones auxiliares:  
+Ninguna.  
 |#
+
 
 (define (escalar-y-desplazar x y centrox centroy escala centroide-x centroide-y)
   ;; Calcular desplazamiento en x y y respecto al centroide
@@ -221,17 +214,20 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: escalar-desplazar-construye-2
- Descripción: dada una lista de pares (puntos) y los puntos que conforman los bordes más exteriores,
- desplaza y escala los puntos
- Parametros:
- - x,y: cuanto desplazar
- - puntos: puntos a desplazar
- - puntos-c: puntos del centroide
- - escala: escala a la que transformar los puntos
- Devuelve:
-  lista de puntos desplazados, escalador y en formato make-posn
+Nombre: escalar-desplaza-construye2  
+Descripción: Escala y desplaza un conjunto de puntos respecto a un centroide calculado a partir de otro conjunto de puntos de referencia.  
+Parámetros:  
+- puntos: Lista de puntos a escalar y desplazar.  
+- puntos-c: Lista de puntos para calcular el centroide.  
+- x: Coordenada X del nuevo centro de desplazamiento.  
+- y: Coordenada Y del nuevo centro de desplazamiento.  
+- escala: Factor de escala aplicado al desplazamiento.  
+Devuelve:  
+Una lista de puntos desplazados y escalados como objetos `posn`.  
+Funciones auxiliares:  
+Ninguna.  
 |#
+
 
 (define (escalar-desplaza-construye2 puntos puntos-c x y escala)
   ;; Calcula el centroide del conjunto de puntos
@@ -250,15 +246,23 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: tangentes
- Descripción: dado una circunferencia y un punto, se calculan sus puntos de tangencia.
- Parametros:
- - xc1,yc1: centro circuunferencia
- - x-tangente,y-tangente: punto por el que pasa.
- - radio: radio de la circunferencia
- Devuelve:
-  vector con los dos puntos de tangencia
+Nombre: tangentes  
+Descripción: Calcula los puntos de tangencia de una circunferencia dados su centro, un punto de referencia, y el radio.  
+Parámetros:  
+- xc1: Coordenada X del centro de la circunferencia.  
+- yc1: Coordenada Y del centro de la circunferencia.  
+- x-tangente: Coordenada X del punto de referencia para calcular las tangentes.  
+- y-tangente: Coordenada Y del punto de referencia para calcular las tangentes.  
+- radio: Radio de la circunferencia.  
+Devuelve:  
+Un vector que contiene dos vectores, cada uno representando un punto de tangencia en coordenadas (X, Y).  
+Descripción de la solución:  
+Se calcula el punto medio entre el centro y el punto de referencia. A partir de este, se obtienen las distancias necesarias para encontrar los puntos de tangencia usando fórmulas geométricas.  
+Funciones auxiliares:  
+- punto-medio: Calcula el punto medio entre dos puntos.  
+- distance: Calcula la distancia entre dos puntos en el plano cartesiano.  
 |#
+
 
 (define (tangentes xc1 yc1 x-tangente y-tangente radio)
   
@@ -303,14 +307,24 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #|
- Nombre: dibujar-corazon
- Descripción: se dibuja un corazón en las coordenadas indicadas
- Parametros:
- - centrox,centroy: centro corazón
- - escala: cuan grande va a ser
- Devuelve:
-  impresión del corazón
+Nombre: dibujar-corazon  
+Descripción: Dibuja un corazón estilizado en el plano utilizando dos lóbulos circulares y un triángulo que los conecta.  
+Parámetros:  
+- centrox: Coordenada X del centro del corazón.  
+- centroy: Coordenada Y del centro del corazón.  
+- escala: Factor de escala para ajustar el tamaño del corazón.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se calculan las coordenadas de los puntos clave del corazón (lóbulos y vértice inferior) utilizando la función `escalar-y-desplazar`.  
+- Los puntos de tangencia entre los lóbulos y el triángulo se obtienen con la función `tangentes`.  
+- Se dibujan los lóbulos circulares y el triángulo que conecta los lóbulos para completar la figura del corazón.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto respecto a un centroide.  
+- tangentes: Calcula los puntos de tangencia de los lóbulos circulares con el triángulo.  
+- dibujar-circulo: Dibuja un círculo sólido en el plano.  
 |#
+
 (define (dibujar-corazon centrox centroy escala)
   ;; Centro original del triángulo
   (define centroide-x 315)
@@ -357,14 +371,24 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: dibujar-trebol
- Descripción: se dibuja un trébol en las coordenadas indicadas
- Parametros:
- - centrox,centroy: centro trébol
- - escala: cuan grande va a ser
- Devuelve:
-  impresión del trébol
+Nombre: dibujar-trebol  
+Descripción: Dibuja un trébol estilizado compuesto por tres círculos superpuestos y un triángulo en la base.  
+Parámetros:  
+- centrox: Coordenada X del centro del trébol.  
+- centroy: Coordenada Y del centro del trébol.  
+- escala: Factor de escala para ajustar el tamaño del trébol.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se calcula el centroide original del trébol basado en los vértices de los círculos y el triángulo.  
+- Los puntos correspondientes a los centros de los círculos y los vértices del triángulo son escalados y desplazados en función del `centrox`, `centroy` y el `escala`.  
+- Los círculos se dibujan en las posiciones correspondientes, seguidos por el triángulo en la base para completar la figura.  
+Funciones auxiliares:  
+- calcular-centroide: Calcula el centroide a partir de tres puntos.  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto respecto a un centroide.  
+- dibujar-circulo: Dibuja un círculo sólido en el plano.  
 |#
+
 
 (define (dibujar-trebol centrox centroy escala)
   ;; Centroide original del trébol
@@ -416,14 +440,26 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: dibujar-pica
- Descripción: se dibuja una pica en las coordenadas indicadas
- Parametros:
- - centrox,centroy: centro pica
- - escala: cuan grande va a ser
- Devuelve:
-  impresión de la pica
+Nombre: dibujar-pica  
+Descripción: Dibuja una figura de pica compuesta por dos círculos superiores y dos polígonos que forman el vértice y la base.  
+Parámetros:  
+- centrox: Coordenada X del centro de la pica.  
+- centroy: Coordenada Y del centro de la pica.  
+- escala: Factor de escala para ajustar el tamaño de la pica.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se definen los radios y se calculan las posiciones escaladas de los círculos y puntos usando `escalar-y-desplazar`.  
+- Los círculos superiores son dibujados primero.  
+- A partir de las tangentes entre los círculos y el vértice, se construye el polígono que forma la parte superior de la pica.  
+- Finalmente, se dibuja la parte baja de la pica usando un polígono inferior basado en tres puntos.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto respecto a un centroide.  
+- dibujar-circulo: Dibuja un círculo sólido en el plano.  
+- tangentes: Calcula las tangentes entre un círculo y un punto externo.  
 |#
+
+
 (define (dibujar-pica centrox centroy escala)
   ;; Definir el radio de los círculos
   (define radio (* escala 50))
@@ -487,14 +523,22 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: dibujar-diamante
- Descripción: se dibuja un diamante en las coordenadas indicadas
- Parametros:
- - centrox,centroy: centro diamante
- - escala: cuan grande va a ser
- Devuelve:
-  impresión del diamante
+Nombre: dibujar-diamante  
+Descripción: Dibuja un diamante compuesto por cuatro vértices escalados y desplazados con respecto a un centroide.  
+Parámetros:  
+- centrox: Coordenada X del centro del diamante.  
+- centroy: Coordenada Y del centro del diamante.  
+- escala: Factor de escala para ajustar el tamaño del diamante.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se definen las coordenadas originales de los cuatro vértices del diamante.  
+- Las coordenadas son escaladas y desplazadas respecto al centroide del diamante.  
+- Se extraen las coordenadas escaladas de los puntos y se utilizan para construir un polígono sólido que forma el diamante.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto respecto a un centroide.  
 |#
+
 
 (define (dibujar-diamante centrox centroy escala)
   ;; Centroide original del diamante (puedes ajustar si es necesario)
@@ -529,20 +573,25 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: dibujar-lista
- Descripción: dada una lista de puntos, dibuja dichos puntos en las coordenadas
- indicadas
- Parametros:
- - lista-asociacion: lista con todas las letras
- - letra: valor a dibujar
- - coordx,coordy: coordenadas donde dibujarlo
- - escala: cuan grande va a ser
- - color
- Devuelve:
-  impresión de los puntos en un polígono sólido
+Nombre: dibujar-lista  
+Descripción: Dibuja un polígono representando una letra especificada, escalada y desplazada, a partir de una lista de asociación de puntos.  
+Parámetros:  
+- lista-asociacion: Lista de asociación que contiene las coordenadas de las letras.  
+- letra: Identificador de la letra a dibujar.  
+- coordx: Coordenada X para el desplazamiento del dibujo.  
+- coordy: Coordenada Y para el desplazamiento del dibujo.  
+- escala: Factor de escala aplicado a las coordenadas originales.  
+- color: Color del polígono que representa la letra.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se busca la letra en la lista de asociación para obtener sus puntos originales.  
+- Un bucle `do` transforma cada punto aplicando el escalado y desplazamiento, utilizando la función `escalar-y-desplazar`.  
+- Los puntos transformados se convierten en objetos `posn` y se agregan a una lista acumulativa.  
+- Una vez procesados todos los puntos, se dibuja el polígono utilizando los puntos transformados.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto con respecto a un centroide y coordenadas base.  
 |#
-
-
 
 (define (dibujar-lista lista-asociacion letra coordx coordy escala color)
   ;; Obtener la lista de puntos de la letra en la lista de asociación
@@ -574,20 +623,30 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 #|
- Nombre: dibujar-carta
- Descripción: dibuja una carta dada una posición, el palo y el valor.
- Parametros:
- - lista-asociacion: lista con todas las letras
- - cx,cy: coordenadas donde dibujarlo
- - escala: cuan grande va a ser
- - palo
- - valor
- Devuelve:
-  impresión de la carta
+Nombre: dibujar-carta  
+Descripción: Dibuja una carta en la posición, escala, palo y valor especificados, utilizando una lista de asociación para los valores de las cartas.  
+Parámetros:  
+- cx: Coordenada X del centro de la carta.  
+- cy: Coordenada Y del centro de la carta.  
+- escala: Factor de escala para ajustar el tamaño de la carta.  
+- palo: El palo de la carta (corazon, diamante, pica o trebol).  
+- valor: El valor de la carta (número o figura).  
+- lista-asociacion: Lista de asociación que contiene las coordenadas de las figuras de las cartas.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Escala y transforma las coordenadas de los bordes, símbolos y números de la carta.  
+- Dibuja el contorno de la carta utilizando polígonos y curvas de los bordes.  
+- Dibuja el número correspondiente usando la lista de asociación y el palo con sus respectivos símbolos (corazón, trébol, pica, diamante).  
+Funciones auxiliares:  
+- transformar-coordenadas: Calcula nuevas coordenadas basadas en la escala y posición de la carta.  
+- lista-cuarto-circulo: Genera las curvas de los bordes de la carta según la escala.  
+- lista-a-posn: Convierte una lista de puntos en objetos posn para gráficos.  
+- dibujar-lista: Dibuja las figuras de los números o letras en la carta.  
+- dibujar-corazon, dibujar-pica, dibujar-trebol, dibujar-diamante: Dibuja los símbolos de los palos según su forma.  
 |#
+
 (define (dibujar-carta cx cy escala palo valor lista-asociacion)
   ;; Función interna para transformar coordenadas según el centro y escala y devolver un par `(x, y)`
   (define (transformar-coordenadas x y esc)
@@ -647,13 +706,21 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: dibujar-carta-por-detras
- Descripción: dibuja la parte trasera de la carta
- Parametros:
- - cx,cy: coordenadas donde dibujarlo
- - escala: cuan grande va a ser
- Devuelve:
-  impresión de la carta por detras
+Nombre: dibujar-carta-por-detras  
+Descripción: Dibuja el reverso de una carta en una posición y escala específicas, con un diseño interior distintivo y un símbolo decorativo (como la patita de un gato).  
+Parámetros:  
+- cx: Coordenada X del centro de la carta.  
+- cy: Coordenada Y del centro de la carta.  
+- escala: Factor de escala para ajustar el tamaño de la carta y sus elementos.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Escala y transforma las coordenadas de los bordes exteriores e interiores de la carta según el centro y la escala.  
+- Dibuja el contorno blanco de la carta y su diseño interior en color morado.  
+- Añade un símbolo decorativo centrado en la parte trasera de la carta, ajustado al tamaño deseado mediante un escalado adicional.  
+Funciones auxiliares:  
+- transformar-coordenadas: Calcula nuevas coordenadas basadas en la posición central y el factor de escala.  
+- escalar-desplaza-construye2: Escala y desplaza un conjunto de puntos para dibujar el símbolo decorativo.  
 |#
 
 (define (dibujar-carta-por-detras cx cy escala)
@@ -692,14 +759,21 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: dibujar-ficha
- Descripción: dibuja una ficha dado un centro, escala y color
- Parametros:
- - centrox,centroy: coordenadas donde dibujarlo
- - escala: cuan grande va a ser
- - color
- Devuelve:
-  impresión de los puntos en un polígono sólido
+Nombre: dibujar-ficha  
+Descripción: Dibuja una ficha en la posición, escala y color especificados. La ficha consta de círculos concéntricos y triángulos decorativos distribuidos simétricamente alrededor de su centro.  
+Parámetros:  
+- centrox: Coordenada X del centro de la ficha.  
+- centroy: Coordenada Y del centro de la ficha.  
+- escala: Factor de escala para ajustar el tamaño de la ficha y sus elementos.  
+- color: Color principal de la ficha para los círculos y triángulos.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- La ficha se compone de tres círculos concéntricos, donde el color alterna entre el principal (color) y blanco.  
+- Se dibujan seis triángulos alrededor del círculo interior, cada uno definido por cuatro puntos y transformados mediante escalado y desplazamiento.  
+- La posición y forma de los triángulos están calculadas para mantener simetría y dar un efecto decorativo a la ficha.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza puntos en función de un centro y un factor de escala.  
 |#
 
 (define (dibujar-ficha centrox centroy escala color)
@@ -786,13 +860,20 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: esLetra?
- Descripción: dado un valor obtenido por teclado, indica si es letra
- Parametros:
- - caracter
- Devuelve:
-  Booleano
+Nombre: esLetra?  
+Descripción: Verifica si un carácter dado es una letra mayúscula del alfabeto inglés.  
+Parámetros:  
+- caracter: Carácter a verificar.  
+Devuelve:  
+- Booleano (#t si el carácter es una letra mayúscula, #f en caso contrario).  
+Descripción de la solución:  
+- Convierte el carácter a su valor entero ASCII usando `char->integer`.  
+- Comprueba si el valor entero se encuentra en el rango de las letras mayúsculas (de 'A' a 'Z').  
+- Devuelve `#t` si cumple la condición, y `#f` en caso contrario.  
+Funciones auxiliares:  
+ninguna  
 |#
+
 (define (esLetra? caracter)
   (if (and (>= (char->integer caracter) (char->integer #\A))
             (<= (char->integer caracter) (char->integer #\Z))
@@ -803,14 +884,22 @@ Autor: Javier García Fernández
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 #|
- Nombre: esNumero?
- Descripción: dado un valor obtenido por teclado, indica si es número
- Parametros:
- - caracter
- Devuelve:
-  Booleano
+Nombre: esNumero?  
+Descripción: Verifica si un carácter dado es un dígito numérico (0-9).  
+Parámetros:  
+- caracter: Carácter a verificar.  
+Devuelve:  
+- Booleano (#t si el carácter es un dígito numérico, #f en caso contrario).  
+Descripción de la solución:  
+- Convierte el carácter a su valor entero ASCII usando `char->integer`.  
+- Comprueba si el valor entero se encuentra en el rango de los dígitos numéricos (de '0' a '9').  
+- Devuelve `#t` si cumple la condición, y `#f` en caso contrario.  
+Funciones auxiliares:  
+ninguna  
 |#
+
 (define (esNumero? caracter)
   (if (and (>= (char->integer caracter) (char->integer #\0))
            (<= (char->integer caracter) (char->integer #\9)))
@@ -822,21 +911,41 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: input-field
- Descripción: esta función genera un campo para introducir texto
- Parametros:
- - x: ancho de la caja de texto
- - y: alto de la caja de texto
- - pos-x, pos-y: posición de la esquina superior izquierda de la caja de texto
- Devuelve:
-  Sting: valor introducido en la caja de texto por teclado
- Funciones a las que llama:
-   esLetra?, esNumero?, dibujar-texto (letras)
+Nombre: input-field  
+Descripción: Renderiza un campo de entrada interactivo en pantalla que permite al usuario ingresar valores numéricos a través del teclado.  
+Parámetros:  
+- x: Ancho del campo de entrada.  
+- y: Alto del campo de entrada.  
+- pos-x: Coordenada X de la esquina superior izquierda del campo.  
+- pos-y: Coordenada Y de la esquina superior izquierda del campo.  
+Devuelve:  
+- El valor numérico ingresado por el usuario tras presionar "Enter".  
+Descripción de la solución:  
+1. Ajusta el alto del campo para que no sea inferior a 40 píxeles.  
+2. Dibuja un rectángulo negro como borde exterior y un rectángulo blanco como fondo interior.  
+3. Itera continuamente mientras el usuario ingresa caracteres:  
+   - Actualiza la cadena de texto ingresada según las teclas presionadas, limitándola a 10 caracteres.  
+   - Muestra el texto actualizado dentro del campo.  
+4. Devuelve el valor numérico ingresado una vez que el usuario presiona "Enter".  
+Funciones auxiliares:  
+- esNumero?  
+- esLetra?  
+
+Notas de bloques grandes:  
+- Dibujo del campo: Se define el marco del campo de entrada (borde negro y fondo blanco).  
+- Bucle de entrada: Maneja la entrada de caracteres hasta que se presiona "Enter".  
+- Gestión de texto: Controla límites de longitud, caracteres válidos (letras y números), y acciones como borrar (retroceso).  
 |#
+
 (define (input-field x y pos-x pos-y)
   (let*
-      ((y (if (< y 40) 40 y))
-       (letra-pos (- (/ y 2) 10)))   
+      ; Variables del let secuencial
+      (
+       ; El valor mínimo del alto es 40
+       (y (if (< y 40) 40 y))
+       ; La posición de las letras es a la mitad del ancho
+       (letra-pos (- (/ y 2) 10)))
+  ; Cuuadrantes de texto
   ((draw-solid-polygon v1)
    (list
     (make-posn pos-x pos-y)
@@ -849,26 +958,31 @@ Autor: Javier García Fernández
     (make-posn (- (+ pos-x x) 5) (+ 5 pos-y))
     (make-posn (- (+ pos-x x) 5) (- (+ pos-y y) 5))
     (make-posn (+ 5 pos-x) (+ pos-y y -5))) (make-posn 0 0) blanco)
+    ; Bucle de ejecución
   (do
+      ; Variables iterativas
       (
        (tecla (key-value (get-key-press v1)) (key-value (get-key-press v1)))
        (valores "" (cond
-                     ; No sea igual a cartorce, se hace todo normal
-                     ;((eq? (dibujar-texto valores (+ 10 pos-x) (+ 10 pos-y) 10 negro) 'null) "")
+                     ; el tamaño de los valores está dentro del rango permitido
                      ((< (string-length valores) 10)
                       (cond
+                        ; Caso captura del "release"
                         ((symbol? tecla) valores)
-                        
+                        ; Obtiene valor
                         ((char? tecla)
                          (if (eq? tecla #\space)
-                             valores
+                             valores           ; No hace nada con el espacio
                              (if (eq? tecla #\backspace)
                                  (cond
+                                   ; Devuelve la cadena menos el último elemento
                                    ((> (string-length valores) 0)
                                     (substring valores 0 (sub1 (string-length valores))))
+                                   ; Cadena vacía si solo hay uno o ningun valor
                                    ((or (= (string-length valores) 1) (= (string-length valores) 0))
                                     ""
                                     ))
+                                 ; Se escribe un número o letra, pues se apendiza
                                  (if (or (esNumero? tecla) (esLetra? tecla))
                                      (string-append valores (string tecla))
                                      valores)
@@ -876,12 +990,14 @@ Autor: Javier García Fernández
                               )
                           ))
                      ))
+                     ; El tamaño de los valores está fuera del rango permitido
                      ((>= (string-length valores) 10)
                       (if (eq? tecla #\backspace)
                              (substring valores 0 (sub1 (string-length valores)))
                              valores))
                      
                       )))
+    ; Pulsa enter para salir
       ((eq? tecla #\return) (string->number valores))
     ((draw-solid-polygon v1)
      (list
@@ -905,14 +1021,19 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: limpiar-figura
- Descripción: genera un poligono del color indicado en los puntos indicados.
- Parametros:
- - puntos: puntos a limpiar
- - color-fondo: color en el que se devuelve la impresion
- Devuelve:
-  impresión de la figura limpia
+Nombre: limpiar-figura  
+Descripción: Simula el borrado de una figura en pantalla pintándola con el color de fondo.  
+Parámetros:  
+- puntos: Lista de puntos que definen la figura a borrar.  
+- color-fondo: Color utilizado para sobrescribir la figura.  
+Devuelve:  
+- void  
+Descripción de la solución:  
+Dibuja la figura dos veces (sólida y con contorno) usando el color de fondo para cubrir completamente la figura original.  
+Funciones auxiliares:  
+ninguna  
 |#
+
 
 (define (limpiar-figura puntos color-fondo)
   ;; Dibuja la figura con el color de fondo para simular el borrado
@@ -928,16 +1049,19 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: contador-jugador
- Descripción: dibuja el contador del jugador
- Parametros:
- - valor: valor que tiene el jugador en su contador
- - tipo: el modo de juego que se está llevando a cabo
- Devuelve:
- impresión del dibujo del contador
- Funciones a las que llama:
-   
+Nombre: contador-jugador  
+Descripción: Dibuja un contador visual para un jugador, mostrando un valor numérico y un texto descriptivo según el tipo de contador.  
+Parámetros:  
+- valor: Número que representa el valor actual del contador (e.g., fichas o partidas ganadas).  
+- tipo: Tipo de contador ('fichas o 'ganadas).  
+Devuelve:  
+- void  
+Descripción de la solución:  
+Dibuja un contador con un marco externo, un recuadro interior, y un texto descriptivo según el tipo de contador. También muestra el valor numérico en el recuadro.  
+Funciones auxiliares:  
+- dibujar-texto  
 |#
+
 (define (contador-jugador valor tipo)
   ;; Contador
   ((draw-solid-polygon v1)
@@ -962,16 +1086,18 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: contador-crupier
- Descripción: dibuja el contador del crupier
- Parametros:
- - valor: valor que tiene el crupier en su contador
- - tipo: el modo de juego que se está llevando a cabo
- Devuelve:
- impresión del dibujo del contador
- Funciones a las que llama:
-   
+Nombre: contador-crupier  
+Descripción: Dibuja un contador visual para la banca (crupier), mostrando el número de fichas disponibles.  
+Parámetros:  
+- fichas: Número que representa la cantidad de fichas del crupier.  
+Devuelve:  
+- void  
+Descripción de la solución:  
+Dibuja un contador compuesto por un texto descriptivo "BANCA" en la parte superior, un marco exterior, un recuadro interior, y el número de fichas dentro del recuadro.  
+Funciones auxiliares:  
+- dibujar-texto  
 |#
+
 
 (define (contador-crupier fichas)
   (dibujar-texto "BANCA" 350 5 10 negro)
@@ -988,17 +1114,22 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: mesa
- Descripción: imprime la mesa de poker
- Parametros:
- - valor-jugador: valor que tiene el jugador en su contador
- - valor-crupier: valor que tiene el crupier en su contador
- - tipo: el modo de juego que se está llevando a cabo
- Devuelve:
-  impresión de la mesa de poker
- Funciones a las que llama:
-   contador-crupier, contador-jugador
+Nombre: mesa  
+Descripción: Dibuja la mesa de juego con sus componentes visuales, como el tapete, los contadores de jugador y crupier, botones de juego, y áreas de interacción.  
+Parámetros:  
+- valor-crupier: Número que indica la cantidad de fichas o valor actual del crupier.  
+- valor-jugador: Número que indica la cantidad de fichas o valor actual del jugador.  
+- tipo: Indica el tipo de juego (por ejemplo, fichas o puntuación).  
+Devuelve:  
+- void  
+Descripción de la solución:  
+El tapete y las áreas de juego son dibujados con polígonos, elipses y texto. Dependiendo del tipo de juego, se muestran botones específicos. Los valores del jugador y el crupier son representados mediante contadores visuales.  
+Funciones auxiliares:  
+- contador-jugador  
+- contador-crupier  
+- dibujar-texto  
 |#
+
 (define (mesa valor-crupier valor-jugador tipo)
   ; Tapete
   ((draw-solid-polygon v1)
@@ -1041,18 +1172,23 @@ Autor: Javier García Fernández
 )
 
 #|
- Nombre: actualizar-mesa
- Descripción: imprime la mesa de poker con nuevos valores actualizados y las cartas puestas inicialmente
- Parametros:
- - mano-c: cartas del crupier
- - mano-j: cartas del jugador
- - f-c: fichas del crupier
- - f-j: fichas del jugador
- Devuelve:
-  impresión de la mesa de poker actualizada
- Funciones a las que llama:
-   mesa, dibujar-carta
+Nombre: actualizar-mesa  
+Descripción: Actualiza los elementos visuales de la mesa de juego, incluyendo las cartas del crupier y el jugador, y los valores de las fichas o puntuaciones.  
+Parámetros:  
+- mano-c: Lista que representa la mano actual del crupier.  
+- mano-j: Lista que representa la mano actual del jugador.  
+- f-c: Número que indica las fichas o puntuación del crupier.  
+- f-j: Número que indica las fichas o puntuación del jugador.  
+- tipo: Indica el tipo de juego (por ejemplo, fichas o puntuación).  
+Devuelve:  
+- void  
+Descripción de la solución:  
+Llama a la función `mesa` para dibujar el fondo y los contadores. Posteriormente, utiliza `dibujar-carta` para mostrar las cartas del crupier y del jugador en sus respectivas posiciones, escalando y ubicando según corresponda.  
+Funciones auxiliares:  
+- mesa  
+- dibujar-carta  
 |#
+
 
 (define (actualizar-mesa mano-c mano-j f-c f-j tipo)
   (mesa f-c f-j tipo)
@@ -1071,15 +1207,20 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: apostar
- Descripción: menu de elección de fichas a apostar
- Parametros:
- - fichas-jugador: fichas que tiene el jugador
- Devuelve:
-  Valor numérico: fichas a apostar
- Funciones a las que llama:
-   dibujar-texto, dibujar-ficha, D2, 
+Nombre: apostar  
+Descripción: Dibuja la interfaz gráfica para que el jugador seleccione la cantidad de fichas que desea apostar y devuelve el valor de la apuesta seleccionada.  
+Parámetros:  
+- fichas-jugador: Número de fichas disponibles para el jugador.  
+Devuelve:  
+- La cantidad seleccionada para la apuesta (20, 50, 100, 200, 500 o 1000).  
+Descripción de la solución:  
+La función dibuja el marco de selección de apuesta y las fichas correspondientes con sus valores. Utiliza coordenadas predefinidas para ubicar las fichas gráficamente y un bucle `let loop` para detectar clics del usuario. Dependiendo de la posición del clic y la cantidad de fichas disponibles, devuelve el valor de la apuesta. Si el clic no es válido, continúa esperando.  
+Funciones auxiliares:  
+- D2: Calcula la distancia euclidiana entre dos puntos.  
+- dibujar-texto: Dibuja texto en pantalla.  
+- dibujar-ficha: Dibuja una ficha con un valor específico.  
 |#
+
 
 
 
@@ -1149,15 +1290,20 @@ Autor: Javier García Fernández
 
 
 #|
- Nombre: cantidad
- Descripción: mensaje para elegir la cantidad de fichas a jugar
- Parametros:
-     No tiene parametros
- Devuelve:
-  Valor numérico: cantidad de fichas con las que jugar
- Funciones a las que llama:
-   dibujar-texto, input-field
+Nombre: cantidad  
+Descripción: Solicita al jugador ingresar la cantidad de fichas con las que desea jugar.  
+Parámetros:  
+- Ninguno.  
+Devuelve:  
+- Un número que representa la cantidad ingresada por el jugador.  
+Descripción de la solución:  
+La función dibuja la interfaz gráfica para que el jugador ingrese la cantidad de fichas deseada. Utiliza `input-field` para capturar la entrada del jugador. Si la entrada es inválida, muestra un mensaje de error, espera dos segundos, limpia el mensaje de la pantalla y vuelve a solicitar la entrada. Cuando la entrada es válida, devuelve el número ingresado.  
+Funciones auxiliares:  
+- dibujar-texto: Dibuja texto en pantalla.  
+- input-field: Captura la entrada del usuario en un cuadro de texto.  
+- limpiar-figura: Borra gráficos de la pantalla.  
 |#
+
 
 (define (cantidad)
   ((draw-solid-polygon v1)
@@ -1203,16 +1349,20 @@ Autor: Javier García Fernández
 
 
 #|
- Nombre: mensaje-ganador
- Descripción: muestra el ganador del juego, ya sea ronda o partida
- Parametros:
- - clase: modalidad de juego
- - ganador: jugador ganador
- Devuelve:
-  impresión del jugador ganador y la modalidad del juego
- Funciones a las que llama:
-   dibujar-texto
+Nombre: mensaje-ganador  
+Descripción: Muestra un mensaje indicando el ganador de una ronda o partida.  
+Parámetros:  
+- clase: indica si se trata de una 'ronda' o 'partida'.  
+- ganador: especifica el ganador ('jugador' o 'crupier').  
+Devuelve:  
+- void.  
+Descripción de la solución:  
+Según los parámetros recibidos, construye el texto del mensaje dinámicamente con el tipo de clase y el ganador. Se dibuja un cuadro en pantalla con el mensaje, ajustando la escala del texto según la combinación de parámetros. El mensaje permanece en pantalla durante 5 segundos antes de continuar.  
+Funciones auxiliares:  
+- dibujar-texto: Dibuja texto en pantalla.  
+- lista-a-posn: Convierte listas de coordenadas a objetos posn para gráficos.  
 |#
+
 
 (define (mensaje-ganador clase ganador)
   (let*
@@ -1243,19 +1393,25 @@ Autor: Javier García Fernández
 
 
 #|
- Nombre: mover-patita
- Descripción: mueve la patita del gato por la pantalla según se indique
- Parametros:
- - x-inicia,y-inicial: coordenada donde empieza la animación.
- - x-final,y-final: coordenadas donde termina la animación.
- -  escala: tamaño de la patita.
- - tiempo-duración: de la animación.
- - color-fondo: color con el que se limpia la patita del frame anterior.
- Devuelve:
-  impresión de la animación
- Funciones a las que llama:
-   limpiar-figura, escalar-desplaza-construye2
+Nombre: mover-patita  
+Descripción: Anima el movimiento de una figura representando una "patita" desde una posición inicial hasta una posición final.  
+Parámetros:  
+- x-inicial: posición inicial en el eje X.  
+- y-inicial: posición inicial en el eje Y.  
+- x-final: posición final en el eje X.  
+- y-final: posición final en el eje Y.  
+- escala: factor de escalado aplicado a la figura.  
+- tiempo-duracion: duración total de la animación en segundos.  
+- color-fondo: color utilizado para limpiar la figura tras cada paso.  
+Devuelve:  
+- void.  
+Descripción de la solución:  
+El movimiento se divide en un número definido de pasos (`pasos`). Por cada paso, la figura se dibuja en una nueva posición calculada por desplazamientos incrementales (`dx` y `dy`), se hace una pausa corta (`tiempo-paso`) para simular la animación y luego se "borra" la figura en la posición anterior usando el color de fondo. El proceso se repite hasta que la figura alcanza la posición final, donde se dibuja de forma permanente.  
+Funciones auxiliares:  
+- escalar-desplaza-construye2: calcula los puntos transformados de la figura según desplazamiento y escala.  
+- limpiar-figura: borra la figura en la posición dada con el color de fondo.  
 |#
+
 
 (define (mover-patita x-inicial y-inicial x-final y-final escala tiempo-duracion color-fondo)
   ;; Divide el tiempo en pasos de animación
@@ -1296,19 +1452,33 @@ Autor: Javier García Fernández
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
- Nombre: mover-patita-carta
- Descripción: mueve la patita del gato con una carta por la pantalla según se indique
- Parametros:
- - x-inicia,y-inicial: coordenada donde empieza la animación.
- - x-final,y-final: coordenadas donde termina la animación.
- - escala: tamaño de la patita.
- - tiempo-duración: de la animación.
- - color-fondo: color con el que se limpia la patita del frame anterior.
- Devuelve:
-  impresión de la animación
- Funciones a las que llama:
-   limpiar-figura, escalar-desplaza-construye2,dibujar-carta-por-detras
+Nombre: mover-patita-carta  
+Descripción: Anima el movimiento de una carta acompañada de una "patita" desde una posición inicial hasta una posición final.  
+Parámetros:  
+- x-inicio: posición inicial en el eje X.  
+- y-inicio: posición inicial en el eje Y.  
+- x-fin: posición final en el eje X.  
+- y-fin: posición final en el eje Y.  
+- escala: factor de escalado aplicado a la figura y la carta.  
+- tiempo-duracion: duración total de la animación en segundos.  
+- fondo: color utilizado para limpiar la figura tras cada paso.  
+Devuelve:  
+- void.  
+Descripción de la solución:  
+El movimiento se divide en un número de pasos (`pasos`). En cada paso:  
+1. Se transforman los puntos de la carta y la patita según la posición actual y la escala.  
+2. Se dibujan la carta y la patita en la posición actual.  
+3. Se espera un tiempo (`pausa`) para simular la animación.  
+4. Se limpian la carta y la patita de la posición anterior usando el color de fondo.  
+El proceso se repite hasta que se alcanza la posición final, donde la carta se dibuja de forma permanente.  
+Funciones auxiliares:  
+- transformar-coordenadas: transforma un punto según el centro y la escala.  
+- transformar-lista: transforma una lista de puntos según el centro y la escala.  
+- escalar-desplaza-construye2: calcula los puntos transformados de la patita según desplazamiento y escala.  
+- limpiar-figura: borra la figura en la posición dada con el color de fondo.  
+- dibujar-carta-por-detras: dibuja la carta en una posición determinada.  
 |#
+
 
 (define (mover-patita-carta x-inicio y-inicio x-fin y-fin escala tiempo-duracion fondo)
   ;; Calcular el número de pasos y la pausa entre ellos

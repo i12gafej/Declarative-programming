@@ -1,3 +1,7 @@
+;                          FUNCIONES DE BARAJA
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (define (crear-mazo)
   (append
    (map (lambda (valor) (list valor 'corazon))
@@ -292,10 +296,10 @@
                ; Si ya pidió, no puede doblar
                (pidio?
                  (display "No puedes doblar una vez pides.\n")
-                 (turno-jugador (add-carta-mano mano mazo 'jugador) fichas-disponibles apuesta #t 'fichas))
+                 (turno-jugador (cons mano mazo) fichas-disponibles apuesta #t 'fichas))
                ; Hay suficientes fichas
                ((>= fichas-disponibles (* 2 apuesta))
-                
+                  (contador-jugador (- fichas-disponibles (* 2 apuesta)) 'fichas)
                   ;(printf "Doblar la apuesta ~a * 2 = ~a\n" apuesta (* 2 apuesta))
                   (let*
                       ((resultado (add-carta-mano mano mazo 'jugador))
@@ -304,12 +308,13 @@
                   (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
                   (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
                   ;(printf "Jugador: ~a (~a)\n" mano (valor-mano mano 'jugador))
+                  
                   (cons (crear-jugada mano (- fichas-disponibles (* 2 apuesta)) (* 2 apuesta))
                         mazo))
                   )
                ; No hay suficientes fichas
                (else
-                ;(display "No hay suficientes fichas para doblar.\n")
+                (display "No hay suficientes fichas para doblar.\n")
                 (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
                 (turno-jugador (cons mano mazo) fichas-disponibles apuesta #t 'fichas))
                 ))
@@ -377,6 +382,8 @@
        (mazo (caddr reparto))
        (apuesta (if (eq? tipo 'fichas) (apostar fichas-jugador) 0))
        (upload- (actualizar-mesa mano-crupier mano-jugador fichas-crupier fichas-jugador tipo))
+       ;(upload-cont-j (contador-jugador (- fichas-jugador apuesta)) 'fichas)
+       ;(upload-cont-c (contador-crupier (- fichas-crupier (* 2 apuesta))))
        (resultado-jugador (turno-jugador (cons mano-jugador mazo) fichas-jugador apuesta #f tipo))
        (resultado-crupier (turno-crupier (cons mano-crupier (cdr resultado-jugador)) fichas-crupier (apuesta? (car resultado-jugador))))
        (valor-jugador (valor-mano (mano? (car resultado-jugador)) 'jugador))
