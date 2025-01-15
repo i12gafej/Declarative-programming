@@ -1,0 +1,81 @@
+\section{Descripción} 
+
+%------------------------------------------------
+
+%------------------------------------------------
+
+
+\begin{frame}{Valor de las cartas}
+    \begin{itemize}
+        \item Del \textbf{2} al \textbf{10}, su valor es el mismo número.
+        \item \textbf{J, Q, K} valen 10.
+        \item \textbf{A} vale 1 u 11, dependiendo del jugador.
+    \end{itemize}
+\end{frame}
+
+%----------------------------------------------------
+
+\begin{frame}
+	\frametitle{Reglas de juego}
+     \begin{itemize}
+         
+         \item Algoritmo del juego:
+         \begin{enumerate}
+            \item Crupier reparte dos cartas al jugador y una a él.
+            \item El jugador indica la apuesta.
+            \item \textbf{Turno del jugador}. Opciones:
+            \begin{enumerate}
+                \item \textit{\textbf{Pedir carta}}: siempre y cuando su mano \textbf{no valga 21 o más}, puede seguir pidiendo. De lo contrario el turno del jugador termina.
+                \item \textit{\textbf{Plantarse}}: \textbf{si aun no ha sumado el valor 21}, puede plantarse y así terminar el turno.
+                \item \textit{\textbf{Doblar}}: \textbf{si acaba de empezar el turno del jugador}, puede doblar la apuesta, lo cual implica que solo le ponga una carta más y directamente se planta.
+            \end{enumerate}
+        \end{enumerate}
+     \end{itemize}
+    
+	
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+	\begin{enumerate}[3]
+	    \item \textbf{Turno del curpier}. Saca cartas \textbf{hasta llegar a un valor igual o superior a 17}.
+	\end{enumerate}
+    \begin{itemize}
+        \item Ganador: quien tenga \textit{el mayor número} \textbf{menor o igual a 21}, sin empatar.
+        \item Premio: \textbf{doble de lo apostado} (varía según la modalidad). 
+    \end{itemize}
+    
+\end{frame}
+
+%----------------------------------------------------
+
+\begin{frame}{Modalidades de juego}
+    Habrán dos modalidades de juego:
+    \begin{itemize}
+        \item Jugar con \textbf{fichas}: donde se \textbf{apuesta} una cantidad y se puede \textbf{doblar} la apuesta realizada.
+        \item Jugar por \textbf{rondas}: el mejor de 3, 5, 7 u 11 rondas gana.
+        \begin{itemize}
+            \item No se apuestan fichas, con lo que solo se juega a \textbf{plantase o pedir carta}.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Interfaz de juego}
+    \begin{itemize}
+        \item El juego implementa \textbf{menús} para
+        \begin{itemize}
+            \item mostrar \textbf{carátula},
+            \item elegir la \textbf{modalidad de juego},
+            \item y seleccionar \textbf{número de rondas} o \textbf{fichas} a jugar.
+        \end{itemize}.
+        \item Durante los turnos, las acciones se implementan con
+        \begin{itemize}
+        \item el menú de \textbf{apostar fichas},
+            \item el botón de \textbf{pedir} carta (azul con símbolo +),
+            \item el botón de \textbf{plantarse} (rojo con símbolo -)
+            \item y el botón de \textbf{doblar} (naranja con la palabra \textit{DOBLAR}, exclusivo del modo fichas).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

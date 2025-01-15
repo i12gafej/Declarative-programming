@@ -1,4 +1,4 @@
-
+#lang racket
 ;                            MAPA DE PUNTOS PARA LAS LETRAS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -450,21 +450,85 @@
     )
    ))
 
-;; Función para escalar y desplazar los puntos de cada letra
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: escalar-desplaza-construye
+Descripción: Escala y desplaza una lista de puntos según un valor de escala y un desplazamiento en las coordenadas x y.
+Parámetros:
+- puntos: Lista de puntos a transformar, donde cada punto es una lista con dos elementos (x, y).
+- x: Desplazamiento en la coordenada x.
+- y: Desplazamiento en la coordenada y.
+- escala: Factor de escala que se aplicará a cada coordenada de los puntos.
+Devuelve:
+- Lista de puntos transformados (escalados y desplazados).
+Descripción de la solución:
+1. La función toma una lista de puntos y aplica una transformación a cada uno de ellos.
+2. Para cada punto, se multiplica la coordenada x por el factor de escala y se le suma el valor de desplazamiento en x.
+3. Lo mismo se hace para la coordenada y.
+4. La transformación es aplicada a todos los puntos de la lista.
+Funciones auxiliares:
+- Ninguna.
+|#
+
 (define (escalar-desplaza-construye puntos x y escala)
   (map (lambda (p)
          (make-posn (+ x (* escala (car p)))
                     (+ y (* escala (cadr p)))))
        puntos))
 
-;; Función para dibujar una letra
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-letra
+Descripción: Dibuja una letra sobre la pantalla, escalando y desplazando sus puntos según las coordenadas (x, y) proporcionadas.
+Parámetros:
+- letra: El carácter de la letra a dibujar.
+- x: Desplazamiento en la coordenada x.
+- y: Desplazamiento en la coordenada y.
+- escala: Factor de escala que se aplica a los puntos de la letra.
+- color: Color de la letra a dibujar.
+Devuelve:
+- void (Dibuja la letra en la pantalla).
+Descripción de la solución:
+1. La función busca los puntos correspondientes a la letra en la lista `letras`, que es una lista de asociación.
+2. Si encuentra los puntos correspondientes a la letra, los escala y desplaza según el valor de `x`, `y` y `escala` utilizando la función `escalar-desplaza-construye`.
+3. Luego, utiliza la función `draw-polygon` para dibujar la letra en el color especificado.
+4. Si no encuentra la letra en la lista, imprime un mensaje de error.
+Funciones auxiliares:
+- escalar-desplaza-construye: Para transformar los puntos de la letra según la escala y el desplazamiento.
+|#
+
 (define (dibujar-letra letra x y escala color)
   (let ((puntos (assoc letra letras))) ; convierte el carácter en cadena
     (if puntos
         ((draw-polygon v1) (escalar-desplaza-construye (cadr puntos) x y escala) (make-posn 0 0) color)
         (printf "Carácter no encontrado (~a)" letra))))
 
-;; Función para dibujar una secuencia de texto
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-texto
+Descripción: Dibuja un texto en la pantalla, donde cada letra se dibuja escalada y desplazada según los parámetros dados.
+Parámetros:
+- texto: La cadena de texto a dibujar.
+- x: La coordenada x donde se dibujará el texto.
+- y: La coordenada y donde se dibujará el texto.
+- escala: Factor de escala aplicado a cada letra.
+- color: Color de las letras.
+Devuelve:
+- void (Dibuja el texto en la pantalla).
+Descripción de la solución:
+1. La función toma cada letra del texto como un carácter individual usando `string->list`.
+2. Para cada letra, llama a la función `dibujar-letra`, que se encarga de dibujarla con los parámetros proporcionados, como el desplazamiento (x, y), la escala y el color.
+3. Después de cada letra, ajusta la posición x añadiendo un desplazamiento proporcional a la escala (para dibujar las letras en línea).
+Funciones auxiliares:
+- dibujar-letra: Para dibujar cada letra individualmente.
+|#
+
 (define (dibujar-texto texto x y escala color)
   (for-each (lambda (letra)
               (dibujar-letra (string letra) x y escala color) ; convierte el carácter en cadena
@@ -472,6 +536,4 @@
             (string->list texto)))
 
 (define color_letras (make-rgb 1.0 1.0 1.0))
-
-;; Prueba de la función con la cadena "AB-"
 

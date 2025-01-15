@@ -1,0 +1,98 @@
+[
+    {
+        "elementos": [
+            [
+                "mesa",
+                0,
+                "-",
+                100,
+                100,
+                "fichas"
+            ],
+            [
+                "dibujar_carta",
+                1,
+                "estatico crupier 1",
+                0.3,
+                "corazon",
+                "A",
+                "valores",
+                "contorno_carta"
+            ],
+            [
+                "dibujar_carta_por_detras",
+                2,
+                "estatico crupier 2",
+                0.3,
+                "contorno_carta",
+                "patita['interior']"
+            ],
+            [
+                "dibujar_patita",
+                3,
+                "no-estatico",
+                0.6,
+                "patita"
+            ]
+        ],
+        "punto_inicio": [
+            290,
+            400
+        ],
+        "punto_final": [
+            290,
+            400
+        ],
+        "puntos_intermedios": [],
+        "duracion": 2,
+        "frames": 200
+    },
+    {
+        "elementos": [
+            [
+                "mesa",
+                0,
+                "-",
+                100,
+                100,
+                "fichas"
+            ],
+            [
+                "dibujar_carta",
+                1,
+                "estatico crupier 1",
+                0.3,
+                "corazon",
+                "K",
+                "valores",
+                "contorno_carta"
+            ],
+            [
+                "dibujar_carta_por_detras",
+                2,
+                "estatico crupier 2",
+                0.3,
+                "contorno_carta",
+                "patita['interior']"
+            ],
+            [
+                "dibujar_patita",
+                3,
+                "no-estatico",
+                0.6,
+                "patita"
+            ]
+        ],
+        "punto_inicio": [
+            300,
+            400
+        ],
+        "punto_final": [
+            300,
+            400
+        ],
+        "puntos_intermedios": [],
+        "duracion": 3,
+        "frames": 250
+    }
+]

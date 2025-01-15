@@ -1,0 +1,140 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Presentación Beamer - Plantilla en LaTeX
+% Versión 2.0 (8 de marzo de 2022)
+% Plantilla original: https://www.LaTeXTemplates.com
+% Autor: Vel (vel@latextemplates.com)
+% Licencia: CC BY-NC-SA 4.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Este modelo de presentación fue 
+% creado a partir del modelo de Giovanni Spadaro.
+% Disponible en: 
+% https://github.com/Giovo17/presentation-template-unict-lm-data
+%
+% Adaptado por Lucas Amaral Taylor para crear una versión especial 
+% para los estudiantes de Matemáticas y Estadística de la USP (IME-USP).
+% Disponible en:
+% https://github.com/lucasamtaylor01/IME-template
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+	11pt, % Tamaño de fuente predeterminado
+	% t, % Alineación vertical superior
+	%aspectratio=169, % Definir proporción 16:9
+]{beamer}
+
+% Ruta de las imágenes
+\graphicspath{{img/}}
+
+% Paquetes adicionales
+\usepackage[spanish]{babel}
+\usepackage[alf]{abntex2cite} % Citas ABNT
+\usepackage{booktabs} % Mejoras en las líneas de tablas
+\usepackage{palatino} % Fuente Palatino
+\usepackage[default]{opensans} % Fuente Open Sans
+\usepackage{subcaption}
+\input{config/code_langs} % Código
+
+%----------------------------------------------------------------------------------------
+%	SELECCIÓN DE DISEÑO Y COLORES
+%----------------------------------------------------------------------------------------
+
+\usetheme{Boadilla} % Tema del diseño
+
+% Definición de colores personalizados
+\definecolor{primaryColor}{RGB}{243,177,244} % Rosa claro
+\definecolor{secondaryColor}{RGB}{105,105,105} % Gris oscuro
+
+
+% Aplicación de colores al tema
+\setbeamercolor{structure}{fg=primaryColor}
+\setbeamercolor{palette primary}{bg=primaryColor, fg=white}
+\setbeamercolor{palette secondary}{bg=secondaryColor, fg=white}
+\setbeamercolor{title}{bg=primaryColor, fg=white} % Color del título principal
+\setbeamercolor{section in toc}{fg=secondaryColor}
+\setbeamercolor{subsection in toc}{fg=secondaryColor}
+
+% Colores en el encabezado
+\setbeamercolor{headline}{bg=secondaryColor, fg=white}
+\setbeamercolor{section in head/foot}{bg=primaryColor, fg=white}
+\setbeamercolor{subsection in head/foot}{bg=secondaryColor, fg=white}
+
+% Configuración de colores para el pie de página
+\setbeamercolor{author in head/foot}{bg=primaryColor, fg=white} % Nombre
+\setbeamercolor{title in head/foot}{bg=secondaryColor, fg=white} % Título
+\setbeamercolor{date in head/foot}{bg=primaryColor, fg=white} % Fecha
+\setbeamercolor{page number in head/foot}{bg=primaryColor, fg=white} % Número de página
+\setbeamercolor{frametitle}{bg=white, fg=secondaryColor}
+
+
+% Temas internos y externos
+\useinnertheme{circles} % Tema interno
+\useoutertheme{miniframes} % Tema externo
+\setbeamertemplate{navigation symbols}{} % Eliminar símbolos de navegación
+
+% Mostrar el índice al inicio de cada sección
+\AtBeginSection[]{
+    \begin{frame}
+        %\frametitle{Estructura de la Presentación}
+        \tableofcontents[currentsection] % Muestra solo la sección actual y sus subsecciones
+    \end{frame}
+}
+
+%------------------
+%	INFORMACIÓN DE LA PRESENTACIÓN
+%------------------
+
+\title[Catjack!]{Catjack!}
+\author[Javier García Fernández]{\scriptsize  Javier García Fernández\\Programación Declarativa \\ Cuarto curso, primer cuatrimestre\\ Ingeniería informática\\ Curso 2024/25 \\ Escuela Politécnica Superior de Córdoba, \\Universidad de Córdoba}
+%\institute[Intitución]{Instituto de Matemáticas y Estadística \\ (IME-USP)} 
+\date[\today]{\today} 
+
+%------------------
+
+\begin{document}
+
+%------------------
+%	DIAPOSITIVA DE TÍTULO
+%------------------
+
+\begin{frame}
+	\begin{figure}
+		%\includegraphics[width=0.45\linewidth]{img/logo_IME.png}
+	\end{figure}
+	\titlepage % Mostrar la diapositiva de título
+\end{frame}
+
+%------------------
+%	DIAPOSITIVA DE ÍNDICE
+%------------------
+
+\begin{frame}
+	\frametitle{Estructura de la presentación} % Título de la diapositiva
+	\tableofcontents % Mostrar el índice
+\end{frame}
+
+%------------------
+%	SECCIONES DEL CUERPO DE LA PRESENTACIÓN
+%------------------
+
+\include{sections/section00}
+\include{sections/section01} 
+\include{sections/section02} 
+\include{sections/section03} 
+\include{sections/section04} 
+\include{sections/section05} 
+
+%------------------
+%	DIAPOSITIVA DE CIERRE
+%------------------
+
+\begin{frame}
+	\begin{center}
+		{\Huge ¡Gracias por su atención!}
+	\end{center}
+\end{frame}
+
+%------------------
+
+\end{document}

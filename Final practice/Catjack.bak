@@ -24,10 +24,3500 @@ El proyecto está dividido en 6 ficheros
 Todo elemento gráfico está generado por la librería graphics.
 |#
 
-(load "funciones/letras.rkt")
-(load "funciones/graficos.rkt")
-(load "funciones/figuras.rkt")
-(load "funciones/juego.rkt")
+
+;                            MAPA DE PUNTOS PARA LAS LETRAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define letras
+  '(("A" (
+          (0.0 2.0)
+          (0.75 0.0)
+          (1.5 2.0)
+          (1.125 1)
+          (0.375 1)))
+    ("B" (
+          (0 0)
+          (1.125 0)
+          (1.5 0.33)
+          (1.5 0.66)
+          (1.125 1)
+          (0 1)
+          (1.125 1)
+          (1.5 1.33)
+          (1.5 1.66)
+          (1.125 2)
+          (0 2)
+          ))
+   ("C" (
+          (1.5 0.3)
+          (1 0)
+          (0.5 0.0)
+          (0.0 0.3)
+          (0.0 1.7)
+          (0.5 2.0)
+          (1 2)
+          (1.5 1.7)
+          (1 2)
+          (0.5 2.0)   
+          (0.0 1.7)
+          (0.0 0.3)
+          (0.5 0.0)
+          (1 0)
+          (1.5 0.3)))
+   ("D" (
+    (0.0 0.0)
+    (0.0 2.0)
+    (1.125 1.8)
+    (1.5 1.6)
+    (1.5 0.4)
+    (1.125 0.2)
+    
+     ))
+   ("E" (
+    (0.0 0.0)
+    (0.0 1.0)
+    (0.0 2.0)
+    (1.5 2.0)
+    (0.0 2.0)
+    (0.0 1.0)
+    (1.0 1.0)
+    (0.0 1.0)
+    (0.0 0.0)
+    (1.5 0.0) ))
+   ("F" (
+    (1.5 0.0)
+    (0.0 0.0)
+    (0.0 1.0)
+    (1.0 1.0)
+    (0.0 1.0)
+    (0.0 2.0)
+    (0.0 0.0) ))
+   ("G"(
+    (1.5 0.3)
+    (1.0 0.0)  
+    (0.5 0.0)
+    (0.0 0.3);Capucha arriba
+    (0.0 1.7)  
+    (0.5 2.0)
+    (1.0 2.0)
+    (1.5 1.7);capucha abajo
+    (1.5 1.4)
+    (0.75 1.4)
+    (1.5 1.4)
+    (1.5 1.7)
+    (1.0 2.0)
+    (0.5 2.0)
+    (0.0 1.7)
+    (0.0 0.3)
+    (0.5 0.0)
+    (1.0 0.0)
+    (1.5 0.3)
+     ))
+   ("H" (
+    (0.0 0.0)
+    (0.0 2.0)
+    (0.0 1.0)
+    (1.5 1.0)
+    (1.5 0.0)
+    (1.5 2.0)
+    (1.5 1.0)
+    (0 1.0)
+    ))
+   ("I" (
+    (0.0 0.0)
+    (1.5 0.0)
+    (0.75 0.0) ;; Medio arriba
+    (0.75 2.0)  ;; Medio abajo
+    (0.0 2.0)
+    (1.5 2.0)
+    (0.75 2.0)
+    (0.75 0.0)))
+   ("J" (
+     (0 0)
+     (1.5 0)
+     (1.5 1.7)
+     (1 2)
+     (0.5 2)
+     (0 1.7)
+     (0.5 2)
+     (1 2)
+     (1.5 1.7)
+     (1.5 0)
+         ))
+   ("K" (
+     (0 0)
+     (0 1.0)
+     (0 2)
+     (0 1)
+     (1.5 2)
+     (0 1)
+     (1.5 0)
+     (0 1)
+         ))
+   ("L" (
+     (0 0)
+     (0 2)
+     (1.5 2)
+     (0 2)
+         ))
+   ("M"(
+        (0 2)
+        (0 0)
+        (0.75 1)
+        (1.5 0)
+        (1.5 2)
+        (1.5 0)
+        (0.75 1)
+        (0 0)
+        ))
+   ("N" (
+         (0 2)
+         (0 0)
+         (1.5 2)
+         (1.5 0)
+         (1.5 2)
+         (0 0)
+         ))
+   ("Ñ" (
+         (0 2)
+         (0 0.2)
+         (1.5 2)
+         (1.5 0.2)
+         (1.5 0)
+         (0 0)
+         (1.5 0)
+         (1.5 0.2)
+         (1.5 2)
+         (0 0.2)
+         ))
+   ("O"(
+        (0.5 0)
+        (0 0.3)
+        (0 1.7)
+        (0.5 2)
+        (1 2)
+        (1.5 1.7)
+        (1.5 0.3)
+        (1 0)
+        ))
+   ("P"(
+        (0 2)
+        (0 0)
+        (1 0)
+        (1.5 0.3)
+        (1.5 0.7)
+        (1 1)
+        (0 1)
+        ))
+   ("Q"(
+        (0.5 0)
+        (0 0.3)
+        (0 1.7)
+        (0.5 2)
+        (1 2)
+        (0.7 1.8)
+        (1.6 2)
+        (1 2)
+        (1.5 1.7)
+        (1.5 0.3)
+        (1 0)
+        ))
+   ("R"(
+        (0 2)
+        (0 0)
+        (1 0)
+        (1.5 0.3)
+        (1.5 0.7)
+        (1 1)
+        (1.5 2)
+        (1 1)
+        (0 1)
+        ))
+   ("S"(
+        (1.5 0.3)
+        (1 0)
+        (0.5 0)
+        (0 0.3)
+        (0 0.7)
+        (0.5 1)
+        (1 1)
+        (1.5 1.3)
+        (1.5 1.7)
+        (1 2)
+        (0.5 2)
+        (0 1.7)
+        (0.5 2)
+        (1 2)
+        (1.5 1.7)
+        (1.5 1.3)
+        (1 1)
+        (0.5 1)
+        (0 0.7)
+        (0 0.3)
+        (0.5 0)
+        (1 0)
+        (1.5 0.3)
+        ))
+   ("T"(
+        (0 0)
+        (1.5 0)
+        (0.75 0)
+        (0.75 2)
+        (0.75 0)
+        ))
+   ("U"(
+        (0 0)
+        (0 1.7)
+        (0.5 2)
+        (1 2)
+        (1.5 1.7)
+        (1.5 0)
+        (1.5 1.7)
+        (1 2)
+        (0.5 2)
+        (0 1.7)
+
+        ))
+   ("V"(
+        (0 0)
+        (0.75 2)
+        (1.5 0)
+        (0.75 2)
+        ))
+   ("W"(
+        (0 0)
+        (0.375 2)
+        (0.75 1)
+        (1.125 2)
+        (1.5 0)
+        (1.125 2)
+        (0.75 1)
+        (0.375 2)
+        ))
+   ("X"(
+        (0 0)
+        (1.5 2)
+        (0.75 1)
+        (0 2)
+        (0.75 1)
+        (1.5 0)
+        (0.75 1)
+        ))
+   ("Y"(
+        (0 0)
+        (0.75 1)
+        (1.5 0)
+        (0.75 1)
+        (0.75 2)
+        (0.75 1)
+        ))
+   ("Z"(
+        (0 0)
+        (1.5 0)
+        (0 2)
+        (1.5 2)
+        (0 2)
+        (1.5 0)
+        ))
+   (" " ())
+   ("0"(
+        (0.5 0)
+        (0 0.3)
+        (0 1.7)
+        (0.5 2)
+        (1 2)
+        (1.5 1.7)
+        (1.5 0.3)
+        (1 0)
+        ))
+   ("1" ((0 0.5)
+         (0.75 0)
+         (0.75 2)
+         (0 2)
+         (1.5 2)
+         (0.75 2)
+         (0.75 0)))
+   ("2"(
+        (0 0.3)
+        (0.5 0)
+        (1 0)
+        (1.5 0.3)
+        (1.5 0.6)
+        (0 2)
+        (1.5 2)
+        (0 2)
+        (1.5 0.6)
+        (1.5 0.3)
+        (1 0)
+        (0.5 0)
+        ))
+   ("3"(
+        (0 0.3)
+        (0.5 0)
+        (1 0)
+        (1.5 0.3)
+        (1.5 0.6)
+        (1 1)
+        (1.5 1.3)
+        (1.5 1.6)
+        (1 2)
+        (0.5 2)
+        (0 1.6)
+        (0.5 2)
+        (1 2)
+        (1.5 1.6)
+        (1.5 1.3)
+        (1 1)
+        (1.5 0.6)
+        (1.5 0.3)
+        (1 0)
+        (0.5 0)
+        (0 0.3)
+        ))
+   ("4"(
+        (1.125 0)
+        (0 1)
+        (1.125 1)
+        (1.125 2)
+        (1.125 1)
+        (1.5 1)
+        (1.125 1)
+        ))
+   ("5"(
+        (1.5 0)
+        (0 0)
+        (0 1)
+        (1 1)
+        (1.5 1.3)
+        (1.5 1.6)
+        (1 2)
+        (0.5 2)
+        (0 1.6)
+        (0.5 2)
+        (1 2)
+        (1.5 1.6)
+        (1.5 1.3)
+        (1 1)
+        (0 1)
+        (0 0)
+        (1.5 0)
+        ))
+   ("6"(
+        (1 0)
+        (0 1.3)
+        (0 1.6)
+        (0.5 2)
+        (1 2)
+        (1.5 1.6)
+        (1.5 1.3)
+        (1 1)
+        (0.5 1)
+        (0 1.3)
+        ))
+   ("7"(
+        (0 0)
+        (1.5 0)
+        (0.75 2)
+        (1.5 0)
+        ))
+   ("8"(
+        (0.5 0)
+        (0 0.3)
+        (0 0.7)
+        (0.5 1)
+        (0.75 1)
+        (0.5 1)
+        (0 1.3)
+        (0 1.7)
+        (0.5 2)
+        (1 2)
+        (1.5 1.7)
+        (1.5 1.3)
+        (1 1)
+        (0.75 1)
+        (1 1)
+        (1.5 0.7)
+        (1.5 0.3)
+        (1 0)
+        ))
+   ("9"(
+        (0.5 0)
+        (0 0.3)
+        (0 0.7)
+        (0.5 1)
+        (1 1)
+        (1.5 0.7)
+        (1.5 2)
+        (1.5 0.3)
+        (1 0)
+        ))
+   ("."(
+        (0.75 1.98)
+        (0.75 1.99)
+        (0.75 2)
+        (0.749 2)
+        (0.749 1.99)
+        (0.749 1.98)
+        ))
+   ("+"(
+        (0.75 0.75)
+        (0 0.75)
+        (1.5 0.75)
+        (0.75 0.75)
+        (0.75 1.5)
+        (0.75 0.75)
+        (0.75 0)
+        ))
+   ("-"(
+        (0 1)
+        (1.5 1)
+        )
+    )
+   ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: escalar-desplaza-construye
+Descripción: Escala y desplaza una lista de puntos según un valor de escala y un desplazamiento en las coordenadas x y.
+Parámetros:
+- puntos: Lista de puntos a transformar, donde cada punto es una lista con dos elementos (x, y).
+- x: Desplazamiento en la coordenada x.
+- y: Desplazamiento en la coordenada y.
+- escala: Factor de escala que se aplicará a cada coordenada de los puntos.
+Devuelve:
+- Lista de puntos transformados (escalados y desplazados).
+Descripción de la solución:
+1. La función toma una lista de puntos y aplica una transformación a cada uno de ellos.
+2. Para cada punto, se multiplica la coordenada x por el factor de escala y se le suma el valor de desplazamiento en x.
+3. Lo mismo se hace para la coordenada y.
+4. La transformación es aplicada a todos los puntos de la lista.
+Funciones auxiliares:
+- Ninguna.
+|#
+
+(define (escalar-desplaza-construye puntos x y escala)
+  (map (lambda (p)
+         (make-posn (+ x (* escala (car p)))
+                    (+ y (* escala (cadr p)))))
+       puntos))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-letra
+Descripción: Dibuja una letra sobre la pantalla, escalando y desplazando sus puntos según las coordenadas (x, y) proporcionadas.
+Parámetros:
+- letra: El carácter de la letra a dibujar.
+- x: Desplazamiento en la coordenada x.
+- y: Desplazamiento en la coordenada y.
+- escala: Factor de escala que se aplica a los puntos de la letra.
+- color: Color de la letra a dibujar.
+Devuelve:
+- void (Dibuja la letra en la pantalla).
+Descripción de la solución:
+1. La función busca los puntos correspondientes a la letra en la lista `letras`, que es una lista de asociación.
+2. Si encuentra los puntos correspondientes a la letra, los escala y desplaza según el valor de `x`, `y` y `escala` utilizando la función `escalar-desplaza-construye`.
+3. Luego, utiliza la función `draw-polygon` para dibujar la letra en el color especificado.
+4. Si no encuentra la letra en la lista, imprime un mensaje de error.
+Funciones auxiliares:
+- escalar-desplaza-construye: Para transformar los puntos de la letra según la escala y el desplazamiento.
+|#
+
+(define (dibujar-letra letra x y escala color)
+  (let ((puntos (assoc letra letras))) ; convierte el carácter en cadena
+    (if puntos
+        ((draw-polygon v1) (escalar-desplaza-construye (cadr puntos) x y escala) (make-posn 0 0) color)
+        (printf "Carácter no encontrado (~a)" letra))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-texto
+Descripción: Dibuja un texto en la pantalla, donde cada letra se dibuja escalada y desplazada según los parámetros dados.
+Parámetros:
+- texto: La cadena de texto a dibujar.
+- x: La coordenada x donde se dibujará el texto.
+- y: La coordenada y donde se dibujará el texto.
+- escala: Factor de escala aplicado a cada letra.
+- color: Color de las letras.
+Devuelve:
+- void (Dibuja el texto en la pantalla).
+Descripción de la solución:
+1. La función toma cada letra del texto como un carácter individual usando `string->list`.
+2. Para cada letra, llama a la función `dibujar-letra`, que se encarga de dibujarla con los parámetros proporcionados, como el desplazamiento (x, y), la escala y el color.
+3. Después de cada letra, ajusta la posición x añadiendo un desplazamiento proporcional a la escala (para dibujar las letras en línea).
+Funciones auxiliares:
+- dibujar-letra: Para dibujar cada letra individualmente.
+|#
+
+(define (dibujar-texto texto x y escala color)
+  (for-each (lambda (letra)
+              (dibujar-letra (string letra) x y escala color) ; convierte el carácter en cadena
+              (set! x (+ x (* escala 2)))) ; Ajusta la posición para cada letra
+            (string->list texto)))
+
+(define color_letras (make-rgb 1.0 1.0 1.0))
+
+
+#|
+Archivo: graficos.rkt
+Descripción: funciones de generación de gráficos y útiles
+Autor: Javier García Fernández
+|#
+
+
+;;                           Colores utilizados en el juego
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define blanco (make-rgb 1.0 1.0 1.0))
+(define rojo (make-rgb 0.9 0.1 0.2))
+(define oro (make-rgb 0.8 0.8 0.03))
+(define amarillo (make-rgb 0.9 0.9 0.09))
+(define gris (make-rgb 0.5 0.5 0.5))
+(define navy (make-rgb 0.04 0.04 0.8))
+(define morosa (make-rgb 0.9 0.7 0.85))
+(define morado (make-rgb 0.6 0.04 0.85))
+(define tapete (make-rgb 0.2 0.8 0.3))
+(define naranja (make-rgb 0.9 0.45 0.08))
+(define negro (make-rgb 0.0 0.0 0.0))
+(define contador (make-rgb 0.3 0.3 0.3))
+(define mas (make-rgb 0.07 0.94 0.74))
+(define mas-opp (make-rgb 0.06 0.16 0.27))
+(define menos (make-rgb 0.94 0.28 0.078))
+(define fondo (make-rgb 0.9 0.9 0.9))
+(define contador2 (make-rgb 0.8 0.8 0.8))
+(define beish (make-rgb 0.925 0.855 0.549))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;                                FUNCIONES ÚTILES MATEMÁTICAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-circulo
+Descripción: Dibuja un círculo sólido con el tamaño, posición y color indicados.
+Parámetros:
+- centro: punto que representa el centro del círculo en formato `make-posn`.
+- radio: número que indica el radio del círculo.
+- color: color del círculo, definido en el entorno gráfico.
+Devuelve:
+- void
+Descripción de la solución:
+Calcula las coordenadas necesarias para definir la esquina superior izquierda del rectángulo circunscrito al círculo. Dibuja el círculo como una elipse sólida, donde los lados son iguales al diámetro.
+Funciones auxiliares:
+- ninguna
+|#
+
+(define (dibujar-circulo centro radio color)
+  ;; Define las coordenadas del círculo
+  (let*
+    ;; Variables locales del let secuencial
+    (
+     ;; Coordenada X del centro
+     (cx (posn-x centro))
+     ;; Coordenada Y del centro
+     (cy (posn-y centro))
+     ;; Diámetro es dos veces el radio
+     (diametro (* 2 radio))
+     ;; Coordenada X de la esquina superior izquierda
+     (esquina-x (- cx radio))
+     ;; Coordenada Y de la esquina superior izquierda
+     (esquina-y (- cy radio))
+    )
+    ;; Cuerpo de la función
+    ;; Dibuja una elipse sólida (círculo si diámetro = altura y anchura)
+    ((draw-solid-ellipse v1) 
+     (make-posn esquina-x esquina-y) 
+     diametro 
+     diametro 
+     color)
+  )
+)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: lista-a-posn
+Descripción: Convierte una lista de pares de coordenadas en una lista de puntos `make-posn`.
+Parámetros:
+- puntos: lista de pares de coordenadas en formato `(x y)`, donde `x` es la coordenada X e `y` es la coordenada Y.
+Devuelve:
+- Lista de puntos `make-posn`, cada uno representado por su posición X e Y.
+Descripción de la solución:
+Aplica una función lambda que convierte cada par `(x y)` en un objeto `make-posn` mediante `map`.
+Funciones auxiliares:
+- ninguna
+|#
+
+(define (lista-a-posn puntos)
+  (map (lambda (p) (make-posn (car p) (cadr p))) puntos))
+  
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: D2
+Descripción: Calcula la distancia euclidiana entre dos puntos en un plano 2D.
+Parámetros:
+- x1: Coordenada X del primer punto.
+- y1: Coordenada Y del primer punto.
+- x2: Coordenada X del segundo punto.
+- y2: Coordenada Y del segundo punto.
+Devuelve:
+- Un número que representa la distancia entre los dos puntos.
+Descripción de la solución:
+Utiliza la fórmula de distancia euclidiana: 
+  √((x2 - x1)2 + (y2 - y1)2)
+Funciones auxiliares:
+- ninguna
+|#
+
+(define (D2 x1 y1 x2 y2)
+  (sqrt (+ (sqr (- x1 x2)) (sqr (- y1 y2))))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: lista-cuarto-circulo
+Descripción: Genera una lista de puntos que forman un cuarto de círculo en un cuadrante específico, con un sentido de recorrido definido.
+Parámetros:
+- centrox: Coordenada X del centro del círculo.
+- centroy: Coordenada Y del centro del círculo.
+- radio: Longitud del radio del círculo.
+- num-puntos: Número de puntos que definen el arco del cuarto de círculo.
+- cuadrante: Cuadrante del círculo ('arriba-derecha, 'arriba-izquierda, 'abajo-derecha, 'abajo-izquierda).
+- sentido: Dirección del recorrido ('horario o 'antihorario).
+Devuelve:
+- Una lista de puntos (en formato `(list x y)`) que forman el cuarto de círculo.
+Descripción de la solución:
+La función utiliza trigonometría para calcular los puntos del arco según el radio y un ángulo `theta`. 
+El sentido horario o antihorario define cómo se generan los ángulos, y el cuadrante ajusta los signos de las coordenadas.
+Funciones auxiliares:
+- punto-circulo: Calcula un punto en el arco para un ángulo dado y ajusta las coordenadas según el cuadrante.
+|#
+
+(define (lista-cuarto-circulo centrox centroy radio num-puntos cuadrante sentido)
+  ;; Definir una función para calcular los puntos de la circunferencia
+  (define (punto-circulo r theta)
+    (let ((x (* r (cos theta)))
+          (y (* r (sin theta))))
+      ;; Ajustar los signos según el cuadrante usando cond
+      (cond
+        ((eq? cuadrante 'arriba-derecha) (list (+ centrox x) (+ centroy (- y))))  ;; Cuadrante 1
+        ((eq? cuadrante 'arriba-izquierda) (list (+ centrox (- x)) (+ centroy (- y))))  ;; Cuadrante 2
+        ((eq? cuadrante 'abajo-izquierda) (list (+ centrox (- x)) (+ centroy y)))  ;; Cuadrante 3
+        ((eq? cuadrante 'abajo-derecha) (list (+ centrox x) (+ centroy y)))  ;; Cuadrante 4
+        (else (error "Cuadrante no válido")))))
+
+  ;; Generar la lista de puntos en función del sentido
+  (build-list num-puntos
+              (lambda (i)
+                (let ((theta (if (eq? sentido 'horario)
+                                 (* (- num-puntos i 1) (/ pi 2 (- num-puntos 1)))  ;; Sentido horario
+                                 (* i (/ pi 2 (- num-puntos 1))))))
+                  (punto-circulo radio theta)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: calcular-centroide
+Descripción: Calcula el centroide de un triángulo definido por tres vértices dados.
+Parámetros:
+- x1, y1: Coordenadas del primer vértice del triángulo.
+- x2, y2: Coordenadas del segundo vértice del triángulo.
+- x3, y3: Coordenadas del tercer vértice del triángulo.
+Devuelve:
+- Un vector con las coordenadas `(x, y)` del centroide.
+Descripción de la solución:
+El centroide de un triángulo es el punto de intersección de sus medianas. Se calcula promediando las coordenadas X e Y de los tres vértices.
+Funciones auxiliares:
+- Ninguna.
+|#
+
+(define (calcular-centroide x1 y1 x2 y2 x3 y3)
+  (vector (/ (+ x1 x2 x3) 3) (/ (+ y1 y2 y3) 3)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: escalar-y-desplazar  
+Descripción: Escala y desplaza un punto en función de un centro de referencia y un factor de escala.  
+Parámetros:  
+- x: Coordenada X del punto inicial.  
+- y: Coordenada Y del punto inicial.  
+- centrox: Coordenada X del centro de desplazamiento.  
+- centroy: Coordenada Y del centro de desplazamiento.  
+- escala: Factor de escala aplicado al desplazamiento.  
+- centroide-x: Coordenada X del centroide de referencia.  
+- centroide-y: Coordenada Y del centroide de referencia.  
+Devuelve:  
+Un vector con las nuevas coordenadas escaladas y desplazadas.  
+Funciones auxiliares:  
+Ninguna.  
+|#
+
+
+(define (escalar-y-desplazar x y centrox centroy escala centroide-x centroide-y)
+  ;; Calcular desplazamiento en x y y respecto al centroide
+  (let ((dx (- x centroide-x))
+        (dy (- y centroide-y)))
+    ;; Escalar y desplazar respecto al nuevo centro
+    (vector (+ centrox (* escala dx)) (+ centroy (* escala dy)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: escalar-desplaza-construye2  
+Descripción: Escala y desplaza un conjunto de puntos respecto a un centroide calculado a partir de otro conjunto de puntos de referencia.  
+Parámetros:  
+- puntos: Lista de puntos a escalar y desplazar.  
+- puntos-c: Lista de puntos para calcular el centroide.  
+- x: Coordenada X del nuevo centro de desplazamiento.  
+- y: Coordenada Y del nuevo centro de desplazamiento.  
+- escala: Factor de escala aplicado al desplazamiento.  
+Devuelve:  
+Una lista de puntos desplazados y escalados como objetos `posn`.  
+Funciones auxiliares:  
+Ninguna.  
+|#
+
+
+(define (escalar-desplaza-construye2 puntos puntos-c x y escala)
+  ;; Calcula el centroide del conjunto de puntos
+  (define total-puntos (length puntos-c))
+  (define sum-x (apply + (map car puntos-c)))
+  (define sum-y (apply + (map cadr puntos-c)))
+  (define centroide-x (/ sum-x total-puntos))
+  (define centroide-y (/ sum-y total-puntos))
+
+  ;; Escala y desplaza cada punto con respecto al centroide
+  (map (lambda (p)
+         (make-posn (+ x (* escala (- (car p) centroide-x)))
+                    (+ y (* escala (- (cadr p) centroide-y)))))
+       puntos))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: tangentes  
+Descripción: Calcula los puntos de tangencia de una circunferencia dados su centro, un punto de referencia, y el radio.  
+Parámetros:  
+- xc1: Coordenada X del centro de la circunferencia.  
+- yc1: Coordenada Y del centro de la circunferencia.  
+- x-tangente: Coordenada X del punto de referencia para calcular las tangentes.  
+- y-tangente: Coordenada Y del punto de referencia para calcular las tangentes.  
+- radio: Radio de la circunferencia.  
+Devuelve:  
+Un vector que contiene dos vectores, cada uno representando un punto de tangencia en coordenadas (X, Y).  
+Descripción de la solución:  
+Se calcula el punto medio entre el centro y el punto de referencia. A partir de este, se obtienen las distancias necesarias para encontrar los puntos de tangencia usando fórmulas geométricas.  
+Funciones auxiliares:  
+- punto-medio: Calcula el punto medio entre dos puntos.  
+- distance: Calcula la distancia entre dos puntos en el plano cartesiano.  
+|#
+
+
+(define (tangentes xc1 yc1 x-tangente y-tangente radio)
+  
+;; Definir una función para calcular el punto medio entre dos puntos
+(define (punto-medio x1 y1 x2 y2)
+  (vector (/ (+ x1 x2) 2) (/ (+ y1 y2) 2)))
+
+;; Función para calcular la distancia entre dos puntos
+(define (distance x1 y1 x2 y2)
+  (sqrt (+ (expt (- x2 x1) 2.) (expt (- y2 y1) 2))))
+
+;; 1. Punto medio entre el vértice y centro del lóbulo
+(define p-m. (punto-medio xc1 yc1 x-tangente y-tangente)) ;; A
+
+;; 2. Calcular d (distancia entre punto medio y el centro del lóbulo)
+(define d (distance (vector-ref p-m. 0) (vector-ref p-m. 1) xc1 yc1)) ;; d entre C y A
+
+;; 3. Distancias a y h
+(define a (/ (sqr radio) (* 2 d))) ;; Definimos distancia a
+(define h (sqrt (- (sqr radio) (sqr a)))) ;; definimos distancia h
+
+;; 4. Punto base
+(define x2 (+ xc1 (* a (/ (- (vector-ref p-m. 0) xc1) d))))
+(define y2 (+ yc1 (* a (/ (- (vector-ref p-m. 1) yc1) d))))
+  
+;; 5. Puntos de intersección
+(define x3_1 (+ x2 (* h (/ (- (vector-ref p-m. 1) yc1) d))))
+(define y3_1 (- y2 (* h (/ (- (vector-ref p-m. 0) xc1) d))))
+
+(define x3_2 (- x2 (* h (/ (- (vector-ref p-m. 1) yc1) d))))
+(define y3_2 (+ y2 (* h (/ (- (vector-ref p-m. 0) xc1) d))))
+
+  (vector (vector x3_1 y3_1) (vector x3_2 y3_2))
+ )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;;                                 FUNCIONES QUE GENERAN FIGURAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|
+Nombre: dibujar-corazon  
+Descripción: Dibuja un corazón estilizado en el plano utilizando dos lóbulos circulares y un triángulo que los conecta.  
+Parámetros:  
+- centrox: Coordenada X del centro del corazón.  
+- centroy: Coordenada Y del centro del corazón.  
+- escala: Factor de escala para ajustar el tamaño del corazón.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se calculan las coordenadas de los puntos clave del corazón (lóbulos y vértice inferior) utilizando la función `escalar-y-desplazar`.  
+- Los puntos de tangencia entre los lóbulos y el triángulo se obtienen con la función `tangentes`.  
+- Se dibujan los lóbulos circulares y el triángulo que conecta los lóbulos para completar la figura del corazón.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto respecto a un centroide.  
+- tangentes: Calcula los puntos de tangencia de los lóbulos circulares con el triángulo.  
+- dibujar-circulo: Dibuja un círculo sólido en el plano.  
+|#
+
+(define (dibujar-corazon centrox centroy escala)
+  ;; Centro original del triángulo
+  (define centroide-x 315)
+  (define centroide-y 385)
+
+  ;; Escalar y desplazar las coordenadas de los puntos del corazón
+  (define xc1-yc1 (escalar-y-desplazar 350 350 centrox centroy escala centroide-x centroide-y))
+  (define xc2-yc2 (escalar-y-desplazar 280 350 centrox centroy escala centroide-x centroide-y))
+  (define xv-yv (escalar-y-desplazar 315 455 centrox centroy escala centroide-x centroide-y))
+
+  (define xc1 (vector-ref xc1-yc1 0))
+  (define yc1 (vector-ref xc1-yc1 1))
+  (define xc2 (vector-ref xc2-yc2 0))
+  (define yc2 (vector-ref xc2-yc2 1))
+  (define xv (vector-ref xv-yv 0))
+  (define yv (vector-ref xv-yv 1))
+
+  (define radio (* escala 50))
+
+  ;; Dibujar el corazón usando las nuevas coordenadas escaladas y desplazadas
+  (define der (tangentes xc1 yc1 xv yv radio))
+  (define izq (tangentes xc2 yc2 xv yv radio))
+
+  ;; Puntos obtenidos
+  (define x3_1 (vector-ref (vector-ref der 0) 0))
+  (define y3_1 (vector-ref (vector-ref der 0) 1))
+  (define x3_2 (vector-ref (vector-ref izq 1) 0))
+  (define y3_2 (vector-ref (vector-ref izq 1) 1))
+
+  ;; Dibujar los lóbulos derecho e izquierdo
+
+  (dibujar-circulo (make-posn xc1 yc1) radio rojo)
+  (dibujar-circulo (make-posn xc2 yc2) radio rojo)
+
+  ;; Dibujar el triángulo que une los lóbulos
+  ((draw-solid-polygon v1) 
+   (list (make-posn xv yv)
+         (make-posn x3_1 y3_1)
+         (make-posn x3_2 y3_2)) (make-posn 0 0)
+   rojo))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-trebol  
+Descripción: Dibuja un trébol estilizado compuesto por tres círculos superpuestos y un triángulo en la base.  
+Parámetros:  
+- centrox: Coordenada X del centro del trébol.  
+- centroy: Coordenada Y del centro del trébol.  
+- escala: Factor de escala para ajustar el tamaño del trébol.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se calcula el centroide original del trébol basado en los vértices de los círculos y el triángulo.  
+- Los puntos correspondientes a los centros de los círculos y los vértices del triángulo son escalados y desplazados en función del `centrox`, `centroy` y el `escala`.  
+- Los círculos se dibujan en las posiciones correspondientes, seguidos por el triángulo en la base para completar la figura.  
+Funciones auxiliares:  
+- calcular-centroide: Calcula el centroide a partir de tres puntos.  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto respecto a un centroide.  
+- dibujar-circulo: Dibuja un círculo sólido en el plano.  
+|#
+
+
+(define (dibujar-trebol centrox centroy escala)
+  ;; Centroide original del trébol
+  (define centroide (calcular-centroide 290 270 250 350 330 350))
+  (define centroide-x (vector-ref centroide 0))
+  (define centroide-y (vector-ref centroide 1))
+
+  ;; Escalar y desplazar los centros de los círculos
+  (define xc1-yc1 (escalar-y-desplazar 330 350 centrox centroy escala centroide-x centroide-y))
+  (define xc2-yc2 (escalar-y-desplazar 250 350 centrox centroy escala centroide-x centroide-y))
+  (define xc3-yc3 (escalar-y-desplazar 290 270 centrox centroy escala centroide-x centroide-y))
+
+  ;; Escalar y desplazar los vértices del triangulito
+  (define xv1-yv1 (escalar-y-desplazar 290 380 centrox centroy escala centroide-x centroide-y))
+  (define xv2-yv2 (escalar-y-desplazar 250 425 centrox centroy escala centroide-x centroide-y))
+  (define xv3-yv3 (escalar-y-desplazar 330 425 centrox centroy escala centroide-x centroide-y))
+
+  ;; Extraer las coordenadas escaladas
+  (define xc1 (vector-ref xc1-yc1 0))
+  (define yc1 (vector-ref xc1-yc1 1))
+  (define xc2 (vector-ref xc2-yc2 0))
+  (define yc2 (vector-ref xc2-yc2 1))
+  (define xc3 (vector-ref xc3-yc3 0))
+  (define yc3 (vector-ref xc3-yc3 1))
+
+  (define xv1 (vector-ref xv1-yv1 0))
+  (define yv1 (vector-ref xv1-yv1 1))
+  (define xv2 (vector-ref xv2-yv2 0))
+  (define yv2 (vector-ref xv2-yv2 1))
+  (define xv3 (vector-ref xv3-yv3 0))
+  (define yv3 (vector-ref xv3-yv3 1))
+
+  (define radio (* escala 50))
+
+  ;; Dibujar los círculos del trébol
+  (dibujar-circulo (make-posn xc1 yc1) radio negro)
+  (dibujar-circulo (make-posn xc2 yc2) radio negro)
+  (dibujar-circulo (make-posn xc3 yc3) radio negro)
+
+  ;; Dibujar el triangulito inferior
+  ((draw-solid-polygon v1) 
+   (list (make-posn xv1 yv1)
+         (make-posn xv2 yv2)
+         (make-posn xv3 yv3)) (make-posn 0 0)
+   negro)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-pica  
+Descripción: Dibuja una figura de pica compuesta por dos círculos superiores y dos polígonos que forman el vértice y la base.  
+Parámetros:  
+- centrox: Coordenada X del centro de la pica.  
+- centroy: Coordenada Y del centro de la pica.  
+- escala: Factor de escala para ajustar el tamaño de la pica.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se definen los radios y se calculan las posiciones escaladas de los círculos y puntos usando `escalar-y-desplazar`.  
+- Los círculos superiores son dibujados primero.  
+- A partir de las tangentes entre los círculos y el vértice, se construye el polígono que forma la parte superior de la pica.  
+- Finalmente, se dibuja la parte baja de la pica usando un polígono inferior basado en tres puntos.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto respecto a un centroide.  
+- dibujar-circulo: Dibuja un círculo sólido en el plano.  
+- tangentes: Calcula las tangentes entre un círculo y un punto externo.  
+|#
+
+
+(define (dibujar-pica centrox centroy escala)
+  ;; Definir el radio de los círculos
+  (define radio (* escala 50))
+
+  ;; Escalar y desplazar los centros de los círculos
+  (define xc1-yc1 (escalar-y-desplazar 250 350 centrox centroy escala 290 350))
+  (define xc2-yc2 (escalar-y-desplazar 330 350 centrox centroy escala 290 350))
+
+  ;; Extraer las coordenadas escaladas
+  (define xc1 (vector-ref xc1-yc1 0))
+  (define yc1 (vector-ref xc1-yc1 1))
+  (define xc2 (vector-ref xc2-yc2 0))
+  (define yc2 (vector-ref xc2-yc2 1))
+
+  ;; Punto superior de la pica
+  (define xv-yv (escalar-y-desplazar 290 230 centrox centroy escala 290 350))
+  (define xv (vector-ref xv-yv 0))
+  (define yv (vector-ref xv-yv 1))
+
+  ;; Dibujar los dos círculos de la pica
+  (dibujar-circulo (make-posn xc1 yc1) radio negro)
+  (dibujar-circulo (make-posn xc2 yc2) radio negro)
+
+  ;; Calcular las tangentes entre los círculos y el vértice
+  (define der (tangentes xc1 yc1 xv yv radio))
+  (define izq (tangentes xc2 yc2 xv yv radio))
+
+  ;; Puntos de las tangentes
+  (define x3_1 (vector-ref (vector-ref der 0) 0))
+  (define y3_1 (vector-ref (vector-ref der 0) 1))
+  (define x3_2 (vector-ref (vector-ref izq 1) 0))
+  (define y3_2 (vector-ref (vector-ref izq 1) 1))
+
+  ;; Dibujar el polígono superior que conecta las tangentes con el vértice
+  ((draw-solid-polygon v1) 
+   (list (make-posn x3_1 y3_1)
+         (make-posn x3_2 y3_2)
+         (make-posn xv yv))(make-posn 0 0)
+   negro)
+
+  ;; Dibujar el polígono inferior (la parte baja de la pica)
+  (define xv1-yv1 (escalar-y-desplazar 290 380 centrox centroy escala 290 350))
+  (define xv2-yv2 (escalar-y-desplazar 250 425 centrox centroy escala 290 350))
+  (define xv3-yv3 (escalar-y-desplazar 330 425 centrox centroy escala 290 350))
+
+  (define xv1 (vector-ref xv1-yv1 0))
+  (define yv1 (vector-ref xv1-yv1 1))
+  (define xv2 (vector-ref xv2-yv2 0))
+  (define yv2 (vector-ref xv2-yv2 1))
+  (define xv3 (vector-ref xv3-yv3 0))
+  (define yv3 (vector-ref xv3-yv3 1))
+
+  ((draw-solid-polygon v1) 
+   (list (make-posn xv1 yv1)
+         (make-posn xv2 yv2)
+         (make-posn xv3 yv3)) (make-posn 0 0)
+   negro)
+ )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-diamante  
+Descripción: Dibuja un diamante compuesto por cuatro vértices escalados y desplazados con respecto a un centroide.  
+Parámetros:  
+- centrox: Coordenada X del centro del diamante.  
+- centroy: Coordenada Y del centro del diamante.  
+- escala: Factor de escala para ajustar el tamaño del diamante.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se definen las coordenadas originales de los cuatro vértices del diamante.  
+- Las coordenadas son escaladas y desplazadas respecto al centroide del diamante.  
+- Se extraen las coordenadas escaladas de los puntos y se utilizan para construir un polígono sólido que forma el diamante.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto respecto a un centroide.  
+|#
+
+
+(define (dibujar-diamante centrox centroy escala)
+  ;; Centroide original del diamante (puedes ajustar si es necesario)
+  (define centroide-x 300)
+  (define centroide-y 200)
+
+  ;; Escalar y desplazar los puntos del diamante
+  (define p1 (escalar-y-desplazar 240 200 centrox centroy escala centroide-x centroide-y))
+  (define p2 (escalar-y-desplazar 300 100 centrox centroy escala centroide-x centroide-y))
+  (define p3 (escalar-y-desplazar 360 200 centrox centroy escala centroide-x centroide-y))
+  (define p4 (escalar-y-desplazar 300 300 centrox centroy escala centroide-x centroide-y))
+
+  ;; Extraer las coordenadas escaladas
+  (define x1 (vector-ref p1 0))
+  (define y1 (vector-ref p1 1))
+  (define x2 (vector-ref p2 0))
+  (define y2 (vector-ref p2 1))
+  (define x3 (vector-ref p3 0))
+  (define y3 (vector-ref p3 1))
+  (define x4 (vector-ref p4 0))
+  (define y4 (vector-ref p4 1))
+
+  ;; Dibujar el diamante
+  ((draw-solid-polygon v1)
+   (list
+    (make-posn x1 y1)
+    (make-posn x2 y2)
+    (make-posn x3 y3)
+    (make-posn x4 y4)) (make-posn 0 0)
+   rojo))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-lista  
+Descripción: Dibuja un polígono representando una letra especificada, escalada y desplazada, a partir de una lista de asociación de puntos.  
+Parámetros:  
+- lista-asociacion: Lista de asociación que contiene las coordenadas de las letras.  
+- letra: Identificador de la letra a dibujar.  
+- coordx: Coordenada X para el desplazamiento del dibujo.  
+- coordy: Coordenada Y para el desplazamiento del dibujo.  
+- escala: Factor de escala aplicado a las coordenadas originales.  
+- color: Color del polígono que representa la letra.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Se busca la letra en la lista de asociación para obtener sus puntos originales.  
+- Un bucle `do` transforma cada punto aplicando el escalado y desplazamiento, utilizando la función `escalar-y-desplazar`.  
+- Los puntos transformados se convierten en objetos `posn` y se agregan a una lista acumulativa.  
+- Una vez procesados todos los puntos, se dibuja el polígono utilizando los puntos transformados.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza las coordenadas de un punto con respecto a un centroide y coordenadas base.  
+|#
+
+(define (dibujar-lista lista-asociacion letra coordx coordy escala color)
+  ;; Obtener la lista de puntos de la letra en la lista de asociación
+  (let* ((puntos-originales (cdr (assoc letra lista-asociacion)))  ;; Extrae la lista de puntos de la letra
+         (puntos-transformados '()))  ;; Inicializamos una lista vacía para los puntos transformados
+
+    (do ((i 0 (+ i 1)))  ;; Inicialización de i en 0, lo incrementamos en cada iteración
+        ((= i (length puntos-originales))  ;; Condición de parada: cuando i alcanza la longitud de la lista
+         ;; Cuando el bucle termine, dibujamos el polígono con los puntos transformados
+         ((draw-solid-polygon v1) puntos-transformados (make-posn 0 0) color))
+      
+      ;; Cuerpo del bucle
+      (let* ((p (list-ref puntos-originales i))  ;; Obtenemos el i-ésimo punto en formato '(x y)
+             (x (car p))  ;; Extraemos la coordenada x
+             (y (cadr p))  ;; Extraemos la coordenada y
+             ;; Aplicamos la transformación de escalado y desplazamiento
+             (punto-transformado (escalar-y-desplazar x y coordx coordy escala 100 85))
+             ;; Convertimos el vector transformado de vuelta a un `posn`
+             (punto-posn (make-posn (vector-ref punto-transformado 0)
+                                    (vector-ref punto-transformado 1))))
+        
+        ;; Agregamos el punto `posn` transformado a la lista
+        (set! puntos-transformados (append puntos-transformados (list punto-posn)))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;                              FUNCIONES PARA GENERAR CARTAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-carta  
+Descripción: Dibuja una carta en la posición, escala, palo y valor especificados, utilizando una lista de asociación para los valores de las cartas.  
+Parámetros:  
+- cx: Coordenada X del centro de la carta.  
+- cy: Coordenada Y del centro de la carta.  
+- escala: Factor de escala para ajustar el tamaño de la carta.  
+- palo: El palo de la carta (corazon, diamante, pica o trebol).  
+- valor: El valor de la carta (número o figura).  
+- lista-asociacion: Lista de asociación que contiene las coordenadas de las figuras de las cartas.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Escala y transforma las coordenadas de los bordes, símbolos y números de la carta.  
+- Dibuja el contorno de la carta utilizando polígonos y curvas de los bordes.  
+- Dibuja el número correspondiente usando la lista de asociación y el palo con sus respectivos símbolos (corazón, trébol, pica, diamante).  
+Funciones auxiliares:  
+- transformar-coordenadas: Calcula nuevas coordenadas basadas en la escala y posición de la carta.  
+- lista-cuarto-circulo: Genera las curvas de los bordes de la carta según la escala.  
+- lista-a-posn: Convierte una lista de puntos en objetos posn para gráficos.  
+- dibujar-lista: Dibuja las figuras de los números o letras en la carta.  
+- dibujar-corazon, dibujar-pica, dibujar-trebol, dibujar-diamante: Dibuja los símbolos de los palos según su forma.  
+|#
+
+(define (dibujar-carta cx cy escala palo valor lista-asociacion)
+  ;; Función interna para transformar coordenadas según el centro y escala y devolver un par `(x, y)`
+  (define (transformar-coordenadas x y esc)
+    (list (+ cx (* esc (- x 175)))
+          (+ cy (* esc (- y 350)))))
+
+  ;; Variables de escala y color para el palo
+  (let* ((escala-objetos (* escala 0.75))
+         (color (cond ((or (eq? palo 'corazon) (eq? palo 'diamante)) rojo)
+                      ((or (eq? palo 'pica) (eq? palo 'trebol)) negro)
+                      (else (error "Palo no válido"))))
+         (desplazamiento-numero-x (+ cx (* escala (- 175 175))))
+         (desplazamiento-numero-y (+ cy (* escala (- 350 480))))
+         (desplazamiento-palo-x (+ cx (* escala (- 175 175))))
+         (desplazamiento-palo-y (+ cy (* escala (- 350 530))))
+         
+         ;; Definir las listas de puntos transformados para el contorno de la carta
+         (list-cuerpo
+          (append
+           (list (transformar-coordenadas 50 100 escala)
+                 (transformar-coordenadas 50 400 escala))
+           (lista-cuarto-circulo (car (transformar-coordenadas 100 100 escala))
+                                 (cadr (transformar-coordenadas 100 100 escala))
+                                 (* escala 50) 20 'arriba-izquierda 'antihorario)
+           (list (transformar-coordenadas 100 50 escala)
+                 (transformar-coordenadas 250 50 escala))
+           (lista-cuarto-circulo (car (transformar-coordenadas 250 100 escala))
+                                 (cadr (transformar-coordenadas 250 100 escala))
+                                 (* escala 50) 20 'arriba-derecha 'horario)
+           (list (transformar-coordenadas 300 100 escala)
+                 (transformar-coordenadas 300 400 escala))
+           (lista-cuarto-circulo (car (transformar-coordenadas 250 400 escala))
+                                 (cadr (transformar-coordenadas 250 400 escala))
+                                 (* escala 50) 20 'abajo-derecha 'antihorario)
+           (list (transformar-coordenadas 100 450 escala)
+                 (transformar-coordenadas 250 450 escala))
+           (lista-cuarto-circulo (car (transformar-coordenadas 100 400 escala))
+                                 (cadr (transformar-coordenadas 100 400 escala))
+                                 (* escala 50) 20 'abajo-izquierda 'horario))))
+
+    ;; Dibujar el contorno de la carta
+    ((draw-solid-polygon v1) (lista-a-posn list-cuerpo) (make-posn 0 0) blanco)
+    ((draw-polygon v1) (lista-a-posn list-cuerpo) (make-posn 0 0) negro)
+    
+    ;; Dibujar el número de la carta, ajustado con las coordenadas relativas, usando la lista de asociación
+    (dibujar-lista lista-asociacion valor desplazamiento-numero-x desplazamiento-numero-y escala-objetos color)
+
+    ;; Dibujar el símbolo del palo, ajustado con las coordenadas relativas
+    (cond
+      ((eq? palo 'corazon) (dibujar-corazon desplazamiento-palo-x desplazamiento-palo-y escala-objetos))
+      ((eq? palo 'pica) (dibujar-pica desplazamiento-palo-x desplazamiento-palo-y escala-objetos))
+      ((eq? palo 'trebol) (dibujar-trebol desplazamiento-palo-x desplazamiento-palo-y escala-objetos))
+      ((eq? palo 'diamante) (dibujar-diamante desplazamiento-palo-x desplazamiento-palo-y escala-objetos))
+      (else (error "Palo no válido")))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-carta-por-detras  
+Descripción: Dibuja el reverso de una carta en una posición y escala específicas, con un diseño interior distintivo y un símbolo decorativo (como la patita de un gato).  
+Parámetros:  
+- cx: Coordenada X del centro de la carta.  
+- cy: Coordenada Y del centro de la carta.  
+- escala: Factor de escala para ajustar el tamaño de la carta y sus elementos.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- Escala y transforma las coordenadas de los bordes exteriores e interiores de la carta según el centro y la escala.  
+- Dibuja el contorno blanco de la carta y su diseño interior en color morado.  
+- Añade un símbolo decorativo centrado en la parte trasera de la carta, ajustado al tamaño deseado mediante un escalado adicional.  
+Funciones auxiliares:  
+- transformar-coordenadas: Calcula nuevas coordenadas basadas en la posición central y el factor de escala.  
+- escalar-desplaza-construye2: Escala y desplaza un conjunto de puntos para dibujar el símbolo decorativo.  
+|#
+
+(define (dibujar-carta-por-detras cx cy escala)
+  ;; Función interna para transformar coordenadas según el centro y escala
+  (define (transformar-coordenadas par esc)
+    (make-posn (+ cx (* esc (- (car par) 175)))
+               (+ cy (* esc (- (cadr par) 350)))))
+
+  ;; Transformar cada punto en list-cuerpo y list-interior usando transformar-coordenadas
+  (let* ((escala-objetos (* escala 1.2))
+         (escala2 (* escala 0.9))
+         
+         (list-cuerpo-transformado
+          (map (lambda (p)
+                 (transformar-coordenadas p escala))
+               list-cuerpo))
+         (list-interior-transformado
+          (map (lambda (p)
+                 (transformar-coordenadas p escala2))
+               list-interior)))
+
+    ;; Dibujar el contorno de la carta y el interior
+    ((draw-solid-polygon v1) list-cuerpo-transformado (make-posn 0 0) blanco)
+    ;((draw-polygon v1) list-cuerpo-transformado (make-posn 0 0) negro)
+    ((draw-solid-polygon v1) list-interior-transformado (make-posn 0 0) morosa)
+
+    ;; Dibujar la patita del gato escalada y centrada en la carta
+    ((draw-solid-polygon v1)
+     (escalar-desplaza-construye2 interior interior
+                                  (+ cx (* escala +5))
+                                  (+ cy (* escala -100))
+                                  escala-objetos)
+     (make-posn 0 0) blanco)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: dibujar-ficha  
+Descripción: Dibuja una ficha en la posición, escala y color especificados. La ficha consta de círculos concéntricos y triángulos decorativos distribuidos simétricamente alrededor de su centro.  
+Parámetros:  
+- centrox: Coordenada X del centro de la ficha.  
+- centroy: Coordenada Y del centro de la ficha.  
+- escala: Factor de escala para ajustar el tamaño de la ficha y sus elementos.  
+- color: Color principal de la ficha para los círculos y triángulos.  
+Devuelve:  
+void  
+Descripción de la solución:  
+- La ficha se compone de tres círculos concéntricos, donde el color alterna entre el principal (color) y blanco.  
+- Se dibujan seis triángulos alrededor del círculo interior, cada uno definido por cuatro puntos y transformados mediante escalado y desplazamiento.  
+- La posición y forma de los triángulos están calculadas para mantener simetría y dar un efecto decorativo a la ficha.  
+Funciones auxiliares:  
+- escalar-y-desplazar: Escala y desplaza puntos en función de un centro y un factor de escala.  
+|#
+
+(define (dibujar-ficha centrox centroy escala color)
+  ;; Dibujar círculos concéntricos de la ficha
+  (dibujar-circulo (make-posn centrox centroy) (* escala 50) color)   ;; Círculo externo negro
+  (dibujar-circulo (make-posn centrox centroy) (* escala 44) blanco)   ;; Círculo medio blanco
+  (dibujar-circulo (make-posn centrox centroy) (* escala 30) color)   ;; Círculo interno negro
+  
+  ;; Escalar y desplazar cada uno de los triángulos de la ficha
+  ;; Triángulo 1
+  (let ((p1 (escalar-y-desplazar 109 72.5 centrox centroy escala 100 100))
+        (p2 (escalar-y-desplazar 114.6 56 centrox centroy escala 100 100))
+        (p3 (escalar-y-desplazar 129.5 66 centrox centroy escala 100 100))
+        (p4 (escalar-y-desplazar 119 78 centrox centroy escala 100 100)))
+    ((draw-solid-polygon v1) (list (make-posn (vector-ref p1 0) (vector-ref p1 1))
+                                   (make-posn (vector-ref p2 0) (vector-ref p2 1))
+                                   (make-posn (vector-ref p3 0) (vector-ref p3 1))
+                                   (make-posn (vector-ref p4 0) (vector-ref p4 1))) 
+     (make-posn 0 0) color))
+
+  ;; Triángulo 2
+  (let ((p1 (escalar-y-desplazar 128.4 94 centrox centroy escala 100 100))
+        (p2 (escalar-y-desplazar 144 91 centrox centroy escala 100 100))
+        (p3 (escalar-y-desplazar 144 109 centrox centroy escala 100 100))
+        (p4 (escalar-y-desplazar 128.4 106 centrox centroy escala 100 100)))
+    ((draw-solid-polygon v1) (list (make-posn (vector-ref p1 0) (vector-ref p1 1))
+                                   (make-posn (vector-ref p2 0) (vector-ref p2 1))
+                                   (make-posn (vector-ref p3 0) (vector-ref p3 1))
+                                   (make-posn (vector-ref p4 0) (vector-ref p4 1))) 
+     (make-posn 0 0) color))
+
+  ;; Triángulo 3
+  (let ((p1 (escalar-y-desplazar 119 122 centrox centroy escala 100 100))
+        (p2 (escalar-y-desplazar 129 134 centrox centroy escala 100 100))
+        (p3 (escalar-y-desplazar 114 142 centrox centroy escala 100 100))
+        (p4 (escalar-y-desplazar 109 127 centrox centroy escala 100 100)))
+    ((draw-solid-polygon v1) (list (make-posn (vector-ref p1 0) (vector-ref p1 1))
+                                   (make-posn (vector-ref p2 0) (vector-ref p2 1))
+                                   (make-posn (vector-ref p3 0) (vector-ref p3 1))
+                                   (make-posn (vector-ref p4 0) (vector-ref p4 1))) 
+     (make-posn 0 0) color))
+
+  ;; Triángulo 4
+  (let ((p1 (escalar-y-desplazar 90.5 127 centrox centroy escala 100 100))
+        (p2 (escalar-y-desplazar 85 142.5 centrox centroy escala 100 100))
+        (p3 (escalar-y-desplazar 70.5 134 centrox centroy escala 100 100))
+        (p4 (escalar-y-desplazar 81 122 centrox centroy escala 100 100)))
+    ((draw-solid-polygon v1) (list (make-posn (vector-ref p1 0) (vector-ref p1 1))
+                                   (make-posn (vector-ref p2 0) (vector-ref p2 1))
+                                   (make-posn (vector-ref p3 0) (vector-ref p3 1))
+                                   (make-posn (vector-ref p4 0) (vector-ref p4 1))) 
+     (make-posn 0 0) color))
+
+  ;; Triángulo 5
+  (let ((p1 (escalar-y-desplazar 71.6 106 centrox centroy escala 100 100))
+        (p2 (escalar-y-desplazar 56 109 centrox centroy escala 100 100))
+        (p3 (escalar-y-desplazar 56 91 centrox centroy escala 100 100))
+        (p4 (escalar-y-desplazar 71.6 94 centrox centroy escala 100 100)))
+    ((draw-solid-polygon v1) (list (make-posn (vector-ref p1 0) (vector-ref p1 1))
+                                   (make-posn (vector-ref p2 0) (vector-ref p2 1))
+                                   (make-posn (vector-ref p3 0) (vector-ref p3 1))
+                                   (make-posn (vector-ref p4 0) (vector-ref p4 1))) 
+     (make-posn 0 0) color))
+
+  ;; Triángulo 6
+  (let ((p1 (escalar-y-desplazar 81 78 centrox centroy escala 100 100))
+        (p2 (escalar-y-desplazar 70.6 65.9 centrox centroy escala 100 100))
+        (p3 (escalar-y-desplazar 86 57 centrox centroy escala 100 100))
+        (p4 (escalar-y-desplazar 91 72.6 centrox centroy escala 100 100)))
+    ((draw-solid-polygon v1) (list (make-posn (vector-ref p1 0) (vector-ref p1 1))
+                                   (make-posn (vector-ref p2 0) (vector-ref p2 1))
+                                   (make-posn (vector-ref p3 0) (vector-ref p3 1))
+                                   (make-posn (vector-ref p4 0) (vector-ref p4 1))) 
+     (make-posn 0 0) color)))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;                                  FUNCIONALIDADES GRÁFICAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: esLetra?  
+Descripción: Verifica si un carácter dado es una letra mayúscula del alfabeto inglés.  
+Parámetros:  
+- caracter: Carácter a verificar.  
+Devuelve:  
+- Booleano (#t si el carácter es una letra mayúscula, #f en caso contrario).  
+Descripción de la solución:  
+- Convierte el carácter a su valor entero ASCII usando `char->integer`.  
+- Comprueba si el valor entero se encuentra en el rango de las letras mayúsculas (de 'A' a 'Z').  
+- Devuelve `#t` si cumple la condición, y `#f` en caso contrario.  
+Funciones auxiliares:  
+ninguna  
+|#
+
+(define (esLetra? caracter)
+  (if (and (>= (char->integer caracter) (char->integer #\A))
+            (<= (char->integer caracter) (char->integer #\Z))
+       )
+      #t
+      #f)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: esNumero?  
+Descripción: Verifica si un carácter dado es un dígito numérico (0-9).  
+Parámetros:  
+- caracter: Carácter a verificar.  
+Devuelve:  
+- Booleano (#t si el carácter es un dígito numérico, #f en caso contrario).  
+Descripción de la solución:  
+- Convierte el carácter a su valor entero ASCII usando `char->integer`.  
+- Comprueba si el valor entero se encuentra en el rango de los dígitos numéricos (de '0' a '9').  
+- Devuelve `#t` si cumple la condición, y `#f` en caso contrario.  
+Funciones auxiliares:  
+ninguna  
+|#
+
+(define (esNumero? caracter)
+  (if (and (>= (char->integer caracter) (char->integer #\0))
+           (<= (char->integer caracter) (char->integer #\9)))
+      #t
+      #f)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: input-field  
+Descripción: Renderiza un campo de entrada interactivo en pantalla que permite al usuario ingresar valores numéricos a través del teclado.  
+Parámetros:  
+- x: Ancho del campo de entrada.  
+- y: Alto del campo de entrada.  
+- pos-x: Coordenada X de la esquina superior izquierda del campo.  
+- pos-y: Coordenada Y de la esquina superior izquierda del campo.  
+Devuelve:  
+- El valor numérico ingresado por el usuario tras presionar "Enter".  
+Descripción de la solución:  
+1. Ajusta el alto del campo para que no sea inferior a 40 píxeles.  
+2. Dibuja un rectángulo negro como borde exterior y un rectángulo blanco como fondo interior.  
+3. Itera continuamente mientras el usuario ingresa caracteres:  
+   - Actualiza la cadena de texto ingresada según las teclas presionadas, limitándola a 10 caracteres.  
+   - Muestra el texto actualizado dentro del campo.  
+4. Devuelve el valor numérico ingresado una vez que el usuario presiona "Enter".  
+Funciones auxiliares:  
+- esNumero?  
+- esLetra?  
+
+Notas de bloques grandes:  
+- Dibujo del campo: Se define el marco del campo de entrada (borde negro y fondo blanco).  
+- Bucle de entrada: Maneja la entrada de caracteres hasta que se presiona "Enter".  
+- Gestión de texto: Controla límites de longitud, caracteres válidos (letras y números), y acciones como borrar (retroceso).  
+|#
+
+(define (input-field x y pos-x pos-y)
+  (let*
+      ; Variables del let secuencial
+      (
+       ; El valor mínimo del alto es 40
+       (y (if (< y 40) 40 y))
+       ; La posición de las letras es a la mitad del ancho
+       (letra-pos (- (/ y 2) 10)))
+  ; Cuuadrantes de texto
+  ((draw-solid-polygon v1)
+   (list
+    (make-posn pos-x pos-y)
+    (make-posn (+ pos-x x) pos-y)
+    (make-posn (+ pos-x x) (+ pos-y y))
+    (make-posn pos-x (+ pos-y y))) (make-posn 0 0) negro)
+  ((draw-solid-polygon v1)
+   (list
+    (make-posn (+ 5 pos-x) (+ 5 pos-y))
+    (make-posn (- (+ pos-x x) 5) (+ 5 pos-y))
+    (make-posn (- (+ pos-x x) 5) (- (+ pos-y y) 5))
+    (make-posn (+ 5 pos-x) (+ pos-y y -5))) (make-posn 0 0) blanco)
+    ; Bucle de ejecución
+  (do
+      ; Variables iterativas
+      (
+       (tecla (key-value (get-key-press v1)) (key-value (get-key-press v1)))
+       (valores "" (cond
+                     ; el tamaño de los valores está dentro del rango permitido
+                     ((< (string-length valores) 10)
+                      (cond
+                        ; Caso captura del "release"
+                        ((symbol? tecla) valores)
+                        ; Obtiene valor
+                        ((char? tecla)
+                         (if (eq? tecla #\space)
+                             valores           ; No hace nada con el espacio
+                             (if (eq? tecla #\backspace)
+                                 (cond
+                                   ; Devuelve la cadena menos el último elemento
+                                   ((> (string-length valores) 0)
+                                    (substring valores 0 (sub1 (string-length valores))))
+                                   ; Cadena vacía si solo hay uno o ningun valor
+                                   ((or (= (string-length valores) 1) (= (string-length valores) 0))
+                                    ""
+                                    ))
+                                 ; Se escribe un número o letra, pues se apendiza
+                                 (if (or (esNumero? tecla) (esLetra? tecla))
+                                     (string-append valores (string tecla))
+                                     valores)
+                                 
+                              )
+                          ))
+                     ))
+                     ; El tamaño de los valores está fuera del rango permitido
+                     ((>= (string-length valores) 10)
+                      (if (eq? tecla #\backspace)
+                             (substring valores 0 (sub1 (string-length valores)))
+                             valores))
+                     
+                      )))
+    ; Pulsa enter para salir
+      ((eq? tecla #\return) (string->number valores))
+    ((draw-solid-polygon v1)
+     (list
+      (make-posn pos-x pos-y)
+      (make-posn (+ pos-x x) pos-y)
+      (make-posn (+ pos-x x) (+ pos-y y))
+      (make-posn pos-x (+ pos-y y))) (make-posn 0 0) negro)
+    ((draw-solid-polygon v1)
+     (list
+      (make-posn (+ 5 pos-x) (+ 5 pos-y))
+      (make-posn (- (+ pos-x x) 5) (+ 5 pos-y))
+      (make-posn (- (+ pos-x x) 5) (- (+ pos-y y) 5))
+      (make-posn (+ 5 pos-x) (+ pos-y y -5))) (make-posn 0 0) blanco)
+    (dibujar-texto valores (+ 10 pos-x) (+ letra-pos pos-y) 10 negro)
+      ;(printf "~a\n" valores)
+      ))
+  
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: limpiar-figura  
+Descripción: Simula el borrado de una figura en pantalla pintándola con el color de fondo.  
+Parámetros:  
+- puntos: Lista de puntos que definen la figura a borrar.  
+- color-fondo: Color utilizado para sobrescribir la figura.  
+Devuelve:  
+- void  
+Descripción de la solución:  
+Dibuja la figura dos veces (sólida y con contorno) usando el color de fondo para cubrir completamente la figura original.  
+Funciones auxiliares:  
+ninguna  
+|#
+
+
+(define (limpiar-figura puntos color-fondo)
+  ;; Dibuja la figura con el color de fondo para simular el borrado
+  ((draw-solid-polygon v1) puntos (make-posn 0 0) color-fondo)
+  ((draw-polygon v1) puntos (make-posn 0 0) color-fondo))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;                       FUNCIONES GENERACIÓN GRÁFICOS MESA DE BALCKJACK
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: contador-jugador  
+Descripción: Dibuja un contador visual para un jugador, mostrando un valor numérico y un texto descriptivo según el tipo de contador.  
+Parámetros:  
+- valor: Número que representa el valor actual del contador (e.g., fichas o partidas ganadas).  
+- tipo: Tipo de contador ('fichas o 'ganadas).  
+Devuelve:  
+- void  
+Descripción de la solución:  
+Dibuja un contador con un marco externo, un recuadro interior, y un texto descriptivo según el tipo de contador. También muestra el valor numérico en el recuadro.  
+Funciones auxiliares:  
+- dibujar-texto  
+|#
+
+(define (contador-jugador valor tipo)
+  ;; Contador
+  ((draw-solid-polygon v1)
+   (list (make-posn 0 500) (make-posn 220 500) (make-posn 220 600)(make-posn 0 600)) (make-posn 0 0) contador)
+     ;; Recuadrito interior
+  ((draw-solid-polygon v1)
+   (list (make-posn 10 530) (make-posn 210 530) (make-posn 210 590)(make-posn 10 590)) (make-posn 0 0) blanco)
+  ((draw-solid-polygon v1)
+   (list (make-posn 15 535) (make-posn 205 535) (make-posn 205 585)(make-posn 15 585)) (make-posn 0 0) negro)
+  (cond
+    ((eq? tipo 'fichas)
+     (dibujar-texto "FICHAS" 60 507 8 fondo)
+     )
+    (else
+     (dibujar-texto "GANADAS" 60 507 8 fondo)
+     ))
+  
+  (dibujar-texto (number->string valor) 25 550 8 blanco)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: contador-crupier  
+Descripción: Dibuja un contador visual para la banca (crupier), mostrando el número de fichas disponibles.  
+Parámetros:  
+- fichas: Número que representa la cantidad de fichas del crupier.  
+Devuelve:  
+- void  
+Descripción de la solución:  
+Dibuja un contador compuesto por un texto descriptivo "BANCA" en la parte superior, un marco exterior, un recuadro interior, y el número de fichas dentro del recuadro.  
+Funciones auxiliares:  
+- dibujar-texto  
+|#
+
+
+(define (contador-crupier fichas)
+  (dibujar-texto "BANCA" 350 5 10 negro)
+  ((draw-solid-polygon v1)
+   (list (make-posn 290 30) (make-posn 510 30) (make-posn 510 100)(make-posn 290 100)) (make-posn 0 0) contador2)
+  ((draw-solid-polygon v1)
+   (list (make-posn 295 35) (make-posn 505 35) (make-posn 505 95)(make-posn 295 95)) (make-posn 0 0) blanco)
+  ((draw-solid-polygon v1)
+   (list (make-posn 300 40) (make-posn 500 40) (make-posn 500 90)(make-posn 300 90)) (make-posn 0 0) negro)
+  (dibujar-texto (number->string fichas) 305 55 10 blanco)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: mesa  
+Descripción: Dibuja la mesa de juego con sus componentes visuales, como el tapete, los contadores de jugador y crupier, botones de juego, y áreas de interacción.  
+Parámetros:  
+- valor-crupier: Número que indica la cantidad de fichas o valor actual del crupier.  
+- valor-jugador: Número que indica la cantidad de fichas o valor actual del jugador.  
+- tipo: Indica el tipo de juego (por ejemplo, fichas o puntuación).  
+Devuelve:  
+- void  
+Descripción de la solución:  
+El tapete y las áreas de juego son dibujados con polígonos, elipses y texto. Dependiendo del tipo de juego, se muestran botones específicos. Los valores del jugador y el crupier son representados mediante contadores visuales.  
+Funciones auxiliares:  
+- contador-jugador  
+- contador-crupier  
+- dibujar-texto  
+|#
+
+(define (mesa valor-crupier valor-jugador tipo)
+  ; Tapete
+  ((draw-solid-polygon v1)
+   (list (make-posn 0 0) (make-posn 800 0) (make-posn 800 600)(make-posn 0 600)) (make-posn 0 0) fondo)
+  ((draw-solid-polygon v1)
+   (list (make-posn 0 50)(make-posn 800 50) (make-posn 800 600)(make-posn 0 600)) (make-posn 0 0) tapete)
+  ; Linea tapete
+  ((draw-ellipse v1)
+   (make-posn 0 50) 800 100 oro)
+  ((draw-solid-polygon v1)
+   (list (make-posn 0 50)(make-posn 800 50) (make-posn 800 100)(make-posn 0 100)) (make-posn 0 0) tapete)
+
+  ; Hueco arriba
+  ((draw-solid-ellipse v1)
+   (make-posn 0 0) 800 100 fondo)
+
+  ;; Cuadrante de operaciones
+  ((draw-polygon v1)
+   (list (make-posn 0 500) (make-posn 800 500) (make-posn 800 600)(make-posn 0 600)) (make-posn 0 0) fondo)
+  (contador-jugador valor-jugador tipo)
+
+  ;; Botones de juego
+  (cond
+    ((eq? tipo 'fichas)
+     ((draw-solid-polygon v1)
+      (list (make-posn 240 520) (make-posn 500 520) (make-posn 500 580)(make-posn 240 580)) (make-posn 0 0) naranja)
+     (dibujar-texto "DOBLAR" 250 530 20 fondo)
+     ))
+  
+  ((draw-solid-polygon v1)
+   (list (make-posn 520 520) (make-posn 600 520) (make-posn 600 580)(make-posn 520 580)) (make-posn 0 0) mas)
+  (dibujar-texto "+" 545 533 20 mas-opp)
+  ((draw-solid-polygon v1)
+   (list (make-posn 620 520) (make-posn 700 520) (make-posn 700 580)(make-posn 620 580)) (make-posn 0 0) menos)
+  (dibujar-texto "-" 645 530 20 mas-opp)
+  ;; Cuadrante fichas crupier
+  (contador-crupier valor-crupier)
+  (dibujar-texto "CRUPIER" 60 200 5 blanco)
+  (dibujar-texto "JUGADOR" 60 350 5 blanco)
+)
+
+#|
+Nombre: actualizar-mesa  
+Descripción: Actualiza los elementos visuales de la mesa de juego, incluyendo las cartas del crupier y el jugador, y los valores de las fichas o puntuaciones.  
+Parámetros:  
+- mano-c: Lista que representa la mano actual del crupier.  
+- mano-j: Lista que representa la mano actual del jugador.  
+- f-c: Número que indica las fichas o puntuación del crupier.  
+- f-j: Número que indica las fichas o puntuación del jugador.  
+- tipo: Indica el tipo de juego (por ejemplo, fichas o puntuación).  
+Devuelve:  
+- void  
+Descripción de la solución:  
+Llama a la función `mesa` para dibujar el fondo y los contadores. Posteriormente, utiliza `dibujar-carta` para mostrar las cartas del crupier y del jugador en sus respectivas posiciones, escalando y ubicando según corresponda.  
+Funciones auxiliares:  
+- mesa  
+- dibujar-carta  
+|#
+
+
+(define (actualizar-mesa mano-c mano-j f-c f-j tipo)
+  (mesa f-c f-j tipo)
+  (dibujar-carta 290 400 0.3 (cadadr mano-j) (caadr mano-j) valores)
+  (dibujar-carta 200 250 0.3 (cadar mano-c) (caar mano-c) valores)
+  (dibujar-carta 200 400 0.3 (cadar mano-j) (caar mano-j) valores)
+  
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;                                    CAJAS DE TEXTO DE INPUT O OUTPUT DEL JUEGO
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: apostar  
+Descripción: Dibuja la interfaz gráfica para que el jugador seleccione la cantidad de fichas que desea apostar y devuelve el valor de la apuesta seleccionada.  
+Parámetros:  
+- fichas-jugador: Número de fichas disponibles para el jugador.  
+Devuelve:  
+- La cantidad seleccionada para la apuesta (20, 50, 100, 200, 500 o 1000).  
+Descripción de la solución:  
+La función dibuja el marco de selección de apuesta y las fichas correspondientes con sus valores. Utiliza coordenadas predefinidas para ubicar las fichas gráficamente y un bucle `let loop` para detectar clics del usuario. Dependiendo de la posición del clic y la cantidad de fichas disponibles, devuelve el valor de la apuesta. Si el clic no es válido, continúa esperando.  
+Funciones auxiliares:  
+- D2: Calcula la distancia euclidiana entre dos puntos.  
+- dibujar-texto: Dibuja texto en pantalla.  
+- dibujar-ficha: Dibuja una ficha con un valor específico.  
+|#
+
+
+
+
+(define (apostar fichas-jugador)
+  ((draw-solid-polygon v1)
+    (list
+     (make-posn 140 120)
+     (make-posn 140 480)
+     (make-posn 660 480)
+     (make-posn 660 120)
+     ) (make-posn 0 0) morosa)
+  ((draw-polygon v1)
+   (list
+    (make-posn 140 120)
+    (make-posn 140 480)
+    (make-posn 660 480)
+    (make-posn 660 120)
+    ) (make-posn 0 0) negro)
+  
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 198 171 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 199 171 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 171 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 170 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 171 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 172 10 blanco)
+  (dibujar-texto "ELIGE CUANTO APOSTAR" 200 173 10 blanco)
+  ;; Ficha 20
+  (dibujar-ficha 200 420 0.8 tapete)
+  (dibujar-texto "2O" 183 410 10 blanco)
+  ;; FIcha 50
+  (dibujar-ficha 250 340 0.8 amarillo)
+  (dibujar-texto "5O" 233 330 10 blanco)
+  ;; Ficha 100
+  (dibujar-ficha 330 280 0.8 navy)
+  (dibujar-texto "1OO" 313 275 6 blanco)
+  ;; Ficha 200
+  (dibujar-ficha 470 280 0.8 morado)
+  (dibujar-texto "2OO" 453 275 6 blanco)
+  ;; Ficha 500
+  (dibujar-ficha 550 340 0.8 menos)
+  (dibujar-texto "5OO" 533 335 6 blanco)
+  ;; Ficha 1000
+  (dibujar-ficha 600 420 0.8 oro)
+  (dibujar-texto "1OOO" 580 415 5 blanco)
+  (let loop ()
+    (let* (
+           (click (get-mouse-click v1))
+           (x (posn-x (mouse-click-posn click)))
+           (y (posn-y (mouse-click-posn click)))
+           )
+     ; El radio es 40
+     (cond
+       ((and (<= (D2 x y 200 420)  40) (>= fichas-jugador 20))  20)
+       ((and (<= (D2 x y 250 340)  40) (>= fichas-jugador 50)) 50)
+       ((and (<= (D2 x y 330 280)  40) (>= fichas-jugador 100)) 100)
+       ((and (<= (D2 x y 470 280)  40) (>= fichas-jugador 200)) 200)
+       ((and (<= (D2 x y 550 340)  40) (>= fichas-jugador 500)) 500)
+       ((and (<= (D2 x y 600 420)  40) (>= fichas-jugador 1000)) 1000)
+       (else (loop))
+     )
+    )
+  )
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+#|
+Nombre: cantidad  
+Descripción: Solicita al jugador ingresar la cantidad de fichas con las que desea jugar.  
+Parámetros:  
+- Ninguno.  
+Devuelve:  
+- Un número que representa la cantidad ingresada por el jugador.  
+Descripción de la solución:  
+La función dibuja la interfaz gráfica para que el jugador ingrese la cantidad de fichas deseada. Utiliza `input-field` para capturar la entrada del jugador. Si la entrada es inválida, muestra un mensaje de error, espera dos segundos, limpia el mensaje de la pantalla y vuelve a solicitar la entrada. Cuando la entrada es válida, devuelve el número ingresado.  
+Funciones auxiliares:  
+- dibujar-texto: Dibuja texto en pantalla.  
+- input-field: Captura la entrada del usuario en un cuadro de texto.  
+- limpiar-figura: Borra gráficos de la pantalla.  
+|#
+
+
+(define (cantidad)
+  ((draw-solid-polygon v1)
+    (list
+     (make-posn 140 120)
+     (make-posn 140 480)
+     (make-posn 660 480)
+     (make-posn 660 120)
+     ) (make-posn 0 0) morosa)
+  ((draw-polygon v1)
+   (list
+    (make-posn 140 120)
+    (make-posn 140 480)
+    (make-posn 660 480)
+    (make-posn 660 120)
+    ) (make-posn 0 0) negro)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 163 171 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 164 171 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 171 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 170 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 171 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 172 10 blanco)
+  (dibujar-texto "CON CUANTO QUIERES JUGAR" 165 173 10 blanco)
+  (let loop
+    (
+     (resultado (input-field 300 20 250 250))
+     )
+    (cond ((not resultado)
+       (dibujar-texto "ENTRADA ERRONEA\n" 250 300 10 blanco)
+       (sleep 2)
+       (limpiar-figura
+        (list (make-posn 250 300) (make-posn 550 300) (make-posn 550 340) (make-posn 250 340))
+        morosa)
+       (loop (input-field 300 20 250 250))
+       )
+      (else resultado)
+ )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+#|
+Nombre: mensaje-ganador  
+Descripción: Muestra un mensaje indicando el ganador de una ronda o partida.  
+Parámetros:  
+- clase: indica si se trata de una 'ronda' o 'partida'.  
+- ganador: especifica el ganador ('jugador' o 'crupier').  
+Devuelve:  
+- void.  
+Descripción de la solución:  
+Según los parámetros recibidos, construye el texto del mensaje dinámicamente con el tipo de clase y el ganador. Se dibuja un cuadro en pantalla con el mensaje, ajustando la escala del texto según la combinación de parámetros. El mensaje permanece en pantalla durante 5 segundos antes de continuar.  
+Funciones auxiliares:  
+- dibujar-texto: Dibuja texto en pantalla.  
+- lista-a-posn: Convierte listas de coordenadas a objetos posn para gráficos.  
+|#
+
+
+(define (mensaje-ganador clase ganador)
+  (let*
+      (
+       (clase-t (if (eq? clase 'ronda) "RONDA" "PARTIDA"))
+       (ganador-t (if (eq? ganador 'jugador) "HAS GANADO LA" "CATJACK GANA LA"))
+       (texto (string-append ganador-t " " clase-t))
+       (escala (if (and (eq? clase 'partida)(eq? ganador 'crupier)) 12 13))
+       )
+    ((draw-polygon v1) (lista-a-posn (list (list 100 200) (list 700 200)(list 700 300)(list 100 300))) (make-posn 0 0) negro)
+    ((draw-solid-polygon v1) (lista-a-posn (list (list 100 200) (list 700 200)(list 700 300)(list 100 300))) (make-posn 0 0) morosa)
+    (dibujar-texto texto 130 230 escala blanco)
+    (dibujar-texto texto 131 230 escala blanco)
+    (dibujar-texto texto 132 230 escala blanco)
+    (dibujar-texto texto 133 230 escala blanco)
+    (sleep 5)
+   )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;                                          ANIMACIONES
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+#|
+Nombre: mover-patita  
+Descripción: Anima el movimiento de una figura representando una "patita" desde una posición inicial hasta una posición final.  
+Parámetros:  
+- x-inicial: posición inicial en el eje X.  
+- y-inicial: posición inicial en el eje Y.  
+- x-final: posición final en el eje X.  
+- y-final: posición final en el eje Y.  
+- escala: factor de escalado aplicado a la figura.  
+- tiempo-duracion: duración total de la animación en segundos.  
+- color-fondo: color utilizado para limpiar la figura tras cada paso.  
+Devuelve:  
+- void.  
+Descripción de la solución:  
+El movimiento se divide en un número definido de pasos (`pasos`). Por cada paso, la figura se dibuja en una nueva posición calculada por desplazamientos incrementales (`dx` y `dy`), se hace una pausa corta (`tiempo-paso`) para simular la animación y luego se "borra" la figura en la posición anterior usando el color de fondo. El proceso se repite hasta que la figura alcanza la posición final, donde se dibuja de forma permanente.  
+Funciones auxiliares:  
+- escalar-desplaza-construye2: calcula los puntos transformados de la figura según desplazamiento y escala.  
+- limpiar-figura: borra la figura en la posición dada con el color de fondo.  
+|#
+
+
+(define (mover-patita x-inicial y-inicial x-final y-final escala tiempo-duracion color-fondo)
+  ;; Divide el tiempo en pasos de animación
+  (let*
+      (
+       (puntos contorno)
+       (puntos-interior interior)
+       (pasos 100)  ;; Número de pasos de la animación
+       (tiempo-paso (/ tiempo-duracion pasos))  ;; Tiempo de cada paso en segundos
+       (dx (/ (- x-final x-inicial) pasos))  ;; Desplazamiento en x por paso
+       (dy (/ (- y-final y-inicial) pasos))
+       )
+     ;; Bucle de animación
+  (do ((i 0 (+ i 1))
+       (x-pos x-inicial (+ x-pos dx))
+       (y-pos y-inicial (+ y-pos dy)))
+      ((= i pasos))  ;; Condición de parada cuando hemos hecho todos los pasos
+    
+    ;; Dibujar la figura en la nueva posición
+    ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos puntos-interior x-pos y-pos escala) (make-posn 0 0) negro)
+    ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos-interior puntos-interior x-pos y-pos escala) (make-posn 0 0) beish)
+    ;(dibujar-carta-por-detras)
+    
+    ;; Pausa para crear el efecto de animación
+    (sleep tiempo-paso)
+
+    ;; Borrar la figura en la posición anterior con el color de fondo
+    (limpiar-figura (escalar-desplaza-construye2 puntos puntos-interior x-pos y-pos escala) color-fondo)
+    (limpiar-figura (escalar-desplaza-construye2 puntos-interior puntos-interior x-pos y-pos escala) color-fondo)
+
+    )
+    ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos puntos-interior x-final y-final escala) (make-posn 0 0) negro)
+    ((draw-solid-polygon v1) (escalar-desplaza-construye2 puntos-interior puntos-interior x-final y-final escala) (make-posn 0 0) beish)
+    
+  ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: mover-patita-carta  
+Descripción: Anima el movimiento de una carta acompañada de una "patita" desde una posición inicial hasta una posición final.  
+Parámetros:  
+- x-inicio: posición inicial en el eje X.  
+- y-inicio: posición inicial en el eje Y.  
+- x-fin: posición final en el eje X.  
+- y-fin: posición final en el eje Y.  
+- escala: factor de escalado aplicado a la figura y la carta.  
+- tiempo-duracion: duración total de la animación en segundos.  
+- fondo: color utilizado para limpiar la figura tras cada paso.  
+Devuelve:  
+- void.  
+Descripción de la solución:  
+El movimiento se divide en un número de pasos (`pasos`). En cada paso:  
+1. Se transforman los puntos de la carta y la patita según la posición actual y la escala.  
+2. Se dibujan la carta y la patita en la posición actual.  
+3. Se espera un tiempo (`pausa`) para simular la animación.  
+4. Se limpian la carta y la patita de la posición anterior usando el color de fondo.  
+El proceso se repite hasta que se alcanza la posición final, donde la carta se dibuja de forma permanente.  
+Funciones auxiliares:  
+- transformar-coordenadas: transforma un punto según el centro y la escala.  
+- transformar-lista: transforma una lista de puntos según el centro y la escala.  
+- escalar-desplaza-construye2: calcula los puntos transformados de la patita según desplazamiento y escala.  
+- limpiar-figura: borra la figura en la posición dada con el color de fondo.  
+- dibujar-carta-por-detras: dibuja la carta en una posición determinada.  
+|#
+
+
+(define (mover-patita-carta x-inicio y-inicio x-fin y-fin escala tiempo-duracion fondo)
+  ;; Calcular el número de pasos y la pausa entre ellos
+  (let* ((pasos 20)
+         (pausa (/ tiempo-duracion pasos))
+         (delta-x (/ (- x-fin x-inicio) pasos))
+         (delta-y (/ (- y-fin y-inicio) pasos)))
+
+    ;; Función para transformar puntos según el centro y la escala
+    (define (transformar-coordenadas punto esc cx cy)
+      (make-posn (+ cx (* esc (- (car punto) 175)))
+                 (+ cy (* esc (- (cadr punto) 350)))))
+    
+
+    ;; Función auxiliar para obtener una lista de puntos transformados
+    (define (transformar-lista puntos esc cx cy)
+      (map (lambda (p) (transformar-coordenadas p esc cx cy)) puntos))
+
+    ;; Bucle para mover la carta y la patita paso a paso
+    (do ((i 0 (+ i 1))
+         (pos-x x-inicio (+ pos-x delta-x))
+         (pos-y y-inicio (+ pos-y delta-y)))
+        ((= i pasos))
+      ;; Transformar listas de puntos para la posición actual
+      (let* ((puntos-cuerpo (transformar-lista list-cuerpo escala pos-x pos-y))
+             (puntos-interior (transformar-lista list-interior (* escala 0.9) pos-x pos-y))
+             (puntos-patita (escalar-desplaza-construye2 contorno contorno pos-x pos-y (* escala 1.2)))
+             (puntos-patita2 (escalar-desplaza-construye2 interior contorno pos-x pos-y (* escala 1.2))))
+
+        (dibujar-carta-por-detras pos-x pos-y escala)
+        ((draw-solid-polygon v1) puntos-patita (make-posn 0 0) negro)
+        ((draw-solid-polygon v1) puntos-patita2 (make-posn 0 0) beish)
+        ;; Pausa entre pasos para ver la animación
+        (sleep pausa)
+
+        ;; Limpiar la carta y la patita en la posición anterior
+        (limpiar-figura puntos-cuerpo fondo)
+        (limpiar-figura puntos-patita fondo)
+        (limpiar-figura puntos-patita2 fondo)
+        ))
+    (dibujar-carta-por-detras x-fin y-fin escala)))
+
+
+
+#|
+Archivo: figuras.rkt
+Descripción: definición de los puntos de algunas figuras
+Autor: Javier García Fernández
+|#
+
+;;                                    MAPAS DE PUNTOS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;              MAPAS DE PUNTOS DE LOS VALORES DE LAS CARTAS
+
+(define valores
+  (list
+   (cons '0 (append
+             (list
+              (list 70 320) (list 50 300) (list 50 170) (list 70 150)
+              (list 130 150) (list 150 170) (list 150 190) ;; Interior
+              (list 130 190) (list 120 170) (list 80 170) (list 70 190)
+              (list 70 280) (list 80 300) (list 120 300) (list 130 280)
+              (list 130 190) (list 150 190) (list 150 300) (list 130 320))))
+   
+   (cons '1 (list (list 50 200) (list 75 200) (list 100 150) (list 125 150)
+                  (list 125 320) (list 100 320) (list 100 200)))
+
+   (cons '2 (append (lista-cuarto-circulo 100 200 50 20 'arriba-izquierda 'antihorario)
+                    (lista-cuarto-circulo 100 200 50 20 'arriba-derecha 'horario)
+                    (list (list 80 300) (list 150 300) (list 150 320) (list 50 320) (list 50 300))
+                    (lista-cuarto-circulo 100 200 25 20 'arriba-derecha 'antihorario)
+                    (lista-cuarto-circulo 100 200 25 20 'arriba-izquierda 'horario)))
+
+   (cons '3 (append (list (list 120 170) (list 50 170) (list 50 150) (list 150 150) (list 150 170))
+                    (lista-cuarto-circulo 100 275 50 20 'arriba-derecha 'horario)
+                    (lista-cuarto-circulo 100 275 50 20 'abajo-derecha 'antihorario)
+                    (lista-cuarto-circulo 100 275 50 20 'abajo-izquierda 'horario)
+                    (lista-cuarto-circulo 100 275 25 20 'abajo-izquierda 'antihorario)
+                    (lista-cuarto-circulo 100 275 25 20 'abajo-derecha 'horario)
+                    (lista-cuarto-circulo 100 275 25 20 'arriba-derecha 'antihorario)
+                    (list (list 75 250) (list 75 225))))
+   (cons '4 (list (list 50 225) (list 120 150) (list 150 150) (list 80 225) (list 130 225)
+                  (list 130 205) (list 150 205) (list 150 225) (list 150 320) (list 125 320)
+                  (list 125 250) (list 50 250)))
+   
+   (cons '5 (append (list (list 50 235) (list 50 150) (list 150 150) (list 150 170) (list 75 170) (list 75 210))
+                    (lista-cuarto-circulo 100 260 50 20 'arriba-derecha 'horario)
+                    (lista-cuarto-circulo 100 275 50 20 'abajo-derecha 'antihorario)
+                    (lista-cuarto-circulo 100 275 50 20 'abajo-izquierda 'horario)
+                    (lista-cuarto-circulo 100 275 25 20 'abajo-izquierda 'antihorario)
+                    (lista-cuarto-circulo 100 275 25 20 'abajo-derecha 'horario)
+                    (lista-cuarto-circulo 100 260 25 20 'arriba-derecha 'antihorario)))
+   
+   (cons '6 (append
+             (list (list 50 320) (list 50 150) (list 150 150) (list 150 180)
+                   (list 80 180) (list 80 225) (list 150 225)
+                   ;; Interior
+                   (list 150 275) (list 120 275) (list 120 245)
+                   (list 80 245) (list 80 295) (list 120 295)
+                   (list 120 275) (list 150 275)
+                   ;; Exterior
+                   (list 150 320))))
+   (cons '7 (list
+             (list 50 180) (list 50 150) (list 150 150)
+             (list 150 180) (list 80 320) (list 50 320)
+             (list 120 180)))
+   (cons '8 (append
+             (list
+              ;; Primer círculo
+              (list 70 230) (list 50 210) (list 50 170) (list 70 150)
+              (list 130 150) (list 150 170) (list 150 190) ;; Interior
+              (list 130 190) (list 110 170) (list 90 170) (list 70 190) (list 90 210)
+              (list 110 210) (list 130 190) ;; Exterior
+              (list 150 190) (list 150 210) (list 130 230) (list 150 250)
+              (list 150 270) ;; Interior
+              (list 130 270) (list 110 250) (list 90 250)
+              (list 70 270) (list 70 280) (list 90 300) (list 110 300) (list 130 280)
+              (list 130 270) ;; Exterior
+              (list 150 270) (list 150 300) (list 130 320) (list 70 320)
+              (list 50 300) (list 50 250))))
+   
+   ;; Número 9
+   (cons '9 (append
+             (lista-cuarto-circulo 100 200 50 20 'abajo-izquierda 'horario)
+             (lista-cuarto-circulo 100 200 50 20 'arriba-izquierda 'antihorario)
+             (lista-cuarto-circulo 100 200 50 20 'arriba-derecha 'horario)
+             (list (list 150 200) (list 125 200)) ;; Interior
+             (lista-cuarto-circulo 100 200 25 20 'arriba-derecha 'antihorario)
+             (lista-cuarto-circulo 100 200 25 20 'arriba-izquierda 'horario)
+             (lista-cuarto-circulo 100 200 25 20 'abajo-izquierda 'horario)
+             (lista-cuarto-circulo 100 200 25 20 'abajo-derecha 'horario)
+             (list (list 125 200) (list 150 200) (list 150 225) (list 100 320) (list 80 320) (list 130 225))))
+   (cons 'T (list
+             (list 50 190) (list 50 150) (list 150 150) (list 150 190)
+             (list 115 190) (list 115 320) (list 85 320) (list 85 190)))
+   
+   ;; Letra J
+   (cons 'J (append
+             (list (list 50 190) (list 50 150) (list 150 150) (list 150 190))
+             (lista-cuarto-circulo 100 270 50 20 'abajo-derecha 'antihorario)
+             (list (list 60 320) (list 60 290))
+             (lista-cuarto-circulo 100 270 20 20 'abajo-derecha 'horario)
+             (list (list 120 190))))
+   
+   ;; Letra Q
+   (cons 'Q (append
+             (lista-cuarto-circulo 80 180 30 20 'arriba-izquierda 'antihorario)
+             (lista-cuarto-circulo 120 180 30 20 'arriba-derecha 'horario)
+             (list (list 150 260) (list 130 260))
+             (lista-cuarto-circulo 120 180 10 20 'arriba-derecha 'antihorario)
+             (lista-cuarto-circulo 80 180 10 20 'arriba-izquierda 'horario)
+             (lista-cuarto-circulo 80 280 10 20 'abajo-izquierda 'antihorario)
+             (list (list 110 290) (list 100 270) (list 120 270) (list 143 320)
+                   (list 123 320) (list 120 310))
+             (lista-cuarto-circulo 80 280 30 20 'abajo-izquierda 'horario)))
+   
+   ;; Letra K
+   (cons 'K (list
+             (list 50 150) (list 70 150) (list 70 210)
+             (list 130 150) (list 150 150) (list 70 230)
+             (list 150 320) (list 130 320) (list 70 250)
+             (list 70 320) (list 50 320)))
+   
+   ;; Letra A
+   (cons 'A (list
+             (list 50 320) (list 90 150) (list 110 150) (list 150 320)
+             (list 130 320) (list 115 250) (list 100 250) (list 100 240)
+             (list 110 240) (list 100 190) (list 90 240)
+             (list 100 240) (list 100 250) (list 85 250) (list 70 320)))
+   ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;                              MAPAS DE PUNTOS DE CARTAS Y PATITA
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; Contorno de la patita
+(define contorno
+  '(
+    (120 171)(72. 171.)(72. 167.)(64. 167.) (64. 162.)(57. 162.)(57. 158.)(53. 158.)
+    (53. 153.)(49. 153.)(49. 150.)  (45.0 150.)  (45.0 140.)  (41. 140.)(41 108)(37 108)
+    (37. 97.)(33. 97.)(33. 62.)(37. 62.)(37. 58.)(41. 58.)(41. 55.)(45. 55.)(45. 55.)
+    (45. 50.)(60.0 50.0)(60.0 40.0)(64. 40.)(64. 32.)(68. 32.)(68. 28.)(75. 28.)
+    (75. 25.)(90. 25.)(90. 30.)(93. 30.)(93. 31.)(97. 31.)(97. 36.)(104. 36.)(104. 32.)
+    (108. 32.)(108. 28.)(112. 28.)(112. 25.)(127. 25.)(127. 28.)(131. 28.)
+    (131. 32.)(134. 32.)(134. 36.)(138. 36.)(138. 40.)(142. 40.)(142. 54.)
+    (153. 54.)(153. 58.)(157. 58.)(157. 62.)(161. 62.)(161. 66.)(164. 66.)
+    (164. 97.)(161. 97.)(161. 101.)(157. 101.)(157. 109.)(153. 109.)(153. 131.)
+    (150. 131.)(150. 142.)(146. 142.)(146. 149.)(142. 149.)(142. 154.)
+    (138. 153.)(138. 158.)(134. 158.)(134. 162.)(131. 162.)(131. 166.)
+    (123. 166.)(123. 170.)(119.98 170.83)
+    ;; Dentro
+    (120.04 166.99)(119.96 163.32)(126.92 163.13)(127.05 158.29)(134.56 158.22)
+    (134.63 154.26)(138.17 153.92)(138.42 146.45)(141.79 146.21)(141.91 139.29)
+    (145.64 139.05)(146.0 131.59)(149.61 131.59)(149.67 109.27)(153.64 109.15)
+    (153.22 101.27)(157.01 101.15)(157.31 97.42)(160.86 97.3)(160.91 70.72)
+    (157.55 70.85)(157.23 62.71)(153.42 62.65)(153.55 58.9)(142.63 58.97)
+    (142.25 62.07)(138.5 62.71)(138.24 66.26)(134.56 66.78)(135.0 70.0)
+    (130.95 70.78)(130.88 77.89)(127.33 78.02)(127.26 94.1)(123.2 93.84)
+    (123.45 74.01)(127.01 74.21)(127.14 70.2)(130.75 70.46)(130.95 62.58)
+    (134.37 62.97)(134.69 58.77)(138.05 58.9)(138.11 44.24)(137.98 41.01)
+    (134.76 40.69)(134.76 36.94)(130.75 36.43)(130.75 33.)(127.14 32.94)
+    (127.07 29.2)(112.61 29.07)(112.28 32.88)(108.73 33.07)(108.54 36.62)
+    (105.05 36.82)(105.0 40.0)(101.3 40.69)(101.37 66.97)(97.62 66.78)
+    (97.56 36.69)(93.88 36.43)(94.01 33.13)(90.07 32.75)(90.13 29.2)
+    (75.54 29.0)(75.67 32.36)(72.05 32.62)(71.86 36.36)(68.31 36.49)
+    (68.24 40.37)(65.0 40.0)(64.43 58.77)(68.5 58.9)(68.24 66.65)
+    (71.92 66.59)(72.05 89.64)(68.5 89.7)(68.24 66.78)(64.69 66.39)
+    (64.43 58.84)(61.27 59.03)(60.81 54.9)(45.0 55.0)(45.45 58.51)
+    (41.57 58.97)(41.7 62.65)(38.02 63.03)(38.02 97.32)(41.7 97.58)
+    (41.64 104.69)(45.06 104.88)(45.45 139.17)(49.51 139.17)(50.0 150.0)
+    (53.45 150.34)(53.65 153.76)(57.46 153.83)(57.33 158.41)(64.62 159.12)
+    (64.62 163.06)(72.44 163.06)(72.44 166.94)(120 167)
+   ))
+(define interior
+  '(
+    (119.98 170.83)(120.04 166.99)(119.96 163.32)(126.92 163.13)
+    (127.05 158.29)(134.56 158.22)(134.63 154.26)(138.17 153.92)
+    (138.42 146.45)(141.79 146.21)(141.91 139.29)(145.64 139.05)
+    (146.0 131.59)(149.61 131.59)(149.67 109.27)(153.64 109.15)
+    (153.22 101.27)(157.01 101.15)(157.31 97.42)(160.86 97.3)
+    (160.91 70.72)(157.55 70.85)(157.23 62.71)(153.42 62.65)
+    (153.55 58.9)(142.63 58.97)(142.25 62.07)(138.5 62.71)
+    (138.24 66.26)(134.56 66.78)(135.0 70.0)(130.95 70.78)
+    (130.88 77.89)(127.33 78.02)(127.26 94.1)(123.2 93.84)
+    (123.45 74.01)(127.01 74.21)(127.14 70.2)(130.75 70.46)
+    (130.95 62.58)(134.37 62.97)(134.69 58.77)(138.05 58.9)
+    (138.11 44.24)(137.98 41.01)(134.76 40.69)(134.76 36.94)
+    (130.75 36.43)(130.75 33.2)(127.14 32.94)(127.07 29.2)
+    (112.61 29.07)(112.28 32.88)(108.73 33.07)(108.54 36.62)
+    (105.05 36.82)(105.0 40.0)(101.3 40.69)(101.37 66.97)
+    (97.62 66.78)(97.56 36.69)(93.88 36.43)(94.01 33.13)(90.07 32.75)
+    (90.13 29.2)(75.54 29.0)(75.67 32.36)(72.05 32.62)(71.86 36.36)
+    (68.31 36.49)(68.24 40.37)(65.0 40.0)(64.43 58.77)(68.5 58.9)
+    (68.24 66.65)(71.92 66.59)(72.05 89.64)(68.5 89.7)(68.24 66.78)
+    (64.69 66.39)(64.43 58.84)(61.27 59.03)(60.81 54.9)(45.0 55.0)
+    (45.45 58.51)(41.57 58.97)(41.7 62.65)(38.02 63.03)(38.02 97.32)
+    (41.7 97.58)(41.64 104.69)(45.06 104.88)(45.45 139.17)(49.51 139.17)
+    (50.0 150.0)(53.45 150.34)(53.65 153.76)(57.46 153.83)(57.33 158.41)
+    (64.62 159.12)(64.62 163.06)(72.44 163.06)(72.44 166.94)(120 167)
+    ))
+; Cuerpo de la carta 
+(define list-cuerpo
+  (append
+   (list (list 50 100) (list 50 400))
+   (lista-cuarto-circulo 100 100 50 20 'arriba-izquierda 'antihorario)
+   (list (list 100 50) (list 250 50))
+   (lista-cuarto-circulo 250 100 50 20 'arriba-derecha 'horario)
+   (list (list 300 100) (list 300 400))
+   (lista-cuarto-circulo 250 400 50 20 'abajo-derecha 'antihorario)
+   (list (list 100 450) (list 250 450))
+   (lista-cuarto-circulo 100 400 50 20 'abajo-izquierda 'horario)))
+; Cuerpo interior carta por detras
+(define list-interior
+  (append
+   (list (list 50 100) (list 50 400))
+   (lista-cuarto-circulo 100 100 50 20 'arriba-izquierda 'antihorario)
+   (list (list 100 50) (list 250 50))
+   (lista-cuarto-circulo 250 100 50 20 'arriba-derecha 'horario)
+   (list (list 300 100) (list 300 400))
+   (lista-cuarto-circulo 250 400 50 20 'abajo-derecha 'antihorario)
+   (list (list 100 450) (list 250 450))
+   (lista-cuarto-circulo 100 400 50 20 'abajo-izquierda 'horario)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;                                MAPAS DE PUNTOS CARATULA
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(define list-c
+  (list
+   (make-posn 201 221) (make-posn 206 209) (make-posn 211 192) (make-posn 214 176)
+   (make-posn 214 162) (make-posn 205 154) (make-posn 188 150) (make-posn 174 148)
+   (make-posn 160 148) (make-posn 145 149) (make-posn 128 155) (make-posn 111 160)
+   (make-posn 95 172) (make-posn 87 186) (make-posn 87 187) (make-posn 79 208)
+   (make-posn 75 227) (make-posn 75 249) (make-posn 74 282) (make-posn 77 309)
+   (make-posn 86 333) (make-posn 96 351) (make-posn 111 360) (make-posn 124 365)
+   (make-posn 137 371) (make-posn 156 373) (make-posn 172 373) (make-posn 189 369)
+   (make-posn 203 356) (make-posn 211 340) (make-posn 213 332) (make-posn 207 325)
+   (make-posn 200 316) (make-posn 193 307) (make-posn 189 304) (make-posn 177 308)
+   (make-posn 159 313) (make-posn 147 312) (make-posn 139 305) (make-posn 133 296)
+   (make-posn 130 286) (make-posn 126 274) (make-posn 123 261) (make-posn 122 244)
+   (make-posn 122 230) (make-posn 129 223) (make-posn 146 219) (make-posn 157 217)
+   (make-posn 170 218) (make-posn 182 222) (make-posn 196 225)
+  ))
+
+(define list-a
+  (list
+   (make-posn 279 289) (make-posn 272 288) (make-posn 259 289) (make-posn 248 297)
+   (make-posn 237 310) (make-posn 230 329) (make-posn 227 352) (make-posn 228 368)
+   (make-posn 241 380) (make-posn 261 380) (make-posn 276 374) (make-posn 286 366)
+   (make-posn 289 356) (make-posn 290 366) (make-posn 292 375) (make-posn 298 379)
+   (make-posn 309 376) (make-posn 314 368) (make-posn 315 354) (make-posn 313 341)
+   (make-posn 310 332) (make-posn 271 336) (make-posn 264 342) (make-posn 256 342)
+   (make-posn 253 330) (make-posn 258 321) (make-posn 268 318) (make-posn 270 321)
+   (make-posn 272 328) (make-posn 271 333) (make-posn 310 329) (make-posn 305 322)
+   (make-posn 301 314) (make-posn 297 309) (make-posn 292 299) (make-posn 282 293)
+  ))
+
+(define list-t
+  (list
+   (make-posn 322 178) (make-posn 325 161) (make-posn 328 142) (make-posn 339 140)
+   (make-posn 344 149) (make-posn 347 157) (make-posn 348 173) (make-posn 349 181)
+   (make-posn 367 183) (make-posn 386 185) (make-posn 394 195) (make-posn 382 198)
+   (make-posn 366 199) (make-posn 353 206) (make-posn 349 222) (make-posn 350 242)
+   (make-posn 349 264) (make-posn 348 281) (make-posn 349 293) (make-posn 349 306)
+   (make-posn 353 321) (make-posn 352 336) (make-posn 353 347) (make-posn 349 364)
+   (make-posn 337 372) (make-posn 329 367) (make-posn 328 348) (make-posn 326 332)
+   (make-posn 326 315) (make-posn 326 297) (make-posn 324 277) (make-posn 324 262)
+   (make-posn 325 247) (make-posn 325 226) (make-posn 325 215) (make-posn 313 211)
+   (make-posn 301 212) (make-posn 292 207) (make-posn 293 192) (make-posn 295 191)
+   (make-posn 304 187) (make-posn 310 185)
+  ))
+
+(define list-j
+  (list
+   (make-posn 400 281) (make-posn 392 283) (make-posn 390 294) (make-posn 390 305)
+   (make-posn 390 312) (make-posn 389 326) (make-posn 389 330) (make-posn 388 341)
+   (make-posn 386 358) (make-posn 385 374) (make-posn 382 388) (make-posn 380 399)
+   (make-posn 373 406) (make-posn 364 413) (make-posn 352 419) (make-posn 339 420)
+   (make-posn 328 422) (make-posn 320 422) (make-posn 319 429) (make-posn 318 437)
+   (make-posn 318 444) (make-posn 323 451) (make-posn 331 453) (make-posn 348 453)
+   (make-posn 358 451) (make-posn 367 448) (make-posn 378 441) (make-posn 384 438)
+   (make-posn 389 434) (make-posn 402 417) (make-posn 407 407) (make-posn 411 393)
+   (make-posn 414 380) (make-posn 417 366) (make-posn 419 352) (make-posn 419 339)
+   (make-posn 421 322) (make-posn 421 308) (make-posn 420 301) (make-posn 418 286)
+   (make-posn 413 280) (make-posn 406 279) (make-posn 402 279) (make-posn 403 278)
+   (make-posn 403 278) (make-posn 402 253) (make-posn 408 252) (make-posn 413 251)
+   (make-posn 416 250) (make-posn 421 246) (make-posn 423 243) (make-posn 424 235)
+   (make-posn 423 230) (make-posn 419 223) (make-posn 414 221) (make-posn 405 219)
+   (make-posn 400 219) (make-posn 398 219) (make-posn 390 223) (make-posn 390 231)
+   (make-posn 390 236) (make-posn 392 238) (make-posn 396 247) (make-posn 397 250)
+   (make-posn 401 253) (make-posn 401 253) (make-posn 405 253) (make-posn 405 253)
+   (make-posn 405 253) (make-posn 407 253) (make-posn 407 253) (make-posn 407 253)
+   (make-posn 405 278) (make-posn 405 278) (make-posn 405 278) (make-posn 405 278)
+  ))
+
+(define list-a2
+  (list
+   (make-posn 479 289) (make-posn 472 288) (make-posn 459 289) (make-posn 448 297)
+   (make-posn 437 310) (make-posn 430 329) (make-posn 427 352) (make-posn 428 368)
+   (make-posn 441 380) (make-posn 461 380) (make-posn 476 374) (make-posn 486 366)
+   (make-posn 489 356) (make-posn 490 366) (make-posn 492 375) (make-posn 498 379)
+   (make-posn 509 376) (make-posn 514 368) (make-posn 515 354) (make-posn 513 341)
+   (make-posn 510 332) (make-posn 471 336) (make-posn 464 342) (make-posn 456 342)
+   (make-posn 453 330) (make-posn 458 321) (make-posn 468 318) (make-posn 470 321)
+   (make-posn 472 328) (make-posn 471 333) (make-posn 510 329) (make-posn 505 322)
+   (make-posn 501 314) (make-posn 497 309) (make-posn 492 299) (make-posn 482 293)
+  ))
+
+(define list-c2
+  (list
+   (make-posn 613 318) (make-posn 615 311) (make-posn 617 304) (make-posn 620 291)
+   (make-posn 619 286) (make-posn 606 281) (make-posn 596 278) (make-posn 593 257)
+   (make-posn 588 249) (make-posn 581 258) (make-posn 579 266) (make-posn 577 273)
+   (make-posn 567 275) (make-posn 563 276) (make-posn 556 267) (make-posn 550 260)
+   (make-posn 543 255) (make-posn 545 263) (make-posn 545 273) (make-posn 545 280)
+   (make-posn 538 286) (make-posn 530 291) (make-posn 526 302) (make-posn 525 317)
+   (make-posn 527 340) (make-posn 529 355) (make-posn 535 367) (make-posn 544 371)
+   (make-posn 558 373) (make-posn 567 374) (make-posn 578 374) (make-posn 588 375)
+   (make-posn 598 373) (make-posn 602 366) (make-posn 597 360) (make-posn 588 356)
+   (make-posn 572 355) (make-posn 563 353) (make-posn 555 344) (make-posn 555 333)
+   (make-posn 558 321) (make-posn 565 311) (make-posn 576 306) (make-posn 587 311)
+   (make-posn 596 313) (make-posn 602 316)
+  ))
+
+(define list-k
+  (list
+   (make-posn 638 388) (make-posn 651 388) (make-posn 662 384) (make-posn 677 387)
+   (make-posn 684 381) (make-posn 686 359) (make-posn 683 341) (make-posn 683 320)
+   (make-posn 683 300) (make-posn 699 313) (make-posn 714 338) (make-posn 736 364)
+   (make-posn 752 378) (make-posn 768 377) (make-posn 766 363) (make-posn 757 346)
+   (make-posn 727 302) (make-posn 718 287) (make-posn 706 263) (make-posn 717 233)
+   (make-posn 735 215) (make-posn 748 196) (make-posn 760 182) (make-posn 756 168)
+   (make-posn 745 157) (make-posn 729 182) (make-posn 713 211) (make-posn 691 240)
+   (make-posn 675 242) (make-posn 659 136) (make-posn 627 134) (make-posn 628 225)
+   (make-posn 632 264) (make-posn 636 355)
+  ))
+
+
+
+;                          FUNCIONES DE BARAJA
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: crear-mazo  
+Descripción: Genera un mazo completo de cartas, compuesto por cuatro barajas completas, con cada palo (corazón, diamante, trébol, pica) y valores ('A', '2', ..., 'K').  
+Parámetros:  
+- Ninguno.  
+Devuelve:  
+- Una lista que representa el mazo completo, donde cada carta es una sublista de la forma `(valor palo)`.  
+Descripción de la solución:  
+Utiliza `map` para generar las cartas de cada palo y `append` para combinarlas. Se crean cuatro barajas completas para cada palo ('corazón', 'diamante', 'trébol', 'pica'), generando 208 cartas en total.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+
+(define (crear-mazo)
+  (append
+   (map (lambda (valor) (list valor 'corazon))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'corazon))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'corazon))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'corazon))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'diamante))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'diamante))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'diamante))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'diamante))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'trebol))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'trebol))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'trebol))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'trebol))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'pica))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'pica))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'pica))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))
+   (map (lambda (valor) (list valor 'pica))
+               (list 'A '2 '3 '4 '5 '6 '7 '8 '9 'T 'J 'Q 'K))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: range  
+Descripción: Genera una lista decreciente desde `n-1` hasta 0.  
+Parámetros:  
+- `n`: Número entero no negativo que define el tamaño de la lista.  
+Devuelve:  
+- Una lista de números enteros decrecientes desde `n-1` hasta 0.  
+Descripción de la solución:  
+La función es recursiva. Si `n` es 0, devuelve una lista vacía. Si no, construye la lista añadiendo `n-1` al frente de la lista generada por una llamada recursiva con `n-1`.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+
+(define (range n)
+  (if (= n 0)
+      '()
+      (cons (- n 1) (range (- n 1)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: swap  
+Descripción: Intercambia los elementos en las posiciones `i` y `j` de una lista dada.  
+Parámetros:  
+- `lst`: Lista en la que se desea realizar el intercambio.  
+- `i`: Índice del primer elemento a intercambiar.  
+- `j`: Índice del segundo elemento a intercambiar.  
+Devuelve:  
+- Una nueva lista con los elementos en las posiciones `i` y `j` intercambiados.  
+Descripción de la solución:  
+Se extraen los elementos en las posiciones `i` y `j`. Luego, se reconstruye la lista utilizando `map` y un rango que recorre todos los índices de la lista. En el mapeo, si el índice actual corresponde a `i`, se reemplaza con el elemento de la posición `j` y viceversa. Los demás índices permanecen iguales.  
+Funciones auxiliares:  
+- `range`: Genera un rango de índices desde `n-1` hasta 0.  
+- `list-ref`: Obtiene el elemento de la lista en el índice especificado.  
+|#
+
+
+(define (swap lst i j)
+  (let ((elem-i (list-ref lst i))
+        (elem-j (list-ref lst j)))
+    (map (lambda (idx)
+           (cond ((= idx i) elem-j)
+                 ((= idx j) elem-i)
+                 (else (list-ref lst idx))))
+         (range (length lst)))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: barajar  
+Descripción: Mezcla un mazo de cartas utilizando un algoritmo de barajado similar al algoritmo de Fisher-Yates.  
+Parámetros:  
+- `mazo`: Lista de cartas a mezclar.  
+Devuelve:  
+- Una nueva lista con las cartas del mazo en orden aleatorio.  
+Descripción de la solución:  
+La función `barajar` utiliza una función auxiliar `shuffle-helper` que realiza el barajado recursivamente.  
+1. Se selecciona un índice aleatorio `j` dentro del rango de 0 a `n` (inclusive).  
+2. Los elementos en las posiciones `n` y `j` son intercambiados mediante la función `swap`.  
+3. El proceso continúa decrementando `n` hasta que alcanza 0, momento en el cual el mazo está completamente barajado.  
+Funciones auxiliares:  
+- `shuffle-helper`: Realiza el barajado recursivamente.  
+- `swap`: Intercambia dos elementos en la lista.  
+|#
+
+
+(define (barajar mazo)
+  (define (shuffle-helper lst n)
+    (if (<= n 0)
+        lst
+        (let ((j (random (+ n 1))))
+          (shuffle-helper (swap lst n j) (- n 1)))))
+  (shuffle-helper mazo (- (length mazo) 1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: add-carta-mano  
+Descripción: Añade una nueva carta a la mano de un jugador o del crupier y actualiza el mazo.  
+Parámetros:  
+- `mano`: Lista de cartas que el jugador o el crupier ya tiene.  
+- `mazo`: Lista de cartas disponibles en el mazo.  
+- `turno`: Indica si es el turno del jugador o del crupier ('jugador' o 'crupier').  
+Devuelve:  
+- Una lista con dos elementos: la mano actualizada con la nueva carta y el mazo actualizado sin esa carta.  
+Descripción de la solución:  
+1. Extrae la primera carta del mazo como `nueva-carta`.  
+2. Calcula la posición en el tablero donde se colocará la carta, dependiendo del turno.  
+3. Anima la carta moviéndose desde el mazo hasta la posición calculada en el tablero.  
+4. Dibuja la carta en la posición final y realiza otra animación para la "patita".  
+5. Devuelve la nueva mano y el mazo restante.  
+Funciones auxiliares:  
+- `mover-patita-carta`: Mueve la carta visualmente desde el mazo a la posición de destino.  
+- `mover-patita`: Dibuja la animación de la "patita" asociada a la carta.  
+- `dibujar-carta`: Dibuja la carta en su posición final.  
+|#
+
+
+(define (add-carta-mano mano mazo turno)
+  (let
+      ((nueva-carta (car mazo))
+       (pos-y (if (eq? turno 'jugador) 400 250))
+       (pos-x (+ (* 90 (length mano)) 200)))
+    (mover-patita-carta 700 pos-y pos-x pos-y 0.3 1. tapete)
+    (dibujar-carta pos-x pos-y 0.3 (cadr nueva-carta) (car nueva-carta) valores)
+    (mover-patita (+ 100 pos-x) pos-y 700 pos-y 0.4 1. tapete)
+    (cons (append mano (list nueva-carta)) (cdr mazo))
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: extraer-mazo  
+Descripción: Extrae el mazo actualizado sin la primera carta.  
+Parámetros:  
+- `mazo`: Lista de cartas disponibles en el mazo.  
+Devuelve:  
+- El mazo actualizado sin la primera carta.  
+Descripción de la solución:  
+Elimina la primera carta del mazo utilizando la función `cdr`.  
+Funciones auxiliares:  
+Ninguna.  
+|#
+
+
+(define (extraer-mazo mazo)
+  (cdr mazo)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: count  
+Descripción: Cuenta los elementos de una lista que cumplen con un predicado dado.  
+Parámetros:  
+- `pred`: Función predicado que evalúa cada elemento de la lista.  
+- `lst`: Lista de elementos a evaluar.  
+Devuelve:  
+- Un número que representa la cantidad de elementos que cumplen con el predicado.  
+Descripción de la solución:  
+Se utiliza una función auxiliar `count-helper` para recorrer la lista acumulando el número de elementos que cumplen el predicado.  
+Funciones auxiliares:  
+- `count-helper`: Realiza la recursión y lleva un acumulador de los elementos contados.  
+|#
+
+
+(define (count pred lst)
+  (define (count-helper lst acc)
+    (cond
+      ; Si la lista está vacía, devuelve el acumulador
+      ((null? lst) acc)
+      ; Si el predicado es verdadero, incrementa el acumulador
+      ((pred (car lst)) (count-helper (cdr lst) (+ acc 1)))
+      ; Si no, sigue sin incrementar
+      (else (count-helper (cdr lst) acc))))
+  ; Inicializa el acumulador en 0
+  (count-helper lst 0))                               
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: valor-carta  
+Descripción: Obtiene el valor numérico de una carta de blackjack.  
+Parámetros:  
+- `carta`: Una lista con el valor y palo de la carta, donde el valor puede ser una letra (e.g., 'A', 'J') o un número.  
+Devuelve:  
+- El valor numérico de la carta según las reglas del blackjack.  
+  - As ('A') vale 11.  
+  - Diez ('T') y figuras ('J', 'Q', 'K') valen 10.  
+  - Cualquier otro número devuelve su valor numérico.  
+Descripción de la solución:  
+El valor de la carta se obtiene verificando su tipo mediante cond:  
+- Se retorna 11 para el As.  
+- Se retorna 10 para las figuras y el diez.  
+- Para otros casos, se convierte el valor a número y se retorna.  
+Funciones auxiliares:  
+Ninguna  
+|#
+
+
+(define (valor-carta carta)
+  (let ((valor (car carta)))
+    (cond
+      ((equal? valor 'A) 11)
+      ((equal? valor 'T) 10)
+      ((member valor '(J Q K)) 10)
+      (else (string->number (number->string valor))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: valor-mano  
+Descripción: Calcula el valor total de una mano de blackjack considerando las reglas para los Ases y actualiza visualmente el puntaje.  
+Parámetros:  
+- `mano`: Lista de cartas en la mano, donde cada carta es una lista que contiene su valor y palo.  
+- `tipo`: Determina si la mano pertenece al jugador o al crupier ('jugador' o 'crupier').  
+Devuelve:  
+- El valor total de la mano según las reglas del blackjack:  
+  - Los Ases cuentan inicialmente como 11, pero si el total supera 21, cada As puede contar como 1 hasta evitar el exceso.  
+  - Actualiza el valor visualmente en la pantalla, en diferentes posiciones según el tipo de jugador.  
+Descripción de la solución:  
+1. Se calcula la suma inicial de los valores de las cartas en la mano usando `valor-carta`.  
+2. Se cuenta la cantidad de Ases en la mano.  
+3. Se ajusta la suma iterativamente, reduciendo 10 por cada As si el total supera 21.  
+4. Según el tipo de jugador, se posiciona el valor visual en el tablero.  
+5. La función devuelve el valor ajustado de la mano.  
+Funciones auxiliares:  
+- `valor-carta`: Calcula el valor individual de una carta.  
+- `count`: Cuenta los elementos en una lista que cumplen un predicado.  
+|#
+
+
+(define (valor-mano mano tipo)
+  ; Función auuxiliar
+  (define (aux)
+  (let
+      ; Variables del let
+      (
+       ; Suma los valores de las cartas
+       (suma (apply + (map valor-carta mano)))
+       ; Cuenta los ases de la mano
+        (ases (count (lambda (carta) (equal? (car carta) 'A)) mano)))
+    ; Cuerpo del let
+    (let loop
+      ; Variables iterativas
+      ((suma suma) (ases ases))
+      ; Suma beneficiosa por ases
+      (if (and (> suma 21) (> ases 0))
+          (loop (- suma 10) (- ases 1))
+          suma))))
+  (let
+      ; Variables del let
+      (
+       ; Resultado de la función auxiliar
+       (resultado (aux))
+       ; Posición de la caja
+       (pos-y
+        (cond
+          ((eq? tipo 'crupier) 250)
+          (else 400)
+          ))
+       )
+    ; Cuerpo del let
+    ((draw-solid-polygon v1)(lista-a-posn (list (list 60 (- pos-y 30))(list 120 (- pos-y 30))(list 120 (+ pos-y 30))(list 60 (+ pos-y 30)))) (make-posn 0 0) negro)
+    ((draw-solid-polygon v1)(lista-a-posn (list (list 65 (- pos-y 25))(list 115 (- pos-y 25))(list 115 (+ pos-y 25))(list 65 (+ pos-y 25)))) (make-posn 0 0) blanco)
+    (dibujar-texto (number->string resultado) 73 (- pos-y 10) 10 negro)
+    
+    resultado
+      )
+  
+  )
+
+;                                   FUNCIÓNES DE IMPRESIÓN (PARA DEPURAR)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: mostrar-estado  
+Descripción: Muestra el estado actual del juego, incluyendo la apuesta, el valor de la mano del jugador y el valor de la mano del crupier.  
+Parámetros:  
+- `jugador`: Mano actual del jugador, una lista de cartas.  
+- `crupier`: Mano actual del crupier, una lista de cartas.  
+- `apuesta`: Valor numérico de la apuesta actual.  
+Devuelve:  
+- void (imprime en la consola los valores actuales del juego).  
+Descripción de la solución:  
+1. Imprime el valor de la apuesta.  
+2. Muestra el valor de la mano del jugador junto con las cartas que la componen.  
+3. Muestra el valor de la mano del crupier junto con sus cartas.  
+Funciones auxiliares:  
+- `valor-mano`: Calcula el valor total de una mano según las reglas del blackjack. 
+|#
+
+(define (mostrar-estado jugador crupier apuesta)
+  (displayln (string-append "Apuesta: " (number->string apuesta)))
+  (displayln (string-append "Jugador: " (number->string (valor-mano jugador 'jugador)) " - " (format "~a" jugador)))
+  (displayln (string-append "Crupier: " (number->string (valor-mano crupier 'crupier)) " - " (format "~a" crupier))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: mostrar-jugador  
+Descripción: Imprime el estado de un jugador en la consola, mostrando su mano y su valor total.  
+Parámetros:  
+- `jugador`: Indica si es 'jugador' o 'crupier'.  
+- `mano`: Lista de cartas en la mano del jugador o del crupier.  
+Devuelve:  
+- La mano del jugador o crupier (sin cambios).  
+Descripción de la solución:  
+1. Comprueba si el jugador es 'crupier' o 'jugador'.  
+2. Imprime el valor total de la mano y las cartas que la componen.  
+3. Retorna la mano para reutilización.  
+Funciones auxiliares:  
+- `valor-mano`: Calcula el valor total de una mano.  
+|#
+
+(define (mostrar-jugador jugador mano)
+  (cond
+    ((eq? jugador 'crupier) (printf "Crupier: ~a (~a)\n" mano (valor-mano mano 'jugador)
+                                    ) mano)
+    ((eq? jugador 'jugador) (printf "Jugador: ~a (~a)\n" mano (valor-mano mano 'crupier)
+                                    ) mano)
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: apostar-fichas  
+Descripción: Solicita al jugador que introduzca una cantidad de fichas para apostar y valida la entrada.  
+Parámetros:  
+- `fichas-disponibles`: Número total de fichas que el jugador tiene disponibles para apostar.  
+Devuelve:  
+- Un número que representa la cantidad de fichas apostadas si es válido.  
+Descripción de la solución:  
+1. Muestra al jugador las fichas disponibles y solicita una cantidad de fichas a apostar.  
+2. Valida la entrada:  
+   - Comprueba que la cantidad ingresada sea uno de los valores permitidos (20, 50, 100, 200, 500, 1000).  
+   - Verifica que el jugador tenga suficientes fichas disponibles para cubrir la apuesta.  
+3. Si la entrada es válida, devuelve la cantidad apostada.  
+4. Si la entrada es inválida, informa al jugador y repite el proceso hasta que se ingrese una cantidad válida.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+
+(define (apostar-fichas fichas-disponibles)
+  (let loop ()
+    (displayln "¿Cuantas fichas quieres apostar? (20, 50, 100, 200, 500, 1000): \n")
+    (printf "Disponibles: ~a\n" fichas-disponibles)
+    (let 
+        ((fichas (string->number (read-line))))    
+      (cond
+        ;; el número de fichas es correcto
+        ((and (or
+          (= 20 fichas)
+          (= 50 fichas)
+          (= 100 fichas)
+          (= 200 fichas)
+          (= 500 fichas)
+          (= 1000 fichas)
+          ) (<= fichas fichas-disponibles)) fichas)
+        (else (display "Fichas insuficientes o erroneas\n") (loop))
+     )
+    ))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: cantidad-fichas!  
+Descripción: Solicita al jugador que ingrese una cantidad de fichas para jugar y valida la entrada.  
+Parámetros:  
+- Ninguno.  
+Devuelve:  
+- Un número que representa la cantidad de fichas ingresadas por el jugador, si la entrada es válida.  
+Descripción de la solución:  
+1. Solicita al jugador que ingrese una cantidad de fichas para jugar.  
+2. Valida la entrada:  
+   - Comprueba que la cantidad ingresada sea un número real y mayor que 0.  
+3. Si la entrada es válida, devuelve el número de fichas ingresadas.  
+4. Si la entrada es inválida, informa al jugador y repite el proceso hasta que se ingrese una cantidad válida.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+
+(define (cantidad-fichas!)
+  (let loop ()
+    (displayln "¿Con cuantas fichas quieres jugar?")
+    (let
+        (
+         (fichas (string->number (read-line))))    
+      (cond
+        ;; el número de fichas es correcto
+        ((and
+          (real? fichas)
+          (> fichas 0)
+          ) fichas)
+        (else (display "Fichas erroneas\n") (loop))
+     )
+    ))
+  )
+
+;                                   TIPOS DE DATO ABSTRACTO
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Tipo de dato JUGADA
+
+#|
+Nombre: crear-jugada  
+Descripción: Crea una jugada con la mano, fichas disponibles y la apuesta del jugador.  
+Parámetros:  
+- mano: La mano del jugador, representada como una lista de cartas.  
+- fichas-disponibles: La cantidad de fichas disponibles para el jugador.  
+- apuesta: La cantidad de fichas apostadas por el jugador.  
+Devuelve:  
+- Una lista de asociaciones que contiene la mano, las fichas disponibles y la apuesta.  
+Descripción de la solución:  
+1. Crea una lista de asociaciones con tres elementos:  
+   - 'mano: la mano del jugador.  
+   - 'fichas-disponibles: las fichas disponibles para el jugador.  
+   - 'apuesta: la apuesta realizada por el jugador.  
+2. Devuelve la lista de asociaciones.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+(define (crear-jugada mano fichas-disponibles apuesta)
+  (list
+     (list 'mano mano)
+     (list 'fichas-disponibles fichas-disponibles)
+     (list 'apuesta apuesta)
+   )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: mano?  
+Descripción: Devuelve la mano de una jugada.  
+Parámetros:  
+- jugada: Una lista de asociaciones que contiene información sobre la jugada.  
+Devuelve:  
+- La mano asociada a la jugada.  
+Descripción de la solución:  
+1. Utiliza la función `assoc` para obtener la asociación con la clave 'mano'.  
+2. La función `cadr` se usa para devolver el valor de la mano, que es el segundo elemento de la lista de la asociación.  
+Funciones auxiliares:  
+- `assoc`: Busca una clave dentro de una lista de asociaciones.  
+|#
+
+
+(define (mano? jugada)
+  (cadr (assoc 'mano jugada))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: fichas-disponibles?  
+Descripción: Devuelve las fichas disponibles en una jugada.  
+Parámetros:  
+- jugada: Una lista de asociaciones que contiene información sobre la jugada.  
+Devuelve:  
+- Las fichas disponibles asociadas a la jugada.  
+Descripción de la solución:  
+1. Utiliza la función `assoc` para obtener la asociación con la clave 'fichas-disponibles'.  
+2. La función `cadr` se usa para devolver el valor de las fichas disponibles, que es el segundo elemento de la lista de la asociación.  
+Funciones auxiliares:  
+- `assoc`: Busca una clave dentro de una lista de asociaciones.  
+|#
+
+(define (fichas-disponibles? jugada)
+  (cadr (assoc 'fichas-disponibles jugada))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: apuesta?  
+Descripción: Devuelve la apuesta realizada en una jugada.  
+Parámetros:  
+- jugada: Una lista de asociaciones que contiene información sobre la jugada.  
+Devuelve:  
+- La apuesta asociada a la jugada.  
+Descripción de la solución:  
+1. Utiliza la función `assoc` para obtener la asociación con la clave 'apuesta'.  
+2. La función `cadr` se usa para devolver el valor de la apuesta, que es el segundo elemento de la lista de la asociación.  
+Funciones auxiliares:  
+- `assoc`: Busca una clave dentro de una lista de asociaciones.  
+|#
+
+(define (apuesta? jugada)
+  (cadr (assoc 'apuesta jugada))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Tipo de dato RONDA
+
+#|
+Nombre: crear-ronda  
+Descripción: Crea una nueva ronda con el estado actual del juego.  
+Parámetros:  
+- ganador: El jugador que ha ganado la ronda.  
+- fichas-jugador: El número de fichas del jugador al inicio de la ronda.  
+- fichas-crupier: El número de fichas del crupier al inicio de la ronda.  
+- mazo: El mazo de cartas actual.  
+Devuelve:  
+- Una lista de asociaciones que contiene los datos de la ronda.  
+Descripción de la solución:  
+1. Se crea una lista de asociaciones que almacena los valores del ganador, las fichas del jugador y el crupier, y el mazo de cartas.  
+2. Cada elemento de la lista está asociado a una clave correspondiente.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+(define (crear-ronda ganador fichas-jugador fichas-crupier mazo)
+  (list
+     (list 'ganador ganador)
+     (list 'fichas-jugador fichas-jugador)
+     (list 'fichas-crupier fichas-crupier)
+     (list 'mazo mazo)
+   )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: ganador?  
+Descripción: Obtiene el ganador de una ronda.  
+Parámetros:  
+- ronda: La ronda del juego representada como una lista de asociaciones.  
+Devuelve:  
+- El valor asociado a la clave 'ganador' de la ronda, que indica quién ha ganado.  
+Descripción de la solución:  
+1. Se utiliza `assoc` para buscar el valor asociado a la clave 'ganador' en la lista de asociaciones.  
+2. La función devuelve ese valor, que puede ser 'jugador', 'crupier', o cualquier otro valor asignado como ganador.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+(define (ganador? ronda)
+  (cadr (assoc 'ganador ronda))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: mazo?  
+Descripción: Obtiene el mazo de cartas de una ronda.  
+Parámetros:  
+- ronda: La ronda del juego representada como una lista de asociaciones.  
+Devuelve:  
+- El valor asociado a la clave 'mazo' de la ronda, que contiene el mazo de cartas.  
+Descripción de la solución:  
+1. Se utiliza `assoc` para buscar el valor asociado a la clave 'mazo' en la lista de asociaciones de la ronda.  
+2. La función devuelve ese valor, que es el mazo de cartas de la ronda actual.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+(define (mazo? ronda)
+  (cadr (assoc 'mazo ronda))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: fichas-jugador?  
+Descripción: Obtiene las fichas disponibles del jugador en una ronda.  
+Parámetros:  
+- ronda: La ronda del juego representada como una lista de asociaciones.  
+Devuelve:  
+- El valor asociado a la clave 'fichas-jugador' de la ronda, que contiene las fichas del jugador.  
+Descripción de la solución:  
+1. Se utiliza `assoc` para buscar el valor asociado a la clave 'fichas-jugador' en la lista de asociaciones de la ronda.  
+2. La función devuelve ese valor, que representa la cantidad de fichas disponibles para el jugador en la ronda actual.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+(define (fichas-jugador? ronda)
+  (cadr (assoc 'fichas-jugador ronda))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: fichas-crupier?  
+Descripción: Obtiene las fichas disponibles del crupier en una ronda.  
+Parámetros:  
+- ronda: La ronda del juego representada como una lista de asociaciones.  
+Devuelve:  
+- El valor asociado a la clave 'fichas-crupier' de la ronda, que contiene las fichas del crupier.  
+Descripción de la solución:  
+1. Se utiliza `assoc` para buscar el valor asociado a la clave 'fichas-crupier' en la lista de asociaciones de la ronda.  
+2. La función devuelve ese valor, que representa la cantidad de fichas disponibles para el crupier en la ronda actual.  
+Funciones auxiliares:  
+- Ninguna.  
+|#
+
+(define (fichas-crupier? ronda)
+  (cadr (assoc 'fichas-crupier ronda))
+  )
+
+
+;                                 IMPLEMENTACIÓN DE LOS TURNOS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: turno-jugador
+Descripción: Gestiona el turno del jugador, permitiéndole pedir carta, plantarse o doblar la apuesta.
+Parámetros:
+- mano-mazo: La mano del jugador y el mazo restante.
+- fichas-disponibles: Las fichas que tiene el jugador disponibles para apostar.
+- apuesta: La cantidad apostada en la ronda.
+- pidio?: Si el jugador ya ha pedido una carta.
+- tipo: El tipo de acción que se está realizando ('fichas para apuesta, etc).
+Devuelve:
+- Una nueva jugada con la mano del jugador, fichas restantes y apuesta actualizada.
+Descripción de la solución:
+1. El jugador ve su mano y puede optar por pedir carta, plantarse o doblar.
+2. Si el jugador supera 21 puntos, termina su turno y se actualizan las fichas disponibles.
+3. Si el jugador opta por pedir carta, se le agrega una nueva carta de la parte superior del mazo.
+4. Si el jugador opta por plantarse, se termina su turno.
+5. Si el jugador decide doblar, verifica si puede hacerlo, duplicando su apuesta y recibiendo una carta adicional.
+Funciones auxiliares:
+- add-carta-mano
+- turno-jugador
+|#
+
+(define (turno-jugador mano-mazo fichas-disponibles apuesta pidio? tipo)
+  (mover-patita 750 550 750 550 0.4 0.01 tapete)
+  (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
+  (let
+    (
+     (valor-mano-actual (valor-mano (car mano-mazo) 'jugador))
+     (mazo (cdr mano-mazo))
+     (mano (car mano-mazo))
+     (fichas-disponibles fichas-disponibles)
+     (apuesta apuesta))
+     ;(printf "Jugador: ~a (~a)\n" mano valor-mano-actual)
+     (cond
+       ; La mano ya supera o iguala el valor de 21
+       ((>= valor-mano-actual 21)
+        (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
+        (cons (crear-jugada mano (- fichas-disponibles apuesta) apuesta)
+              mazo))
+       (else
+        ;(display "Qué prefieres?\n 1. Pedir\n 2. Plantarte\n 3. Doblar\n")
+        (let
+         (
+          (eleccion
+           (do
+               ((click (get-mouse-click v1) (get-mouse-click v1))
+               (x 0 (posn-x (mouse-click-posn click)))
+               (y 0 (posn-y (mouse-click-posn click)))
+               )
+             ((and (<= 520 y 580)
+                   (or
+                    (and (<= 240 x 500)(eq? tipo 'fichas))
+                    (<= 520 x 600)
+                    (<= 620 x 700)))
+              (cond
+                ((and (<= 240 x 500)(eq? tipo 'fichas)) 3)
+                ((<= 520 x 600) 1)
+                ((<= 620 x 700) 2)
+                                  ))
+           ))
+          )
+          
+          (cond
+            ; Pedir carta
+            ((eq? eleccion 1)
+             ;(display "Pide carta.\n")
+             (turno-jugador (add-carta-mano mano mazo 'jugador) fichas-disponibles apuesta #t 'fichas))
+            ; Plantarse
+            ((eq? eleccion 2)
+             ;(display "Se planta.\n")
+             (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
+             (cons
+              (crear-jugada mano (- fichas-disponibles apuesta) apuesta) mazo))
+            ; Doblar 
+            ((and (eq? eleccion 3))
+             (cond
+               ; Si ya pidió, no puede doblar
+               (pidio?
+                 (display "No puedes doblar una vez pides.\n")
+                 (turno-jugador (cons mano mazo) fichas-disponibles apuesta #t 'fichas))
+               ; Hay suficientes fichas
+               ((>= fichas-disponibles (* 2 apuesta))
+                  (contador-jugador (- fichas-disponibles (* 2 apuesta)) 'fichas)
+                  ;(printf "Doblar la apuesta ~a * 2 = ~a\n" apuesta (* 2 apuesta))
+                  (let*
+                      ((resultado (add-carta-mano mano mazo 'jugador))
+                       (mano (car resultado))
+                       (mazo (cdr resultado)))
+                  (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
+                  (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
+                  ;(printf "Jugador: ~a (~a)\n" mano (valor-mano mano 'jugador))
+                  
+                  (cons (crear-jugada mano (- fichas-disponibles (* 2 apuesta)) (* 2 apuesta))
+                        mazo))
+                  )
+               ; No hay suficientes fichas
+               (else
+                (display "No hay suficientes fichas para doblar.\n")
+                (limpiar-figura (lista-a-posn (list (list 710 510)(list 800 510)(list 800 590)(list 710 590))) tapete)
+                (turno-jugador (cons mano mazo) fichas-disponibles apuesta #t 'fichas))
+                ))
+            (else (display "FUERA"))
+             )
+            )
+        ))
+       ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: turno-crupier
+Descripción: Gestiona el turno del crupier, tomando cartas hasta que su mano supere 16 puntos.
+Parámetros:
+- mano-mazo: La mano actual del crupier y el mazo restante.
+- fichas-disponibles: Las fichas disponibles para el crupier.
+- apuesta: La apuesta realizada en la ronda.
+Devuelve:
+- Una nueva jugada con la mano del crupier, fichas restantes y la apuesta actualizada.
+Descripción de la solución:
+1. El crupier evalúa el valor de su mano.
+2. Si su valor es mayor a 16, termina su turno y actualiza las fichas y apuesta.
+3. Si su valor es menor o igual a 16, el crupier pide una carta adicional.
+Funciones auxiliares:
+- add-carta-mano
+|#
+
+(define (turno-crupier mano-mazo fichas-disponibles apuesta)
+  (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
+  (let
+      (
+       (valor-mano-actual (valor-mano (car mano-mazo) 'crupier))
+       (mazo (cdr mano-mazo))
+       (mano (car mano-mazo))
+       (fichas-disponibles fichas-disponibles)
+       (apuesta (if (> apuesta fichas-disponibles) fichas-disponibles apuesta)))
+      ;(printf "Crupier: ~a (~a)\n" mano valor-mano-actual)
+      (cond
+        ((> valor-mano-actual 16)
+         (cons (crear-jugada mano (- fichas-disponibles apuesta) apuesta)
+               mazo)
+         )
+        (else (turno-crupier (add-carta-mano mano mazo 'crupier) fichas-disponibles apuesta))
+        ))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: reparto-inicial
+Descripción: Reparte las cartas iniciales al crupier y al jugador, moviendo las cartas en la pantalla.
+Parámetros:
+- mazo: El mazo de cartas que contiene todas las cartas por repartir.
+Devuelve:
+- Una lista con la mano del crupier, la mano del jugador y el mazo restante.
+Descripción de la solución:
+1. Se asigna la primera carta del mazo al crupier y las siguientes dos al jugador.
+2. Se mueve la carta del crupier a su lugar y se dibuja en la pantalla.
+3. Se mueve la carta del jugador a su lugar y se dibuja en la pantalla.
+4. Se actualiza la mano del crupier y del jugador y se devuelve el mazo restante.
+Funciones auxiliares:
+- mover-patita-carta
+- dibujar-carta
+- limpiar-figura
+|#
+
+(define (reparto-inicial mazo)
+  (let*
+      (
+       (mano-crupier (list (car mazo)))
+       (mano-jugador (list (cadr mazo) (caddr mazo)))
+       )
+    ; Carta crupier
+    (mover-patita-carta 700 250 200 250 0.3 1. tapete)
+    (dibujar-carta 200 250 0.3 (cadar mano-crupier) (caar mano-crupier) valores)
+    (mover-patita 300 250 700 250 0.4 1. tapete)
+    
+    (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
+    ; Carta jugador
+    (mover-patita-carta 700 400 200 400 0.3 1. tapete)
+    (dibujar-carta 200 400 0.3 (cadar mano-jugador) (caar mano-jugador) valores)
+    (mover-patita 300 400 700 400 0.4 1. tapete)
+    (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
+    (mover-patita-carta 700 400 290 400 0.3 1. tapete)
+    (dibujar-carta 290 400 0.3 (cadadr mano-jugador) (caadr mano-jugador) valores)
+    (mover-patita 400 400 700 400 0.4 1. tapete)
+    (limpiar-figura (lista-a-posn (list (list 650 200) (list 750 200) (list 750 450) (list 650 450))) tapete)
+    (append (list mano-crupier) (list mano-jugador) (list (cdddr mazo)))
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: ronda
+Descripción: Ejecuta una ronda de juego entre el jugador y el crupier, actualizando las manos y las apuestas.
+Parámetros:
+- mazo: El mazo de cartas para repartir.
+- fichas-crupier: Las fichas disponibles del crupier.
+- fichas-jugador: Las fichas disponibles del jugador.
+- tipo: El tipo de jugada, que puede ser 'fichas'.
+Devuelve:
+- Una ronda con el resultado de la mano, el ganador, las fichas actualizadas y el mazo restante.
+Descripción de la solución:
+1. Se realiza el reparto inicial de cartas entre el crupier y el jugador.
+2. Se solicita la apuesta del jugador si es necesario.
+3. Se actualiza la mesa con las manos del jugador y del crupier.
+4. Se manejan los turnos de ambos jugadores.
+5. Se calculan los valores de las manos y se verifica el resultado de la ronda:
+    - Si el jugador gana, se actualizan las fichas.
+    - Si el crupier gana, también se actualizan las fichas.
+    - Si hay empate, no hay cambios.
+    - Si algún jugador se pasa de 21, se determina el ganador.
+Funciones auxiliares:
+- reparto-inicial
+- apostar
+- actualizar-mesa
+- turno-jugador
+- turno-crupier
+- valor-mano
+- crear-ronda
+|#
+
+(define (ronda mazo fichas-crupier fichas-jugador tipo)
+  (let*
+      (
+       ; Reparto inicial
+       (reparto (reparto-inicial mazo))
+       ; Definición de las manos
+       (mano-crupier (car reparto))
+       (mano-jugador (cadr reparto))
+       ; Definición del mazo
+       (mazo (caddr reparto))
+       ; Pedir apuesta
+       (apuesta (if (eq? tipo 'fichas) (apostar fichas-jugador) 0))
+       ; Actualizar la mesa
+       (upload- (actualizar-mesa mano-crupier mano-jugador fichas-crupier fichas-jugador tipo))
+       ; Turnos
+       (resultado-jugador (turno-jugador (cons mano-jugador mazo) fichas-jugador apuesta #f tipo))
+       (resultado-crupier (turno-crupier (cons mano-crupier (cdr resultado-jugador)) fichas-crupier (apuesta? (car resultado-jugador))))
+       ; Valores de las manos
+       (valor-jugador (valor-mano (mano? (car resultado-jugador)) 'jugador))
+       (valor-crupier (valor-mano (mano? (car resultado-crupier)) 'crupier))
+       ; Mazo resultante
+       (mazo-final (cdr resultado-crupier))
+       ; Fichas actualizadas
+       (fichas-jugador-a (fichas-disponibles? (car resultado-jugador)))
+       (fichas-crupier-a (fichas-disponibles? (car resultado-crupier)))
+       ; Apuesta final por si dobla
+       (apuesta-final (apuesta? (car resultado-jugador))) 
+       )
+    
+    (sleep 2)
+    (cond
+      ; No empate y debajo o igual a 21
+      ((and (<= valor-jugador 21) (<= valor-crupier 21) (not (= valor-jugador valor-crupier)))
+       (if (> valor-jugador valor-crupier)
+       (crear-ronda 'jugador (+ fichas-jugador-a (* apuesta-final 2)) fichas-crupier-a mazo-final)
+       (crear-ronda 'crupier fichas-jugador-a (+ fichas-crupier-a (* apuesta-final 2)) mazo-final)))
+      ; Ambos se pasan o empate
+      ((or
+        (and (> valor-jugador 21) (> valor-crupier 21))
+        (= valor-jugador valor-crupier)) (crear-ronda 'empate fichas-jugador fichas-crupier mazo-final))
+      ; Se pasa el crupier y gana jugador
+      ((and (<= valor-jugador 21) (> valor-crupier 21)) (crear-ronda 'jugador (+ fichas-jugador-a (* apuesta-final 2)) fichas-crupier-a mazo-final))
+      ; Se pasa el jugador y gana crupier
+      ((and (> valor-jugador 21) (<= valor-crupier 21)) (crear-ronda 'crupier fichas-jugador-a (+ fichas-crupier-a (* apuesta-final 2)) mazo-final))    
+    )
+  ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: blackjack-fichas
+Descripción: Función que ejecuta un juego de Blackjack utilizando fichas.
+Parámetros:
+- Ninguno.
+Devuelve:
+- Ninguno.
+Descripción de la solución:
+1. Se inicia el juego con una mesa vacía.
+2. Se solicita al jugador la cantidad de fichas con las que desea jugar.
+3. Se inicia la primera ronda, con las fichas del jugador y crupier, y el mazo barajado.
+4. El resultado de la ronda se evalúa:
+    - Si las fichas del jugador son menores a 20, el crupier gana la partida.
+    - Si las fichas del crupier son menores a 20, el jugador gana la partida.
+5. Si hay un ganador en la ronda, se muestra el mensaje correspondiente.
+6. Si hay empate, se indica el empate.
+7. El ciclo de rondas continúa hasta que no haya más fichas suficientes para seguir jugando.
+Funciones auxiliares:
+- mesa
+- cantidad
+- ronda
+- barajar
+- crear-mazo
+- mensaje-ganador
+|#
+
+(define (blackjack-fichas)
+  ; Ficha inicial
+  (mesa 0 0 'fichas)  
+  (let
+    (
+     ; Pide las fichas a usar
+     (fichas (cantidad))
+     )
+    ; Actualiza mesa
+    (mesa fichas fichas 'fichas)
+    ; Bucle del juego
+    (let juego
+    (
+     ; Obtención de la ronda
+     (resultado-ronda (ronda (barajar (crear-mazo)) fichas fichas 'fichas))
+    )
+      
+      (cond
+        ; Gana crupier: jugador no puede apostar
+        ((< (fichas-jugador? resultado-ronda) 20) (mensaje-ganador 'partida 'crupier))
+        ; Gana jugador: crupier no puede apostar
+        ((< (fichas-crupier? resultado-ronda) 20) (mensaje-ganador 'partida 'jugador))
+        
+        (else
+         (cond
+           ; Gana jugador
+           ((eq? (ganador? resultado-ronda) 'jugador) (mensaje-ganador 'ronda 'jugador))
+           ; Gana crupier
+           ((eq? (ganador? resultado-ronda) 'crupier) (mensaje-ganador 'ronda 'crupier))
+           ; Empate
+           (else (display "Empate\n")))
+         ; Actualización de la mesa
+         (mesa (fichas-crupier? resultado-ronda) (fichas-jugador? resultado-ronda) 'fichas)
+         ; Nuevo bucle del juego
+         (juego
+          (ronda (mazo? resultado-ronda) (fichas-crupier? resultado-ronda) (fichas-jugador? resultado-ronda) 'fichas))))
+  )))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Nombre: blackjack-ganar
+Descripción: Función que ejecuta el ciclo de rondas de un juego de Blackjack hasta que uno de los jugadores (jugador o crupier) gane una cantidad de rondas establecida.
+Parámetros:
+- rondas: Número total de rondas que se deben jugar.
+Devuelve:
+- Ninguno.
+Descripción de la solución:
+1. Se inicia el juego con la mesa en un estado 'ganar'.
+2. Se baraja un nuevo mazo para cada ronda y se inicia el ciclo de rondas.
+3. Se lleva un conteo de las rondas ganadas por el jugador y el crupier.
+4. Si el crupier gana más de la mitad de las rondas, se declara el crupier como ganador de la partida.
+5. Si el jugador gana más de la mitad de las rondas, se declara el jugador como ganador de la partida.
+6. Si no se cumple ninguna de las condiciones anteriores, se continúa con la siguiente ronda y el resultado de la ronda se evalúa:
+    - Si el jugador gana la ronda, se incrementa el contador de rondas ganadas por el jugador.
+    - Si el crupier gana la ronda, se incrementa el contador de rondas ganadas por el crupier.
+7. El ciclo de rondas continúa hasta que uno de los jugadores gane más de la mitad de las rondas.
+Funciones auxiliares:
+- mesa
+- ronda
+- mensaje-ganador
+- barajar
+- crear-mazo
+|#
+
+(define (blackjack-ganar rondas)
+  ; Mesa inicial
+  (mesa 0 0 'ganar)
+  ; Bucle juego
+  (let juego
+    (
+     ; Resultados de ronda
+     (resultado-ronda (ronda (barajar (crear-mazo)) 0 0 'ganar))
+     (rondas-jugador 0)
+     (rondas-crupier 0)
+     )
+      (let
+           (
+            ; Rondas actualizadas tras jugar
+            (rondas-jugador (+ rondas-jugador (if (eq? (ganador? resultado-ronda) 'jugador) 1 0)))
+            (rondas-crupier (+ rondas-crupier (if (eq? (ganador? resultado-ronda) 'crupier) 1 0)))
+            )
+    (cond
+      ; Gana crupier: más de la mitad de rondas ganadas
+      ((> rondas-crupier (/ rondas 2)) (mensaje-ganador 'partida 'crupier))
+      ; Gana jugador más de la mitad de rondas ganadas
+      ((> rondas-jugador (/ rondas 2)) (mensaje-ganador 'partida 'jugador))
+      (else
+       (cond
+         ; Gana jugador la ronda
+         ((eq? (ganador? resultado-ronda) 'jugador) (mensaje-ganador 'ronda 'jugador))
+         ; Gana crupier la ronda
+         ((eq? (ganador? resultado-ronda) 'crupier) (mensaje-ganador 'ronda 'crupier))
+         (else (display "Empate\n")))
+       
+       ; Actualizar mesa
+       (mesa rondas-crupier
+             rondas-jugador 'ganar)
+       ; Lanzar bucle de nuevo
+       (juego
+        (ronda (mazo? resultado-ronda)
+               rondas-crupier
+               rondas-jugador
+               'ganar)
+        rondas-jugador
+        rondas-crupier))))
+  ))
 
 #|
  Nombre: menu-inicio
@@ -151,29 +3641,47 @@ Funciones auxiliares:
        ((and (<= 600 x 750) (<= 10 y 70)) 'inicio)
 
        ;; Si no se ha seleccionado ninguna opción válida, sigue esperando clics
-       (else (loop)))))))
+       (else (loop))))))
+
+#|
+Nombre: menu-rondas
+Descripción: Muestra un menú para seleccionar la cantidad de rondas que se desea jugar o regresar al menú principal.
+Parámetros:
+- Ninguno
+Devuelve:
+- Un número (3, 5, 7, o 11) que representa las rondas seleccionadas, o el símbolo 'back para regresar al menú principal.
+Descripción de la solución:
+El menú dibuja un fondo, botones interactivos con texto, y detecta la opción seleccionada mediante clics del ratón.
+El texto de cada opción se dibuja varias veces levemente desplazado para crear un efecto de profundidad.
+Funciones auxiliares:
+- dibujar-texto
+|#
 
 (define (menu-rondas)
+  ;; Dibuja el fondo del menú
   ((draw-solid-polygon v1)
-                     (list
-                      (make-posn 0 0)
-                      (make-posn 800 0)
-                      (make-posn 800 600)
-                      (make-posn 0 600)) (make-posn 0 0)morosa)
+   (list
+    (make-posn 0 0)
+    (make-posn 800 0)
+    (make-posn 800 600)
+    (make-posn 0 600))
+   (make-posn 0 0) morosa)
 
-  
-  ((draw-polygon v1) (list
-                    (make-posn 600 10)
-                    (make-posn 750 10)
-                    (make-posn 750 70)
-                    (make-posn 600 70)
-                    ) (make-posn 0 0) blanco)
+  ;; Dibuja el botón "BACK"
+  ((draw-polygon v1)
+   (list
+    (make-posn 600 10)
+    (make-posn 750 10)
+    (make-posn 750 70)
+    (make-posn 600 70))
+   (make-posn 0 0) blanco)
+  ;; Dibuja el texto "BACK" varias veces para dar profundidad
   (dibujar-texto "BACK" 615 30 10 color_letras)
   (dibujar-texto "BACK" 616 31 10 color_letras)
   (dibujar-texto "BACK" 617 32 10 color_letras)
   (dibujar-texto "BACK" 618 33 10 color_letras)
 
-  
+  ;; Dibuja el texto del título "RONDAS A JUGAR"
   (dibujar-texto "RONDAS A JUGAR" 120 110 20 color_letras)
   (dibujar-texto "RONDAS A JUGAR" 121 110 20 color_letras)
   (dibujar-texto "RONDAS A JUGAR" 121 111 20 color_letras)
@@ -182,72 +3690,104 @@ Funciones auxiliares:
   (dibujar-texto "RONDAS A JUGAR" 123 112 20 color_letras)
   (dibujar-texto "RONDAS A JUGAR" 123 113 20 color_letras)
 
-  ((draw-polygon v1) (list
-                      (make-posn 200 200)
-                      (make-posn 380 200)
-                      (make-posn 380 350)
-                      (make-posn 200 350)) (make-posn 0 0) blanco)
+  ;; Dibuja el botón para 3 rondas
+  ((draw-polygon v1)
+   (list
+    (make-posn 200 200)
+    (make-posn 380 200)
+    (make-posn 380 350)
+    (make-posn 200 350))
+   (make-posn 0 0) blanco)
+  ;; Dibuja el texto "3" varias veces para dar profundidad
   (dibujar-texto "3" 268 240 30 color_letras)
   (dibujar-texto "3" 269 240 30 color_letras)
   (dibujar-texto "3" 269 241 30 color_letras)
   (dibujar-texto "3" 270 241 30 color_letras)
   (dibujar-texto "3" 270 242 30 color_letras)
 
-  
-  ((draw-polygon v1) (list
-                      (make-posn 420 200)
-                      (make-posn 600 200)
-                      (make-posn 600 350)
-                      (make-posn 420 350)) (make-posn 0 0) blanco)
+  ;; Dibuja el botón para 5 rondas
+  ((draw-polygon v1)
+   (list
+    (make-posn 420 200)
+    (make-posn 600 200)
+    (make-posn 600 350)
+    (make-posn 420 350))
+   (make-posn 0 0) blanco)
+  ;; Dibuja el texto "5" varias veces para dar profundidad
   (dibujar-texto "5" 488 240 30 color_letras)
   (dibujar-texto "5" 489 240 30 color_letras)
   (dibujar-texto "5" 489 241 30 color_letras)
   (dibujar-texto "5" 490 241 30 color_letras)
   (dibujar-texto "5" 490 242 30 color_letras)
 
-  
-  ((draw-polygon v1) (list
-                      (make-posn 200 390)
-                      (make-posn 380 390)
-                      (make-posn 380 540)
-                      (make-posn 200 540)) (make-posn 0 0) blanco)
+  ;; Dibuja el botón para 7 rondas
+  ((draw-polygon v1)
+   (list
+    (make-posn 200 390)
+    (make-posn 380 390)
+    (make-posn 380 540)
+    (make-posn 200 540))
+   (make-posn 0 0) blanco)
+  ;; Dibuja el texto "7" varias veces para dar profundidad
   (dibujar-texto "7" 268 430 30 color_letras)
   (dibujar-texto "7" 269 430 30 color_letras)
   (dibujar-texto "7" 269 431 30 color_letras)
   (dibujar-texto "7" 270 431 30 color_letras)
   (dibujar-texto "7" 270 432 30 color_letras)
 
-  
-  ((draw-polygon v1) (list
-                      (make-posn 420 390)
-                      (make-posn 600 390)
-                      (make-posn 600 540)
-                      (make-posn 420 540)) (make-posn 0 0) blanco)
+  ;; Dibuja el botón para 11 rondas
+  ((draw-polygon v1)
+   (list
+    (make-posn 420 390)
+    (make-posn 600 390)
+    (make-posn 600 540)
+    (make-posn 420 540))
+   (make-posn 0 0) blanco)
+  ;; Dibuja el texto "11" varias veces para dar profundidad
   (dibujar-texto "11" 462 430 30 color_letras)
   (dibujar-texto "11" 463 430 30 color_letras)
   (dibujar-texto "11" 463 431 30 color_letras)
   (dibujar-texto "11" 464 431 30 color_letras)
   (dibujar-texto "11" 464 432 30 color_letras)
 
-  
+  ;; Bucle para capturar clics del usuario
   (let loop ()
-    (let* ((click (get-mouse-click v1))
-           (x (posn-x (mouse-click-posn click)))
-           (y (posn-y (mouse-click-posn click))))
+    ;; Variables locales del let secuencial
+    (let* ((click (get-mouse-click v1)) ;; Captura el clic del ratón
+           (x (posn-x (mouse-click-posn click))) ;; Obtiene la coordenada x del clic
+           (y (posn-y (mouse-click-posn click)))) ;; Obtiene la coordenada y del clic
       (cond
-       
+       ;; Si el clic está dentro del área de "3 rondas"
        ((and (<= 200 x 380) (<= 200 y 350)) 3)
+       ;; Si el clic está dentro del área de "5 rondas"
        ((and (<= 420 x 600) (<= 200 y 350)) 5)
+       ;; Si el clic está dentro del área de "7 rondas"
        ((and (<= 200 x 380) (<= 390 y 540)) 7)
+       ;; Si el clic está dentro del área de "11 rondas"
        ((and (<= 420 x 600) (<= 390 y 540)) 11)
-       
+       ;; Si el clic está dentro del área de "BACK"
        ((and (<= 600 x 750) (<= 10 y 70)) 'back)
-       
-       (else (loop)))
-      )
-   )
-)
+       ;; Si no se ha seleccionado ninguna opción válida, sigue esperando clics
+       (else (loop))))))
 
+
+
+#|
+Nombre: inicio
+Descripción: Maneja el flujo principal de la aplicación, incluyendo la navegación por los menús y la selección de modos de juego.
+Parámetros:
+- Ninguno
+Devuelve:
+- void
+Descripción de la solución:
+El programa utiliza una estructura condicional y bucles para mostrar menús y manejar la interacción del usuario. Dependiendo de las elecciones del usuario, se navega entre distintos menús o modos de juego.
+Funciones auxiliares:
+- menu-inicio
+- menu-juegos
+- menu-rondas
+- blackjack-ganar
+- blackjack-fichas
+|#
 
 (define (inicio)
   ; Si se clica la pantalla
